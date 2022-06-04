@@ -1,0 +1,261 @@
+@font-face {
+    font-family: 'poppins';
+    src: url('poppins.woff2') format('woff2');
+  }
+
+body{ 
+    margin: 0; 
+    font-family: "poppins"; 
+    width: 100vw;
+    height: 100vh; 
+    font-size: large;
+}
+.space-between{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.flex-v-space{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.flex-h{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.flex-h-left{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+}
+.flex-v{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.flex-v-start{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+}
+.center{
+    justify-content:center;
+}
+.homepage-body{
+    background-image: url("namegamebackground.jpg"); 
+    background-size:cover;
+    background-position: center center;
+}
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    position: absolute;
+    z-index:-2
+}
+.heading{
+    color: white;
+    font-size: 11vw;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    background-color:rgba(0, 0, 0, 0.2);
+}
+.subheading{font-size: 6vw;}
+.subheading2{font-size: 4vw; margin:0em 0em 0em 0em}
+.button1{
+    font-family: "poppins"; 
+    align-self: center;
+    width: 30vw;
+    min-width: 20vmax; 
+    height: 10vw;
+    min-height: 6.7vmax; 
+    background-color:rgba(0, 0, 0, 0.55); 
+    color:white; 
+    z-index:999;
+    backdrop-filter: blur(5px);
+    font-size: 3.6vw;
+    border: none;
+    border-radius: 0.5em;
+}
+.button2{
+    font-family: "poppins"; 
+    width: 15vw;
+    height: 5vw;
+    background-color:rgba(0, 0, 0, 0.55); 
+    color:white; 
+    z-index:999;
+    backdrop-filter: blur(5px);
+    font-size: 2.6vw;
+    border: none;
+    border-radius: 0.3em;
+}
+.button1:hover,.button2:hover{
+    background-color:rgba(30, 30, 30, 0.40); 
+    transition: 0.2s;
+}
+.button1:disabled,.button2:disabled{
+    color:grey; 
+    background-color:rgba(30, 30, 30, 0.20); 
+    transition: 0.2s;
+}
+.form{    min-height: 60vh;}
+.pad-10pct{padding: 0 10vw 0 10vw;}
+.pad-10pct-v{padding: 10vw 0vw 10vw 0vw ;}
+.pad-05em{padding: 0.5em}
+.pad-1em{padding: 1em}
+.mar-05em{margin: 0.5em}
+.mar-1em{margin: 1em}
+/*input[type="checkbox"]{
+    height: 1.5em; 
+    width: 1.3em; 
+    margin-right: 0.9em;}*/
+input[type="text"]{
+    font-family: "poppins"; 
+    max-width: auto;
+    font-size: 2.6vw;
+    padding: 0.3em 0.6em 0.3em 0.6em;
+}
+input[type="range"]{
+    accent-color: rgb(108, 234, 183);
+    border: 10px solid black;
+}
+output{
+    margin-left: 1em;
+}
+.margin-v{
+    margin: 0.3em 0em 0.3em 0em
+}
+.option{
+    /* border: 0.1em solid black; */
+    font-size: 3.6vw;
+    padding: 0.3em 0.7em 0.3em 0.7em;
+}
+.small-option{
+    font-size: 2.6vw;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+}
+.td-right{text-align: right;}
+.td-left{text-align: left;}
+.selected{
+    background-color: rgb(80, 80, 241) !important;
+    color: white;
+}
+.vw40{width:40vw}
+.vw86{width:86vw}
+.vh40{width:40vh}
+p{margin:0}
+td p, td strong, .game-details p{
+    font-size: 2.6vw;
+}
+.lobby{
+    background-color: turquoise;
+/* background-image: linear-gradient(30deg, rgb(214, 174, 196) 12%, transparent 12.5%, transparent 87%, rgb(214, 174, 196) 87.5%, rgb(214, 174, 196)),
+linear-gradient(150deg, rgb(214, 174, 196) 12%, transparent 12.5%, transparent 87%, rgb(214, 174, 196) 87.5%, rgb(214, 174, 196)),
+linear-gradient(30deg, rgb(214, 174, 196) 12%, transparent 12.5%, transparent 87%, rgb(214, 174, 196) 87.5%, rgb(214, 174, 196)),
+linear-gradient(150deg, rgb(214, 174, 196) 12%, transparent 12.5%, transparent 87%, rgb(214, 174, 196) 87.5%, rgb(214, 174, 196)),
+linear-gradient(60deg, rgb(80, 80, 241) 25%, transparent 25.5%, transparent 75%, rgb(80, 80, 241) 75%, rgb(80, 80, 241)),
+linear-gradient(60deg, rgb(80, 80, 241) 25%, transparent 25.5%, transparent 75%, rgb(80, 80, 241) 75%, rgb(80, 80, 241));
+background-size:80px 140px;
+background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px; */
+    flex:1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.zbehind{z-index:-1}
+table, th, td, tr {
+    border:none;
+    /* border: 0.1em solid black; */
+    border-spacing: 0px;
+    border-collapse:collapse
+}
+.no-border, .no-border.th, .no-border.td {
+    border: none
+}
+.border{ border:  solid rgba(0, 0, 0, 0.20) 1px}
+.vmar{margin:0.8em 0em 0.8em 0em}
+.pad-lr{padding:0em 0.4em 0em 0.4em}
+.slight-v-gradient{
+    background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.06));
+}
+.name_input{width: 30em;}
+.invisible{visibility:hidden}
+.name_big{font-size:8vw}
+.myturn-background{background-color:rgb(251, 62, 62)}
+
+
+
+
+
+
+
+
+/*toggle switch*/
+.switch { margin: 0em 0.6em 2px 4px; position: relative; display: inline-block; width: 45px; height: 26px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; -webkit-transition: .4s; transition: .4s; border-radius: 2px; }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s; border-radius: 2px;}
+input:checked + .slider { background-color: rgb(108, 234, 183); }
+input:focus + .slider { box-shadow: 0 0 1px linear-gradient(to bottom right, #e0e0e0, #F7F7F7); }
+input:checked + .slider:before { -webkit-transform: translateX(19px); -ms-transform: translateX(19px); transform: translateX(19px); }
+
+
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body            { font-family: "Helvetica"; background: rgb(133, 61, 227); }
+
+h1              { font-family: "Poppins"; margin: 0 0 0 0.1em; color: white;}
+
+h3              { margin-top: 0;}
+
+label           { margin-left: 0.35em; }
+
+progress        { border-radius: 7px; width: 35vw; height: 22px; box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.2 ); }
+progress::-webkit-progress-bar { background-color: rgba(83, 83, 83, 0.35); border-radius: 7px; }
+progress::-webkit-progress-value { background-image: linear-gradient(10deg, rgb(133, 61, 227), rgba(108, 234, 183, 1)); border-radius: 7px; }
+
+.title          { padding: 0.8em; background-color: rgb(29, 15, 51); color: white; display: flex; place-content: center; }
+.logo           { height:50px; margin-top: 0.1em}
+
+.hero           { font-size: 1.4em; padding: 2.85em; }
+
+.frame            { box-shadow: 0 3px 10px rgb(0 0 0 / 0.3); }
+
+.centered       { display: flex; place-content: center; flex-direction: row}
+.centered2      { display: flex; place-content: center; flex-direction: column}
+.centered3      { position: absolute; left: 50%; top: 35%; transform: translate(-50%, -50%);}
+
+.date           { font-family: "Poppins"; font-size: 0.9em; text-align: center; width: 9em; border-radius: 0.3em; border-width: 0; padding: 0.2em;
+                  background-image: linear-gradient(to bottom right, #e0e0e0, #F7F7F7); margin: 0 0 2em 1.2em}
+.date:hover,
+.date:focus     { background-image: linear-gradient(to bottom right, #ECECEC, #ffffff); color: #4d4d4d;}
+
+.checkbox-line  { display: flex; place-content: left; flex-direction: row; margin: 0 0 .3em 1em; width: 10em; }
+
+button          { background-color: rgb(29, 15, 51); font-family: "Poppins"; font-size: 1em; color: white; border-width: 0; 
+                  border-radius: 0.6em; padding: 0.4em 0.9em; font-weight: 600; margin: 3em 0 2em 0;}
+button:hover,
+button:focus    { background-color: rgb(52, 39, 71); cursor: pointer; color: #bdbdbd;}
+
+.page           { margin: 2em auto; width: 30em; background: white; }
+
+.status         { text-align: left; margin: 0; }
+.status>li      { margin:0 0 0.4em 2em; font-size: 0.8em; font-weight: 400; }
+
+input[type='checkbox'] {accent-color: rgb(108, 234, 183); width:20px; height:20px; margin-top: 0.5em}
+input[type='checkbox']:hover { cursor: pointer; }
+*/
+/*
+blue violet = rgb(133, 61, 227)
+GT Purple = rgb(97, 45, 127)
+Dark Purple = rgb(29, 15, 51)
+Dark Orchid = rgb(175, 36, 209)
+Teal = rgb(0, 167, 181)
+Reef rgb(80, 80, 241) = rgb(108, 234, 183) #6CEAB7
+Warm Grey = rgb(203, 196, 188)
+bg="#393939"; 
+bg2="#202020"; 
+fg="#B4B4B4"; 
+hl="#853DE3"*/

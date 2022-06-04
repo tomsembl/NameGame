@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <title>The Name Game</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+    </head>
+    <body class="homepage-body flex-v">
+        <video autoplay muted loop>
+            <source src="/static/ennuin_sign_lo.mp4" type="video/mp4" />
+        </video> 
+            <h1 class="heading">THE NAME GAME</h1>
+        <button class="button1" onclick="location.href='create_game';">Create Game</button>
+        <button class="button1" onclick="location.href='join_game';">Join Game</button>
+    </body>
+</html>
+        

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <title>The Name Game</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+    </head>
+    <body id="body" class="flex-v-space lobby"> 
+        <h1 class="heading subheading">THE NAME GAME</h1>
+
+        
+        <div class="flex-v">
+            <h1 id="the_name" class=" heading subheading pad-10pct-v name_big">&nbsp;</h1>
+            <button id="done_button" class="button1 invisible" onclick="done()" disabled>Done</button>
+            <h1 class="heading subheading" id="countdown">{{game_deets['time_limit']}}</h1>
+        </div>
+
+        <div id="whos_up" class="flex-v pad-10pct">
+            <h1 id="current_player" class="heading subheading2"></h1>
+            <h1 id="current_team" class="heading subheading2"></h1></h1>
+        </div>
+
+        <div class="flex-h mar-1em">
+            <button id="start_button" class="button1" onclick="start()" disabled>Start</button>
+            <button id="concede_button" class="button1" onclick="concede()" disabled>Concede</button>
+        </div>
+        <div class="flex-h mar-1em">
+            <button class="button2" onclick="location.href='/';">Home</button>
+        </div>
+    </body>
+    <script>
+        var socket
+        var current_name
+        var previous_name
+
+        $(document).ready(function(){
+            socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
+
+            socket.on('advance_game_emit',function(msg) {
+                alert("game started")
+                location.href='/name_game/{{game_id}}';
+            }) 
+
+            socket.on('emit_next_name',function(name_data) {
+                document.getElementById("the_name").innerHTML = name_data['name']
+            })
+
+            socket.on('your_turn',function(msg) {
+                if (!my_turn){
+
+                }
+            })
+
+            socket.on('emit_current_turn',function(msg) {
+                current_turn_user_id = msg[1]
+                current_team_id = msg[0]
+                document.getElementById("current_player").innerHTML = "Current Player: " + players[current_turn_user_id]
+                document.getElementById("current_team").innerHTML = "Team: " + teams[current_team_id]
+                if (`${current_turn_user_id}` === "{{user_id}}"){
+                    if (!my_turn){
+                        your_turn()
+                    }
+                }
+            }) 
+
+            socket.on('emit_teams',function(msg) {
+                teams = msg
+            }) 
+
+            socket.on('emit_players',function(msg) {
+                players = msg[0]
+            }) 
+
+            socket.emit("emit_teams","{{game_id}}","{{user_id}}")
+            socket.emit("emit_players","{{game_id}}","{{user_id}}")
+            socket.emit("emit_current_turn","{{game_id}}","{{user_id}}")
+            
+        })
+
+        var current_turn_user_id
+        var current_team_id
+        var teams
+        var players
+        var my_turn = false
+
+        function your_turn() {
+            my_turn = true
+            document.getElementById("start_button").removeAttribute("disabled")
+            document.getElementById("concede_button").removeAttribute("disabled")
+            document.getElementById("body").classList.add("myturn-background")
+            document.getElementById("whos_up").classList.add("invisible")
+            document.getElementById("done_button").classList.remove("invisible")
+            
+        }
+
+        function start() {
+            document.getElementById("start_button").setAttribute("disabled",'')
+            document.getElementById("done_button").removeAttribute("disabled")
+            socket.emit("emit_next_name","{{game_id}}","{{user_id}}")
+            // var audio = new Audio('static/321youreback/ttsMP3.com_VoiceText_2022-5-29_14_5_0.mp3');
+            // audio.play();
+            var count = parseInt("{{game_deets['time_limit']}}")
+            socket.emit("start_timer",count)
+            var interval = setInterval(function(){
+                document.getElementById('countdown').innerHTML=count;
+                count--;
+                if (count <= -1){
+                    document.getElementById('countdown').innerHTML='0';
+                    end_turn()
+                    clearInterval(interval);
+                }
+            }, 1000)
+        }
+
+        function done() {
+            //score name as successful
+            socket.emit("emit_next_name","{{game_id}}","{{user_id}}")
+        }
+
+        function end_turn() {
+            my_turn = false
+            //score current name as unsuccessful
+            document.getElementById("the_name").innerHTML = "&nbsp;"
+            document.getElementById("start_button").setAttribute("disabled",'')
+            document.getElementById("concede_button").setAttribute("disabled","")
+            document.getElementById("body").classList.remove("myturn-background")
+            document.getElementById("whos_up").classList.remove("invisible")
+            document.getElementById("done_button").classList.add("invisible")
+            socket.emit("advance_turn","{{game_id}}","{{user_id}}")
+        }
+        function concede() {end_turn()}
+
+    </script>
+</html>
+        

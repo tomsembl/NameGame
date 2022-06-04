@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <title>The Name Game</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+    </head>
+    <body class="flex-v-start lobby"> 
+        <h1 class="heading subheading">WRITE {{game_deets['number_names']}} NAMES</h1>
+       
+        <div class="flex-v form pad-10pct">
+            <p>
+                Write names that at least a few players will know.<br>Eg. celebrities, fictional characters, et cetera.<br>Players will need to read and describe them.
+            </p>
+                {% for name_number in range(game_deets['number_names']) %}
+                    <div id="name_div{{name_number}}">
+                        <input class="name_input" type="text" id="name_input{{name_number}}" maxlength="40">
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="flex-h mar-1em">
+            <button class="button1" onclick="submit_names()">Submit</button>
+            <button class="button1" onclick="advance_game()">Start Game</button>
+        </div>
+        <div class="flex-h mar-1em">
+            <button class="button1" onclick="location.href='/';">Home</button>
+        </div>
+    </body>
+    <script>
+
+        $(document).ready(function(){
+            var socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
+
+            socket.on('advance_game_emit',function(msg) {
+                alert("game started")
+                location.href='/name_game/{{game_id}}';
+            }) 
+        })
+
+
+        function submit_names(){
+            const number_names = parseInt("{{game_deets['number_names']}}")
+            var names = []
+            for(var i=0; i<number_names; i++) {
+                var elem = document.getElementById(`name_input${i}`)
+                var val = elem.value
+                elem.value = ""
+                elem.setAttribute('disabled','')
+                if (val !== ""){names.push(val)}
+            }
+            if (names.length !== 0){
+                fetch("/submit_names",{
+                    method:"POST", 
+                    body: JSON.stringify({"game_id":"{{game_id}}","user_id":"{{user_id}}","names":names}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                }).then(response=>{
+                    response.json().then(str=>{
+                        if(str.length > 0){alert(str)}
+                    })
+                })
+            }else{alert("no names to submit")}
+        }
+
+
+        function advance_game(){
+            if (confirm("do you want to start")){
+                fetch("/advance_game",{
+                    method:"POST", 
+                    body: JSON.stringify({"game_id":"{{game_id}}","stage":3}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                })
+            }
+        }
+
+    </script>
+</html>
+        

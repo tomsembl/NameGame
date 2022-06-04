@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Name Game</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+    </head>
+    <body class="flex-v-start lobby"> 
+        <h1 class="heading subheading">LOBBY</h1>
+        <div class="flex-h center vmar">
+            <h1 class="heading subheading2 pad-05em">
+                Change Your Name
+                <div class="flex-h-start">
+                    <input type="text" id="username_change" value="{{username}}" maxlength="16">
+                    <button class="button2" onclick="username_change()">Change</button>
+                </div>
+            </h1>
+        </div>
+        <div class="flex-h vmar">
+
+            <div class="flex-v-start vw40 game-details">
+                <h1 class="heading subheading2">Game Details</h1>
+                <table class="">
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Name: </strong></td>
+                            <td class="td-left"><p id="game_name">{{game_deets['game_name']}}</p></td>
+                        </tr>
+                    </table>
+                    <table class="">
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Num of Teams:</strong></td>
+                            <td class="td-left"><p id="details_teams">{{game_deets['number_teams']}}</p></td>
+                        </tr>
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Num of Names:</strong></td>
+                            <td class="td-left"><p id="details_num_names">{{game_deets['number_names']}}</p></td>
+                        </tr>
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Time Limit (s):</strong></td>
+                            <td class="td-left"><p id="details_time_limit">{{game_deets['time_limit']}}</p></td>
+                        </tr>
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Round1:</strong></td>
+                            <td class="td-left"><p id="details_round1">{% if game_deets['round1'] %}✓{% else %}✗{% endif %}</p></td>
+                        </tr>
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Round2:</strong></td>
+                            <td class="td-left"><p id="details_round2">{% if game_deets['round2'] %}✓{% else %}✗{% endif %}</p></td>
+                        </tr>
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Round3:</strong></td>
+                            <td class="td-left"><p id="details_round3">{% if game_deets['round3'] %}✓{% else %}✗{% endif %}</p></td>
+                        </tr>
+                        <tr class="table-row slight-v-gradient">
+                            <td class="td-left"><strong>Round4:</strong></td>
+                            <td class="td-left"><p id="details_round4">{% if game_deets['round4'] %}✓{% else %}✗{% endif %}</p></td>
+                        </tr>
+                </table>
+            </div>
+            <div class="flex-v-start vw40">
+                <h1 class="heading subheading2">Players</h1>
+                <div class="text-box" id="players">
+                    {% for user_id, username in players %}
+                        <div class="option small-option slight-v-gradient" onclick="player_option_select(this)" id="player-option{{user_id}}">
+                            <input type="hidden" value="{{user_id}}">
+                            <p id="player-label{{user_id}}">{{username}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <h1 class="heading subheading2 pad-05em">
+                    <div class="flex-h">
+                        <button class="button2" onclick="assign()">Assign</button>
+                        <button class="button2" onclick="kick()">Kick</button>
+                    </div>
+                </h1>
+            </div>
+        </div>
+        <div class="flex-h center vmar">
+            <div id="teams-div" class="flex-v center vw86">
+                <h1 class="heading subheading2">Teams</h1>
+                <div class="text-box" id="teams">
+                    {% for team_id, team_name in teams %}
+                        <div class="option small-option space-between slight-v-gradient" onclick="team_option_select(this)" id="team-option{{team_id}}">
+                            <input type="hidden" value="{{team_id}}">
+                            <p><strong id="team-label{{team_id}}">{{team_name}}</strong></p>
+                            <table id="users_table{{team_id}}">
+                                <tr>
+                                </tr>
+                            </table>
+                        </div>
+                    {% endfor %}
+                    </div>
+            </div>
+        </div>
+        <div class="flex-h center vmar">
+            <h1 class="heading subheading2 pad-05em">
+                Edit Team Name
+                <div class="flex-h-start">
+                    <input type="text" id="team_name_change" value="" maxlength="20">
+                    <button class="button2" onclick="team_name_change()">Change</button>
+                </div>
+            </h1>
+        </div>
+        <div class="flex-h vmar">
+            <button class="button1" onclick="advance_game()">Start Game</button>
+            <button class="button1" onclick="location.href='/';">Home</button>
+        </div>
+    </body>
+    <script>
+
+        $(document).ready(function(){
+            var socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
+            
+            socket.on('message',function(msg) {
+                console.log(msg)
+                alert(msg)
+            })
+
+            socket.on('emit_players',function(msg) {
+                update_lobby_players(msg)
+            })
+
+            socket.on('emit_teams',function(msg) {
+                update_team_names(msg)
+            })
+
+            socket.on('advance_game_emit',function(msg) {
+                alert("game started")
+                location.href='/write_names/{{game_id}}';
+            }) 
+
+            socket.emit("update_lobby_players","{{game_id}}","{{user_id}}")
+        })
+
+
+        function update_lobby_players(msg) {
+            new_players_dict = msg[0]
+            teammembers = msg[1]
+            player_list_div = document.getElementById("players")
+            old_player_list = []
+            for(var player of player_list_div.children){
+                 old_player_list.push(player.children[0].value)
+            }
+            //// PLAYERS
+            // remove
+            for(var player of old_player_list){
+                if (!(player in new_players_dict)){
+                    document.getElementById(`player-option${player}`).remove()
+                    if (player_selected_option === `${player}`){player_selected_option=""}
+                }
+            }
+            // add
+            for(var new_player in new_players_dict){
+                username = new_players_dict[new_player]
+                if (!(old_player_list.includes(new_player) )){
+                    console.log("adding",new_player)
+                    player_list_div.innerHTML += `<div class="option small-option slight-v-gradient" onclick="player_option_select(this)" id="player-option${new_player}"><input type="hidden" value="${new_player}"><p id="player-label${new_player}">${username}</p></div>`
+                }
+            // edit
+                else {
+                    document.getElementById(`player-label${new_player}`).innerHTML = username
+                }
+            }
+            //// TEAM MEMBERS
+            // remove
+            for (var team_div of document.getElementById("teams").children){
+                var team_id_2 = team_div.id.slice(11)
+                if (!(teammembers[team_id_2])) {
+                    document.getElementById(`users_table${team_id_2}`).children[0].innerHTML = ''
+                }
+            }
+            // add
+            for(var team_id in teammembers){
+                if(team_id !== 'null'){
+                    team_innerHTML=""
+                    for(var team_member of teammembers[team_id]){
+                        team_innerHTML+= `<td class="pad-lr border">${team_member}</td>`
+                    }
+                    document.getElementById(`users_table${team_id}`).children[0].innerHTML = team_innerHTML
+                }
+            }
+        }
+
+        function update_team_names(new_teams) {
+            for(var new_team in new_teams){
+                document.getElementById(`team-label${new_team}`).innerHTML = new_teams[new_team]
+            }
+        }
+
+        var player_selected_option = ''
+        function player_option_select(elem){
+            if(player_selected_option){document.getElementById(player_selected_option).classList.remove("selected")}
+            player_selected_option = elem.id
+            document.getElementById(player_selected_option).classList.add("selected")
+        }
+
+        var team_selected_option = ''
+        function team_option_select(elem){
+            if(team_selected_option){document.getElementById(team_selected_option).classList.remove("selected")}
+            team_selected_option = elem.id
+            document.getElementById(team_selected_option).classList.add("selected")
+        }
+
+        function username_change(){
+            new_username = document.getElementById("username_change").value
+            if (!new_username.length){alert("name must be longer")}
+            else {
+                fetch("/username_change",{
+                    method:"POST", 
+                    body: JSON.stringify({"new_username":new_username,"user_inst_id":"{{user_inst_id}}","game_id":"{{game_id}}"}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                })
+            }
+        }
+
+        function team_name_change(){
+            new_team_name = document.getElementById("team_name_change").value
+            team_id = team_selected_option.slice(11)
+            if (team_id === ''){alert("select a team");return}
+            if (!new_team_name.length){alert("name must be longer")}
+            else {
+                fetch("/team_name_change",{
+                    method:"POST", 
+                    body: JSON.stringify({"new_team_name":new_team_name,"team_id":team_id,"game_id":"{{game_id}}"}),
+                    headers: new Headers({ "content-type": "application/json"}) 
+                })
+            }
+        }
+
+
+        function assign(){
+            user_id = player_selected_option.slice(13)
+            team_id = team_selected_option.slice(11)
+            if (user_id === ''){alert("select a player")}
+            else {
+                if (team_id === ''){alert("select a team")} 
+                else {
+                    fetch("/player_team_change",{
+                        method:"POST", 
+                        body: JSON.stringify({"user_id":user_id,"team_id":team_id,"game_id":"{{game_id}}"}),
+                        headers: new Headers({"content-type": "application/json"}) 
+                    })
+                }
+            }
+        }
+
+        function kick() {
+            user_id = player_selected_option
+            if (user_id === ''){alert("select a player")}
+            else {
+                //remove user_instance
+            }
+        }
+        function advance_game(){
+            if (confirm("do you want to start")){
+                fetch("/advance_game",{
+                    method:"POST", 
+                    body: JSON.stringify({"game_id":"{{game_id}}","stage":3}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                })
+            }
+        }
+        
+    </script>
+</html>
+        

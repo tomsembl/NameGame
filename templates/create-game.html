@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <title>The Name Game</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+    </head>
+    <body class="flex-v"> 
+        <h1 class="heading subheading">CREATE GAME</h1>
+            <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
+                <h1 class="heading subheading2">SETTINGS</h1>
+                <label for="game_name">Game Name:</label>
+                <input type="text" id="game_name" name="game_name" value="Insert Name Here">
+
+                <label for="number_teams">Number of Teams:</label>
+                <div class="flex-h-left">
+                    <input type="range" id="number_teams" name="number_teams" value="3" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
+                    <output>3</output>
+                </div>
+                <label for="number_names">Number of Names Per Person:</label>
+                <div class="flex-h-left">
+                    <input type="range" id="number_names" name="number_names" value="10" max="16" min="1" oninput="this.nextElementSibling.value = this.value">
+                    <output>10</output>
+                </div>
+                <label for="time_limit">Round Time Limit (s):</label>
+                <div class="flex-h-left">
+                    <input type="range" id="time_limit" name="time_limit" value="60" max="120" min="30" oninput="this.nextElementSibling.value = this.value">
+                    <output>60</output>
+                </div>
+                <h1 class="heading subheading2">ROUNDS</h2>
+                <div class="flex-h-left margin-v">
+                    <label class="switch"><input type="checkbox" id='round1' name="round1" checked=True><span class="slider round"></span></label>
+                    <label for="round1">Round 1: &nbsp; No Limits</label>
+                </div>
+                <div class="flex-h-left margin-v">
+                    <label class="switch"><input type="checkbox" id='round2' name="round2" checked=True><span class="slider round"></span></label>
+                    <label for="round2">Round 2: &nbsp; 3 Words</label>
+                </div>
+                <div class="flex-h-left margin-v">
+                    <label class="switch"><input type="checkbox" id='round3' name="round3" checked=True><span class="slider round"></span></label>
+                    <label for="round3">Round 3: &nbsp; 1 Word</label>
+                </div>
+                <div class="flex-h-left margin-v">
+                    <label class="switch"><input type="checkbox" id='round4' name="round4" checked=True><span class="slider round"></span></label>
+                    <label for="round4">Round 4: &nbsp; Mime</label>
+                </div>
+            </form>
+        <div class="flex-h">
+            <button class="button1" onclick="submit()">Create Game</button>
+            <button class="button1" onclick="location.href='/';">Home</button>
+        </div>
+    </body>
+    <script>
+        function submit(){document.getElementById("form").submit()}
+    </script>
+</html>
+        
