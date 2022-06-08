@@ -6,6 +6,9 @@ CREATE TABLE IF NOT EXISTS public.games
 (
     game_id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     game_name character varying(256) COLLATE pg_catalog."default" NOT NULL,
+    active boolean NOT NULL,
+    stage integer,
+    round integer,
     number_teams integer NOT NULL,
     number_names integer NOT NULL,
     time_limit integer NOT NULL,
@@ -115,10 +118,10 @@ CREATE TABLE IF NOT EXISTS public.answers
     name_id integer NOT NULL,
     name character varying(40) COLLATE pg_catalog."default" NOT NULL,
     success integer NOT NULL,
-    round_num integer NOT NULL,
+    round integer NOT NULL,
     time_start timestamp without time zone,
     time_finish timestamp without time zone,
-    CONSTRAINT answers_pkey PRIMARY KEY (name_id)
+    CONSTRAINT answers_pkey PRIMARY KEY (answer_id)
 )
 
 TABLESPACE pg_default;
@@ -198,3 +201,53 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.players_turn_order
     OWNER to postgres;
+
+
+
+
+
+
+
+    -- Table: public.mp3_order
+
+-- DROP TABLE IF EXISTS public.mp3_order;
+
+CREATE TABLE IF NOT EXISTS public.mp3_order
+(
+    number_stops integer,
+    current_stop integer,
+    number_starts integer,
+    current_start integer
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.mp3_order
+    OWNER to postgres;
+
+
+
+-- MP3 Data standard
+INSERT INTO public.mp3_order(
+	number_stops, current_stop, number_starts, current_start)
+	VALUES (13, 0, 18, 0);
+
+
+
+--SCORES
+--get team totals
+	select team_id, count(*) from answers
+	where success = 1
+	and round = 1 --by round
+	group by team_id
+-- get player totals
+	select user_inst_id, count(*) from answers
+	where success = 1
+	and round = 1 --by round
+	group by user_inst_id
+--get hardest names
+	select name, count(*) from answers
+	where success = 0
+	group by name
+	order by count(*) desc
+	

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <title>The Name Game</title>
+        <link rel= "stylesheet" type= "text/css" href= "/static/style.css">
+        <script src="/static/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/socket.io.js"></script>
+        <script type="text/javascript" src="/static/chart.js"></script>
+    </head>
+    <body>
+        <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        <script>
+            var xValues = [50,60,70,80,90,100,110,120,130,140,150];
+            var yValues = [7,8,8,9,9,9,10,11,14,14,15];
+            
+            new Chart("myChart", {
+              type: "horizontalBar",
+              data: {
+                labels: xValues,
+                datasets: [{
+                  fill: false,
+                  lineTension: 0,
+                  backgroundColor: "rgba(0,0,255,1.0)",
+                  borderColor: "rgba(0,0,255,0.1)",
+                  data: yValues
+                }]
+              },
+              options: {
+                legend: {display: false},
+                scales: {
+                  yAxes: [{ticks: {min: 6, max:16}}],
+                }
+              }
+            });
+            </script>
+    </body>
+    <!-- <script>
+        var myChart = new Chart("myChart", {
+            type: "horizontalBar",
+            data: {
+                labels: ['tom','hugo','harry'],
+                datasets: [{
+                    backgroundColor: "rgba(0,0,0,1.0)",
+                    borderColor: "rgba(0,0,0,0.1)",
+                    data: [1,2,3]
+                }]
+            },
+            options: {scale: {ticks: {precision: 0}}}
+        });
+    </script> -->
+    
+</html>

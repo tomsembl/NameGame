@@ -11,19 +11,19 @@
             <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
                 <h1 class="heading subheading2">SETTINGS</h1>
                 <label for="game_name">Game Name:</label>
-                <input type="text" id="game_name" name="game_name" value="Insert Name Here">
+                <input type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'">
 
                 <label for="number_teams">Number of Teams:</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_teams" name="number_teams" value="3" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>3</output>
                 </div>
-                <label for="number_names">Number of Names Per Person:</label>
+                <label for="number_names">Each Player Will Submit # Names:</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_names" name="number_names" value="10" max="16" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>10</output>
                 </div>
-                <label for="time_limit">Round Time Limit (s):</label>
+                <label for="time_limit">Turn Time Limit (s):</label>
                 <div class="flex-h-left">
                     <input type="range" id="time_limit" name="time_limit" value="60" max="120" min="30" oninput="this.nextElementSibling.value = this.value">
                     <output>60</output>
@@ -52,7 +52,21 @@
         </div>
     </body>
     <script>
-        function submit(){document.getElementById("form").submit()}
+        function submit(){
+            var all=[]
+            for(var x of [1,2,3,4]){ 
+                checked = document.getElementById(`round${x}`).checked
+                if (Boolean(checked)){
+                    all.push(checked)
+                }
+            }
+            if(all.length !== 0){
+                game_name = document.getElementById('game_name').value
+                if(game_name.length !== 0){
+                    document.getElementById("form").submit()
+                } else {alert("Enter the name of the game")}
+            } else {alert("you can't have zero rounds")}
+        }
     </script>
 </html>
         

@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <title>The Name Game</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
     </head>
     <body class="flex-v-start"> 
         <h1 class="heading subheading">JOIN GAME</h1>
@@ -22,8 +24,8 @@
             </div>
         </div>
         <div class="flex-h mar-1em">
-            <button class="button1" onclick="submit('join_game')">Join Game</button>
-            <button class="button1" onclick="submit('delete_game')">Delete Game</button>
+            <button class="button1" onclick="submit()">Join Game</button>
+            <button class="button1" onclick="submit(true)">Delete Game</button>
         </div>
         <div class="flex-h mar-1em">
             <button class="button1" onclick="location.href='join_game';">Refresh</button>
@@ -31,19 +33,38 @@
         </div>
     </body>
     <script>
+        var socket
+        $(document).ready(function(){
+            socket = io.connect(window.origin, {query:"game_id=join"})
+
+            socket.on('refresh_join_game', function(msg) {
+                console.log("refresh_join_game")
+                location.reload();
+            })
+
+        })
+
         var selected_option = ''
         function option_select(elem){
             if(selected_option){selected_option.classList.remove("selected")}
             selected_option = document.getElementById(elem.id)
             selected_option.classList.add("selected")
         }
-            
-        function submit(join_or_submit){
+     
+        function submit(delete_=false){
             game_id = ''
             options = document.getElementById("games").children
             for(var x of options){if (x.classList.contains('selected')){game_id = x.children[0].value}}
             if (game_id === ''){alert("select one")}
-            else { location.href=`${join_or_submit}/${game_id}`; }
+            else { 
+                if (delete_){
+                    socket.emit('delete_game',game_id)
+                    socket.emit('deletion_kick',game_id,'{{username}}')
+                    socket.emit('refresh_join_game')
+                } else { 
+                    location.href=`join_game/${game_id}`;
+                }
+            }
         }
     </script>
 </html>

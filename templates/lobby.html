@@ -12,10 +12,10 @@
         <h1 class="heading subheading">LOBBY</h1>
         <div class="flex-h center vmar">
             <h1 class="heading subheading2 pad-05em">
-                Change Your Name
+                Edit Player Name
                 <div class="flex-h-start">
                     <input type="text" id="username_change" value="{{username}}" maxlength="16">
-                    <button class="button2" onclick="username_change()">Change</button>
+                    <button class="button2" onclick="username_change()">Save</button>
                 </div>
             </h1>
         </div>
@@ -100,7 +100,7 @@
                 Edit Team Name
                 <div class="flex-h-start">
                     <input type="text" id="team_name_change" value="" maxlength="20">
-                    <button class="button2" onclick="team_name_change()">Change</button>
+                    <button class="button2" onclick="team_name_change()">Save</button>
                 </div>
             </h1>
         </div>
@@ -110,9 +110,9 @@
         </div>
     </body>
     <script>
-
+        var socket
         $(document).ready(function(){
-            var socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
+            socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
             
             socket.on('message',function(msg) {
                 console.log(msg)
@@ -132,7 +132,12 @@
                 location.href='/write_names/{{game_id}}';
             }) 
 
-            socket.emit("update_lobby_players","{{game_id}}","{{user_id}}")
+            socket.on('deletion_kick',function(msg) {
+                alert(`You we're kicked by ${msg}`)
+                location.href='/';
+            }) 
+
+            socket.emit("emit_players","{{game_id}}","{{user_id}}")
         })
 
 
@@ -248,9 +253,14 @@
         }
 
         function kick() {
-            user_id = player_selected_option
+            user_id = player_selected_option.slice(13)
+            team_id = team_selected_option.slice(11)
             if (user_id === ''){alert("select a player")}
             else {
+                if (team_id === ''){
+                    conf = confirm("are you sure you want to kick the selected player from the game?")
+                    if (conf) {socket.emit("deletion_kick","{{game_id}}","{{username}}",user_id)}
+                }
                 //remove user_instance
             }
         }
