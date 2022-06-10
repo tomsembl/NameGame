@@ -101,6 +101,12 @@ def advance_round_sql(game_id):
         query_sql(f"update games set round = {all_rounds[next_index]}")
         emit_current_round(game_id)
 
+def get_scores(game_id, is_team=False):
+    if is_team:  results = query_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and a.game_id = {game_id} group by t.team_name order by count(*) desc")
+    else: results = query_sql(f"select u.username, count(*) from answers a join user_instance u on a.user_inst_id = u.user_inst_id where success = 1 and a.game_id = {game_id} group by u.username order by count(*) desc")
+    scorers, scores = [], []
+    [(scorers.append(x),scores.append(y)) for x,y in results]
+    return scorers, scores
 
 app = Flask(__name__)
 socketio = SocketIO(app=app)
@@ -146,6 +152,7 @@ def deletion_kick(game_id,by_user,user_id=None):
     else: 
         query_sql(f"delete from user_instance where game_id = {game_id} and user_id = {user_id}")
         socketio.emit('deletion_kick',by_user, room=f"user{user_id}")
+        emit_players(game_id)
 
 @socketio.on('refresh_join_game')
 def refresh_join_game():
@@ -169,9 +176,9 @@ def emit_next_name(game_id,user_id):
         socketio.emit('emit_next_name',"no more names", room=f"user{user_id}")
 
 @socketio.on('emit_current_round')
-def emit_current_round(game_id,user_id=None):
+def emit_current_round(game_id,user_id=None,is_new_round=False):
     round = get_round(game_id)
-    socketio.emit('emit_current_round',round, room=f"user{user_id}" if user_id else f"game{game_id}")
+    socketio.emit('emit_current_round',[round,is_new_round], room=f"user{user_id}" if user_id else f"game{game_id}")
 
 @socketio.on('advance_turn')
 def advance_turn(game_id,user_id=None):
@@ -182,7 +189,7 @@ def advance_turn(game_id,user_id=None):
 @socketio.on('advance_round')
 def advance_round(game_id,user_id=None):
     advance_round_sql(game_id)
-    emit_current_round(game_id)
+    emit_current_round(game_id,is_new_round=True)
 
 @socketio.on('start_timer')
 def start_timer(game_id):
@@ -209,6 +216,11 @@ def get_mp3_number(user_id,start_or_stop):
     total, current = query_sql(query)[0]
     query_sql(f"update mp3_order set current_{start_or_stop}={(current+1)%total}")
     socketio.emit('get_mp3_number',{"mp3_number":current, "start_or_stop":start_or_stop}, room= f"user{user_id}")
+
+@socketio.on('emit_scores')
+def emit_scores(game_id,user_id,is_team=False):
+    res = get_scores(game_id, is_team)
+    socketio.emit('emit_scores',[res,is_team], room= f"user{user_id}")
 
 
 # APP ROUTES
@@ -367,13 +379,16 @@ def name_game(game_id):
     user_inst_id = get_user_inst_id(user_id,game_id)
     teams = query_sql(f"select team_id, team_name from teams where game_id = {game_id}")
     players = query_sql(f"select user_id, username from user_instance where game_id = {game_id}")
-    return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, username=username, user_inst_id=user_inst_id, teams=teams)
+    team_id = query_sql(f"select team_id from user_instance where user_inst_id = {user_inst_id}")[0][0]
+    return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, username=username, user_inst_id=user_inst_id, teams=teams, team_id=team_id)
 
 
 #graphs
 @app.route('/graphs/<game_id>', methods=["GET"])
 def graphs(game_id):
-    return render_template('graphs.html',game_id=game_id)
+    user_id = request.cookies.get('user_id')
+    round = query_sql(f"select round from answers where game_id = {game_id} order by round desc limit 1")[0][0]
+    return render_template('graphs.html',game_id=game_id,user_id=user_id,round=round)
 
 
 

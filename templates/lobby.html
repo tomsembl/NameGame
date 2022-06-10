@@ -111,6 +111,7 @@
     </body>
     <script>
         var socket
+        var teammembers
         $(document).ready(function(){
             socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
             
@@ -265,12 +266,15 @@
             }
         }
         function advance_game(){
-            if (confirm("do you want to start")){
-                fetch("/advance_game",{
-                    method:"POST", 
-                    body: JSON.stringify({"game_id":"{{game_id}}","stage":3}),
-                    headers: new Headers({"content-type": "application/json"}) 
-                })
+            if (teammembers.null){alert(`not every player is assigned to a team: ${teammembers.null}`)}
+            else{
+                if (confirm("do you want to start")){
+                    fetch("/advance_game",{
+                        method:"POST", 
+                        body: JSON.stringify({"game_id":"{{game_id}}","stage":3}),
+                        headers: new Headers({"content-type": "application/json"}) 
+                    })
+                }
             }
         }
         

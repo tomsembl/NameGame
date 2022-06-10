@@ -28,12 +28,12 @@
         <div class="flex-v">
             <h1 id="the_name" class=" heading subheading pad-10pct-v name_big">&nbsp;</h1>
             <button id="done_button" class="button1 invisible" onclick="done()" disabled>They Guessed It</button>
-            <h1 id="countdown" class="heading subheading">{{game_deets['time_limit']}}</h1>
+            <h1  class="heading subheading">Timer<br><span id="countdown">{{game_deets['time_limit']}}</span></h1>
         </div>
 
         <div id="whos_up" class="flex-v pad-10pct">
-            <h1 id="current_player" class="heading subheading2"></h1>
-            <h1 id="current_team" class="heading subheading2"></h1></h1>
+            <p id="current_player" class=""></p>
+            <p id="current_team" class=""></p>
         </div>
 
         <div class="flex-h mar-1em">
@@ -90,18 +90,28 @@
                 if (`${current_turn_user_id}` === "{{user_id}}"){
                     if (!my_turn){
                         your_turn()
+                        document.getElementById("the_name").innerHTML = "Your Turn"
                     }
                 }
+                else if (`${current_team_id}` === "{{team_id}}"){
+                    document.getElementById("body").classList.add("myteam-background")
+                    document.getElementById("the_name").innerHTML = players[current_turn_user_id] + "'s Turn<br>You're Guessing"
+                } else {
+                    document.getElementById("body").classList.remove("myteam-background")
+                    document.getElementById("the_name").innerHTML = players[current_turn_user_id] + "'s Turn"
+                }
+
             }) 
 
             socket.on('emit_teams',function(msg) { teams = msg }) 
 
             socket.on('emit_players',function(msg) { players = msg[0] }) 
 
-            socket.on('emit_current_round',function(msg) { 
-                current_round = msg
+            socket.on('emit_current_round',function(msg) {
+                current_round = msg[0] ; is_new_round = msg[1]
                 round_texts = {1:'Round 1: Unlimited',2:'Round 2: 3 Words Max',3:'Round 3: 1 Word Only',4:'Round 4: Mime'}
-                document.getElementById("round").innerHTML = round_texts[msg]
+                document.getElementById("round").innerHTML = round_texts[current_round]
+                if (is_new_round){location.href="/graphs/{{game_id}}"}
                 
             }) 
 
