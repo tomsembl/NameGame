@@ -4,7 +4,7 @@ import psycopg2, random, string, os
 
 
 #connect DB
-try: conn = psycopg2.connect("dbname='namegame' user='postgres' host='localhost' password='masterpass2'")
+try: conn = psycopg2.connect("dbname='namegame' user='postgres' host='localhost' password='sqlpass123'")
 except: print("I am unable to connect to the database")
 conn.autocommit = True
 
@@ -12,6 +12,7 @@ conn.autocommit = True
 # DATABASE FUNCTIONS
 
 def query_sql(query,get_header=False):
+    # TODO: fix SQL injection literally everywhere
     cur = conn.cursor()
     cur.execute(query)
     output = ""
@@ -50,7 +51,11 @@ def db_user_instance(user_id,username,game_id):
     print("user_inst", result)
     return result
 
-def get_user_inst_id(user_id,game_id): return query_sql(f"select user_inst_id from user_instance where game_id = {game_id} and user_id={user_id}")[0][0]
+def get_user_inst_id(user_id,game_id): 
+    user_insts = query_sql(f"select user_inst_id from user_instance where game_id={game_id} and user_id={user_id}")
+    if not user_insts:
+        raise Exception(f"Could not find user_inst for game_id={game_id} and user_id={user_id}")
+    return user_insts[0][0]
 
 def get_game_deets(game_id): return header_zip_query(f"select * from games where game_id = {game_id}")
 
@@ -87,6 +92,7 @@ def get_turn_order(game_id, get_index=False):
     return team, player
 
 def advance_turn_order(game_id):
+    # TODO: if a player disconnects during their turn, they get another turn. This logic should happen serverside instead
     team, number_teams, current_team, number_players, current_player = get_turn_order(game_id,get_index=True)
     query_sql(f"update players_turn_order set current_player = {(current_player+1)%number_players} where team_id={team};update teams_turn_order set current_team = {(current_team+1)%number_teams} where game_id={game_id}")
 
@@ -96,7 +102,7 @@ def advance_round_sql(game_id):
     all_rounds = [x  for x in range(1,5) if bool(game_deets[f'round{x}'])]
     next_index = all_rounds.index(round)+1
     if next_index >= len(all_rounds):
-        pass #conclude game
+        query_sql(f"update games set stage=4 where game_id={game_id}")
     else:
         query_sql(f"update games set round = {all_rounds[next_index]}")
         emit_current_round(game_id)
@@ -158,6 +164,11 @@ def deletion_kick(game_id,by_user,user_id=None):
 def refresh_join_game():
     socketio.emit('refresh_join_game','', room="gamejoin")
 
+@socketio.on('who_hasnt_written_name')
+def who_hasnt_written_name(game_id,user_id=None):
+    who_hasnt = header_zip_query(f"select user_id, username from user_instance where game_id = {game_id} and user_inst_id not in ( select user_inst_id from names where game_id = {game_id} )", multi = True)
+    socketio.emit('who_hasnt_written_name', who_hasnt, room=f"user{user_id}" if user_id else f"game{game_id}")
+
 @socketio.on('emit_current_turn')
 def emit_current_turn(game_id,user_id=None):
     current_team_id, current_turn_user_id  = get_turn_order(game_id)
@@ -173,6 +184,7 @@ def emit_next_name(game_id,user_id):
         socketio.emit('emit_next_name',names[i], room=f"user{user_id}")
     else:
         advance_round(game_id)
+        advance_turn(game_id)
         socketio.emit('emit_next_name',"no more names", room=f"user{user_id}")
 
 @socketio.on('emit_current_round')
@@ -184,7 +196,7 @@ def emit_current_round(game_id,user_id=None,is_new_round=False):
 def advance_turn(game_id,user_id=None):
     advance_turn_order(game_id)
     emit_current_turn(game_id)
-    emit_current_round(game_id)
+    #emit_current_round(game_id)
 
 @socketio.on('advance_round')
 def advance_round(game_id,user_id=None):
@@ -259,11 +271,12 @@ def add_game():
         team_name = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(5))
         query2 = f"insert into teams (game_id,team_name) values ({game_id},'{team_name}')"
         query_sql(query2)
+    refresh_join_game()
     return redirect(url_for('join_game'))
 
 
 @app.route('/advance_game', methods=['POST'])
-def advance_game():  
+def advance_game():
     data = request.get_json()
     game_id, stage = data["game_id"], data["stage"]
     query_sql(f"update games set stage={stage} where game_id={game_id}")
@@ -279,28 +292,29 @@ def advance_game():
 
 @app.route('/join_game', defaults={'game_id': None})
 @app.route('/join_game/<game_id>', methods=["GET"])
-def join_game(game_id):
+def join_game(game_id):    
+    user_id = request.cookies.get('user_id')
     if not game_id:
-        user_id = request.cookies.get('user_id')
         user_id, username = db_cookie(user_id)[0]
         games_sql = query_sql("select game_id, game_name from games where active=TRUE order by game_id desc")
         return render_template('join-game.html',games=games_sql,username=username)
     game_deets = get_game_deets(game_id)
     if game_deets["stage"] == 1:
-         return redirect(url_for(f'lobby',game_id=game_id))
-    if game_deets["stage"] == 2:
-        return redirect(url_for(f'write_names',game_id=game_id))
-    if game_deets["stage"] == 3:
-        return redirect(url_for(f'name_game',game_id=game_id))
-    if game_deets["stage"] == 4:
-        return redirect(url_for(f'scoreboard',game_id=game_id))
-    if game_deets["stage"] == 5:
-        return redirect(url_for(f'final_scoreboard',game_id=game_id))
+        return redirect(url_for('lobby',game_id=game_id))
+    elif query_sql(f"select user_inst_id from user_instance where game_id = {game_id} and user_id={user_id}"):
+        if game_deets["stage"] == 2:
+            return redirect(url_for('write_names',game_id=game_id))
+        if game_deets["stage"] == 3:
+            return redirect(url_for('name_game',game_id=game_id))
+        if game_deets["stage"] == 4:
+            return redirect(url_for('graphs',game_id=game_id))
+    else: return redirect(url_for('join_game'))
 
 
 #lobby
 @app.route('/lobby/<game_id>', methods=["GET"])
 def lobby(game_id):
+    # TODO: if game has started, redirect to the started game
     game_deets = get_game_deets(game_id)
     user_id = request.cookies.get('user_id')
     username = request.cookies.get('username')
@@ -365,6 +379,7 @@ def submit_names():
         query = "insert into names (user_inst_id,game_id,name) values"
         query += ",".join([f"({user_inst_id},{game_id},'{name}')" for name in names])
         query_sql(query)
+        who_hasnt_written_name(game_id)
         return make_response(jsonify(""),200)
     else:
         return make_response(jsonify("You've already submitted names"),200)
@@ -373,6 +388,7 @@ def submit_names():
 #name game
 @app.route('/name_game/<game_id>', methods=["GET"])
 def name_game(game_id):
+    # TODO: handle when game has started without user
     game_deets = get_game_deets(game_id)
     user_id = request.cookies.get('user_id')
     username = request.cookies.get('username')
@@ -380,6 +396,7 @@ def name_game(game_id):
     teams = query_sql(f"select team_id, team_name from teams where game_id = {game_id}")
     players = query_sql(f"select user_id, username from user_instance where game_id = {game_id}")
     team_id = query_sql(f"select team_id from user_instance where user_inst_id = {user_inst_id}")[0][0]
+    if game_deets['stage'] >= 4: return redirect(url_for(f"graphs", game_id=game_id))
     return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, username=username, user_inst_id=user_inst_id, teams=teams, team_id=team_id)
 
 
@@ -387,11 +404,18 @@ def name_game(game_id):
 @app.route('/graphs/<game_id>', methods=["GET"])
 def graphs(game_id):
     user_id = request.cookies.get('user_id')
+    game_deets = get_game_deets(game_id)
     round = query_sql(f"select round from answers where game_id = {game_id} order by round desc limit 1")[0][0]
-    return render_template('graphs.html',game_id=game_id,user_id=user_id,round=round)
+    return render_template('graphs.html',game_id=game_id,user_id=user_id,round=round,game_deets=game_deets)
 
 
 
 # START APP
 if __name__ == '__main__':
-    socketio.run(app,host="192.168.137.1", port=8, log_output=True) # 192.168.0.106  host="0.0.0.0", port=8,debug=True
+    socketio.run(
+        app,
+        host="192.168.137.1",
+        port=8, 
+        log_output=True,
+        debug=True
+    ) # 192.168.0.106, port=8,

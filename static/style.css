@@ -68,8 +68,7 @@ video {
 .button1{
     font-family: "poppins"; 
     align-self: center;
-    width: 30vw;
-    min-width: 20vmax; 
+    width: 40vw; 
     height: 10vw;
     min-height: 6.7vmax; 
     background-color:rgba(0, 0, 0, 0.55); 
@@ -119,8 +118,7 @@ input[type="text"]{
     padding: 0.3em 0.6em 0.3em 0.6em;
 }
 input[type="range"]{
-    accent-color: rgb(108, 234, 183);
-    border: 10px solid black;
+    accent-color: #27877d;
 }
 output{
     margin-left: 1em;
@@ -176,6 +174,8 @@ table, th, td, tr {
 }
 .border{ border:  solid rgba(0, 0, 0, 0.20) 1px}
 .vmar{margin:0.8em 0em 0.8em 0em}
+.vmar{margin:0.8em 0em 0.8em 0em}
+.vmar2{margin:2em 0em 2em 0em}
 .pad-lr{padding:0em 0.4em 0em 0.4em}
 .slight-v-gradient{
     background-image: linear-gradient(rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.06));
@@ -184,8 +184,8 @@ table, th, td, tr {
 .invisible{visibility:hidden}
 .name_big{font-size:8vw}
 .myturn-background{background-color:rgb(251, 62, 62)}
-.myteam-background{background-color:rgb(255, 200, 0)}
-
+.myteam-background{background-color:rgb(251, 210, 62)}
+.white{color:rgb(255, 255, 255)}
 
 
 
@@ -198,7 +198,7 @@ table, th, td, tr {
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; -webkit-transition: .4s; transition: .4s; border-radius: 2px; }
 .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s; border-radius: 2px;}
-input:checked + .slider { background-color: rgb(108, 234, 183); }
+input:checked + .slider { background-color: #27877d; }
 input:focus + .slider { box-shadow: 0 0 1px linear-gradient(to bottom right, #e0e0e0, #F7F7F7); }
 input:checked + .slider:before { -webkit-transform: translateX(19px); -ms-transform: translateX(19px); transform: translateX(19px); }
 

@@ -13,16 +13,20 @@
 
 <body>
   <h1 class="heading subheading">Scores - Round {{round}}</h1>
-  <div class="flex-v center vmar">
+  <div class="flex-v center vmar2">
     <h1 class="heading subheading2 pad-05em">Teams</h1>
     <canvas id="team_chart" ></canvas>
   </div>
-  <div class="flex-v center vmar">
+  <div class="flex-v center vmar2">
   <h1 class="heading subheading2 pad-05em">Players</h1>
   <canvas id="player_chart" ></canvas>
   </div>
-  <div class="flex-h vmar">
-    <button class="button1" onclick="done()">Return</button>
+  <div class="flex-h vmar2">
+    {% if game_deets['stage'] < 4 %}
+    <button class="button1" onclick="done()">Return to Game</button>
+    {% else %}
+    <h1 class="heading subheading2">GAME OVER</h1>
+    {% endif %}
   </div>  
   <div class="flex-h mar-1em">
     <button class="button2" onclick="location.href='/';">Home</button>

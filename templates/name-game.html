@@ -14,13 +14,13 @@
         <div class="flex-v">
             <h1 id="round" class="heading subheading">
                 {% if game_deets['round'] == 1 %}
-                    Round 1: Unlimited
+                    Round 1: &nbsp;Unlimited
                 {% elif game_deets['round'] == 2 %}
-                    Round 2: 3 Words Max
+                    Round 2: &nbsp3 Words Max
                 {% elif game_deets['round'] == 3 %}
-                    Round 3: 1 Word Only
+                    Round 3: &nbsp1 Word Only
                 {% elif game_deets['round'] == 4 %}
-                    Round 4: Mime
+                    Round 4: &nbspMime
                 {% endif %}
             </h1>
         </div>
@@ -31,9 +31,10 @@
             <h1  class="heading subheading">Timer<br><span id="countdown">{{game_deets['time_limit']}}</span></h1>
         </div>
 
+        <!-- TODO: show turn order of players -->
         <div id="whos_up" class="flex-v pad-10pct">
-            <p id="current_player" class=""></p>
-            <p id="current_team" class=""></p>
+            <p class="white" id="current_player" class=""></p>
+            <p class="white" id="current_team" class=""></p>
         </div>
 
         <div class="flex-h mar-1em">
@@ -70,7 +71,7 @@
 
             socket.on('emit_next_name',function(name_data) {
                 if (name_data == "no more names"){
-                    concede(false)
+                    concede(names_ran_out=true)
                 }
                 document.getElementById("the_name").innerHTML = name_data['name']
                 current_name = name_data
@@ -109,7 +110,7 @@
 
             socket.on('emit_current_round',function(msg) {
                 current_round = msg[0] ; is_new_round = msg[1]
-                round_texts = {1:'Round 1: Unlimited',2:'Round 2: 3 Words Max',3:'Round 3: 1 Word Only',4:'Round 4: Mime'}
+                round_texts = {1:'Round 1: &nbspUnlimited',2:'Round 2: &nbsp3 Words Max',3:'Round 3: &nbsp1 Word Only',4:'Round 4: &nbspMime'}
                 document.getElementById("round").innerHTML = round_texts[current_round]
                 if (is_new_round){location.href="/graphs/{{game_id}}"}
                 
@@ -123,6 +124,7 @@
                         count--;
                         if (count <= -1){
                             document.getElementById('countdown').innerHTML='0';
+                            socket.emit("emit_current_turn","{{game_id}}","{{user_id}}")
                             clearInterval(interval);
                         }
                     }, 1000)
@@ -130,7 +132,6 @@
             })
 
             socket.on('stop_timer',function(msg) { 
-                console.log('stop_timer')
                 document.getElementById('countdown').innerHTML='0';
                 clearInterval(interval) 
             }) 
@@ -178,6 +179,8 @@
                 document.getElementById("done_button").classList.remove("invisible")
                 var count = parseInt("{{game_deets['time_limit']}}")
                 socket.emit("start_timer","{{game_id}}")
+                document.getElementById('countdown').innerHTML=count;
+                count--
                 interval = setInterval(function(){
                     document.getElementById('countdown').innerHTML=count;
                     count--;
@@ -195,13 +198,18 @@
             score_answer(current_name['name_id'], is_success=1)
             previous_name = current_name
             socket.emit("emit_next_name","{{game_id}}","{{user_id}}")
+            document.getElementById("done_button").setAttribute("disabled","")
+            setTimeout(()=>{document.getElementById("done_button").removeAttribute("disabled")}, 400)
+
         }
 
-        function end_turn(to_score=true) {
+        function end_turn(names_ran_out=false) {
             my_turn = false
             audio2.play()
-            if (to_score){score_answer(current_name['name_id'], is_success=0)}
-            socket.emit('advance_turn',"{{game_id}}","{{user_id}}")
+            if (!names_ran_out){
+                score_answer(current_name['name_id'], is_success=0)
+                socket.emit('advance_turn',"{{game_id}}","{{user_id}}") //if names run out and round ends, then advance_turn is handled in app.py > emit_next_name() - 
+            }
             document.getElementById("the_name").innerHTML = "&nbsp;"
             document.getElementById("start_button").setAttribute("disabled",'')
             document.getElementById("concede_button").setAttribute("disabled","")
@@ -210,12 +218,12 @@
             document.getElementById("done_button").classList.add("invisible")
             
         }
-        function concede(to_score=true) {
+        function concede(names_ran_out=false) {
             socket.emit('stop_timer',"{{game_id}}")
             document.getElementById('countdown').innerHTML='0';
-            end_turn(to_score)
+            end_turn(names_ran_out)
             clearInterval(interval)
-            if (to_score){console.log("conceded")}
+            if (!names_ran_out){console.log("conceded")}
         }
 
     </script>

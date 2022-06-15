@@ -1,0 +1,1247 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2022-06-11 22:25:24
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Databases
+--
+
+--
+-- Database "template1" dump
+--
+
+\connect template1
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.3
+-- Dumped by pg_dump version 14.3
+
+-- Started on 2022-06-11 22:25:24
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- Completed on 2022-06-11 22:25:25
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "namegame" dump
+--
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.3
+-- Dumped by pg_dump version 14.3
+
+-- Started on 2022-06-11 22:25:25
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3372 (class 1262 OID 16394)
+-- Name: namegame; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE namegame WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'English_United States.1252';
+
+
+ALTER DATABASE namegame OWNER TO postgres;
+
+\connect namegame
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3366 (class 0 OID 16679)
+-- Dependencies: 223
+-- Data for Name: answers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (65, 8, 157, 125, 136, 'Hugo Innes', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (66, 8, 157, 125, 131, 'Sarah knight', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (67, 8, 157, 125, 128, 'Jake Gyllenhaal', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (68, 8, 157, 125, 126, 'Dumbledore', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (69, 8, 157, 125, 133, 'Tom McElhinney', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (70, 8, 158, 124, 132, 'Dwayne the rock johnson', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (71, 8, 158, 124, 135, 'Paul Francis', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (72, 8, 158, 124, 125, 'Jk rowling', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (73, 8, 158, 124, 133, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (74, 8, 158, 124, 134, 'Harry Manson', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (75, 8, 159, 126, 129, 'Frosty the snowman', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (76, 8, 159, 126, 137, 'Anna Chandler', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (77, 8, 159, 126, 130, 'Peter knight', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (78, 8, 157, 125, 127, 'Amber heard', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (79, 8, 157, 125, 134, 'Harry Manson', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (80, 8, 157, 125, 130, 'Peter knight', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (81, 8, 158, 124, 129, 'Frosty the snowman', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (82, 8, 158, 124, 131, 'Sarah knight', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (83, 8, 158, 124, 130, 'Peter knight', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (84, 8, 158, 124, 136, 'Hugo Innes', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (85, 8, 158, 124, 125, 'Jk rowling', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (86, 8, 159, 126, 127, 'Amber heard', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (87, 8, 159, 126, 137, 'Anna Chandler', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (88, 8, 159, 126, 132, 'Dwayne the rock johnson', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (89, 8, 159, 126, 133, 'Tom McElhinney', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (90, 8, 157, 125, 125, 'Jk rowling', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (91, 8, 157, 125, 126, 'Dumbledore', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (92, 8, 157, 125, 128, 'Jake Gyllenhaal', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (93, 8, 157, 125, 134, 'Harry Manson', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (94, 8, 157, 125, 135, 'Paul Francis', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (95, 8, 157, 125, 133, 'Tom McElhinney', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (96, 8, 158, 124, 127, 'Amber heard', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (97, 8, 158, 124, 133, 'Tom McElhinney', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (98, 8, 158, 124, 125, 'Jk rowling', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (99, 8, 158, 124, 137, 'Anna Chandler', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (100, 8, 158, 124, 128, 'Jake Gyllenhaal', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (101, 8, 158, 124, 132, 'Dwayne the rock johnson', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (102, 8, 158, 124, 135, 'Paul Francis', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (103, 8, 158, 124, 136, 'Hugo Innes', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (104, 8, 158, 124, 126, 'Dumbledore', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (105, 8, 159, 126, 130, 'Peter knight', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (106, 8, 159, 126, 131, 'Sarah knight', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (107, 8, 159, 126, 134, 'Harry Manson', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (108, 8, 159, 126, 126, 'Dumbledore', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (109, 8, 159, 126, 129, 'Frosty the snowman', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (110, 8, 157, 125, 137, 'Anna Chandler', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (111, 8, 157, 125, 125, 'Jk rowling', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (112, 8, 157, 125, 128, 'Jake Gyllenhaal', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (113, 8, 157, 125, 130, 'Peter knight', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (114, 8, 157, 125, 129, 'Frosty the snowman', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (115, 8, 157, 125, 133, 'Tom McElhinney', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (116, 8, 157, 125, 126, 'Dumbledore', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (117, 8, 157, 125, 136, 'Hugo Innes', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (118, 8, 157, 125, 131, 'Sarah knight', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (119, 8, 157, 125, 134, 'Harry Manson', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (120, 8, 157, 125, 135, 'Paul Francis', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (121, 8, 157, 125, 132, 'Dwayne the rock johnson', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (122, 8, 157, 125, 127, 'Amber heard', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (123, 11, 165, 130, 140, 'windi', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (124, 11, 165, 130, 138, 'viper', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (125, 11, 166, 131, 142, 'The whomping willow', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (126, 11, 166, 131, 143, 'Pudge', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (127, 11, 166, 131, 139, 'james', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (128, 11, 166, 131, 141, 'Smeagol / Gollum', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (129, 11, 166, 131, 138, 'viper', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (130, 11, 165, 130, 138, 'viper', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (131, 11, 166, 131, 142, 'The whomping willow', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (132, 11, 166, 131, 143, 'Pudge', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (133, 11, 166, 131, 138, 'viper', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (134, 11, 166, 131, 139, 'james', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (135, 11, 166, 131, 141, 'Smeagol / Gollum', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (136, 11, 166, 131, 140, 'windi', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (137, 11, 165, 130, 139, 'james', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (138, 11, 165, 130, 138, 'viper', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (139, 11, 165, 130, 141, 'Smeagol / Gollum', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (140, 11, 165, 130, 142, 'The whomping willow', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (141, 11, 165, 130, 143, 'Pudge', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (142, 11, 165, 130, 140, 'windi', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (143, 11, 166, 131, 141, 'Smeagol / Gollum', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (144, 11, 166, 131, 143, 'Pudge', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (145, 11, 166, 131, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (146, 11, 165, 130, 142, 'The whomping willow', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (147, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (148, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (149, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (150, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (151, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (152, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (153, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (154, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (155, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (156, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (157, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (158, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (159, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (160, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (161, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (162, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (163, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (164, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (165, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (166, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (167, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (168, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (169, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (170, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (171, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (172, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (173, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (174, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (175, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (176, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (177, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (178, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (179, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (180, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (181, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (182, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (183, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (184, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (185, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (186, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (187, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (188, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (189, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (190, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (191, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (192, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (193, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (194, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (195, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (196, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (197, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (198, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (199, 11, 165, 130, 139, 'james', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (200, 11, 165, 130, 138, 'viper', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (201, 11, 165, 130, 142, 'The whomping willow', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (202, 11, 165, 130, 139, 'james', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (203, 11, 165, 130, 140, 'windi', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (204, 13, 170, 133, 147, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (205, 13, 170, 133, 145, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (206, 13, 170, 133, 149, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (207, 13, 170, 133, 148, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (208, 13, 170, 133, 144, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (209, 13, 170, 133, 151, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (210, 13, 170, 133, 152, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (211, 13, 170, 133, 150, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (212, 13, 170, 133, 146, 'Tom McElhinney', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (213, 13, 170, 133, 151, 'Tom McElhinney', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (214, 13, 170, 133, 146, 'Tom McElhinney', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (215, 13, 170, 133, 147, 'Tom McElhinney', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (216, 25, 202, 147, 168, 'bongo', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (217, 25, 202, 147, 163, 'lol', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (218, 25, 202, 145, 166, 'daniel nguyen', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (219, 25, 202, 145, 164, 'tom', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (220, 25, 202, 146, 165, 'jorge', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (221, 25, 202, 146, 167, 'asdf', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (222, 25, 202, 146, 163, 'lol', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (223, 25, 202, 147, 163, 'lol', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (224, 25, 202, 145, 162, 'fuck', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (225, 25, 202, 145, 164, 'tom', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (226, 25, 202, 145, 163, 'lol', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (227, 25, 202, 146, 163, 'lol', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (228, 25, 202, 147, 164, 'tom', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (229, 25, 202, 147, 163, 'lol', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (230, 25, 202, 147, 166, 'daniel nguyen', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (231, 25, 202, 147, 168, 'bongo', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (232, 25, 202, 145, 165, 'jorge', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (233, 25, 202, 145, 167, 'asdf', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (234, 25, 202, 146, 167, 'asdf', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (235, 25, 202, 146, 168, 'bongo', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (236, 25, 202, 147, 162, 'fuck', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (237, 25, 202, 147, 168, 'bongo', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (238, 25, 202, 147, 166, 'daniel nguyen', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (239, 25, 202, 147, 167, 'asdf', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (240, 25, 202, 147, 165, 'jorge', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (241, 25, 202, 147, 164, 'tom', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (242, 25, 202, 145, 168, 'bongo', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (243, 25, 202, 145, 163, 'lol', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (244, 25, 202, 145, 162, 'fuck', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (245, 25, 202, 145, 164, 'tom', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (246, 25, 202, 146, 164, 'tom', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (247, 25, 202, 146, 166, 'daniel nguyen', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (248, 25, 202, 146, 162, 'fuck', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (249, 25, 202, 146, 167, 'asdf', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (250, 25, 202, 146, 168, 'bongo', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (251, 25, 202, 146, 163, 'lol', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (252, 25, 202, 147, 164, 'tom', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (253, 25, 202, 147, 165, 'jorge', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (254, 25, 202, 145, 165, 'jorge', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (255, 25, 202, 145, 163, 'lol', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (256, 27, 205, 154, 171, 'fffffff', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (257, 27, 205, 154, 170, 'dddddddd', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (258, 27, 206, 155, 172, 'cccccccc', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (259, 27, 205, 153, 172, 'cccccccc', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (260, 27, 205, 153, 170, 'dddddddd', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (261, 27, 205, 153, 169, 'aaaaaa', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (262, 29, 209, 162, 179, 'Scomo', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (263, 29, 209, 162, 208, 'Britney Spears ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (264, 29, 209, 162, 177, 'Donald Trump', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (265, 29, 209, 162, 183, 'Picasso', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (266, 29, 209, 162, 212, 'Kylie Jenner ', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (267, 29, 210, 164, 185, 'Pepe the frog', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (268, 29, 210, 164, 192, 'Anthea', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (269, 29, 209, 166, 188, 'Arnold Schwarzenegger', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (270, 29, 209, 166, 184, 'Tony Abbott', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (271, 29, 209, 166, 213, 'The Pope ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (272, 29, 209, 166, 175, 'Amber Heard', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (273, 29, 209, 166, 178, 'Justin Beiber', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (274, 29, 209, 166, 198, 'Hillary clinton', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (275, 29, 210, 167, 204, 'Tom cruise', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (276, 29, 210, 167, 187, 'Bolsonaro', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (277, 29, 210, 167, 211, 'Boris Johnson ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (278, 29, 210, 167, 210, 'Donald Trump ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (279, 29, 210, 167, 181, 'Albanese', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (280, 29, 209, 165, 194, 'Donald trump', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (281, 29, 209, 165, 202, 'Fred Flintstone ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (282, 29, 209, 165, 207, 'Mark twain', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (283, 29, 210, 164, 203, 'Sponge bob', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (284, 29, 210, 164, 190, 'Hugo Innes', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (285, 29, 210, 164, 205, 'Ànthony albonese', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (286, 29, 210, 164, 189, 'Josh Frydenberg', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (287, 29, 209, 162, 197, 'Monalisa', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (288, 29, 209, 162, 192, 'Anthea', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (289, 29, 209, 162, 176, 'Johnny Depp', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (290, 29, 209, 162, 180, 'Peter Dutton', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (291, 29, 210, 167, 195, 'Iron man', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (292, 29, 210, 167, 189, 'Josh Frydenberg', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (293, 29, 210, 167, 200, 'Tom cruise', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (294, 29, 210, 167, 199, 'Gladys', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (295, 29, 209, 166, 201, 'Eva', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (296, 29, 209, 166, 174, 'Tom cruise', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (297, 29, 209, 166, 196, 'Madonna', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (298, 29, 209, 166, 186, 'Donald Trump', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (299, 29, 209, 166, 209, 'Justin Beiber ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (300, 29, 209, 166, 193, 'Barack Obama', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (301, 29, 210, 164, 180, 'Peter Dutton', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (302, 29, 210, 164, 181, 'Albanese', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (303, 29, 210, 164, 198, 'Hillary clinton', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (304, 29, 210, 164, 207, 'Mark twain', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (305, 29, 210, 164, 193, 'Barack Obama', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (306, 29, 209, 165, 191, 'Harry Manson', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (307, 29, 209, 165, 199, 'Gladys', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (308, 29, 209, 165, 206, 'Michael jordan', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (309, 29, 209, 165, 193, 'Barack Obama', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (310, 29, 209, 165, 212, 'Kylie Jenner ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (311, 29, 209, 165, 182, 'Queen Elizabeth', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (312, 29, 210, 167, 192, 'Anthea', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (313, 29, 210, 167, 187, 'Bolsonaro', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (314, 29, 210, 167, 210, 'Donald Trump ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (315, 29, 210, 167, 175, 'Amber Heard', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (316, 29, 210, 167, 184, 'Tony Abbott', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (317, 29, 209, 162, 179, 'Scomo', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (318, 29, 209, 162, 177, 'Donald Trump', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (319, 29, 209, 162, 205, 'Ànthony albonese', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (320, 29, 209, 162, 204, 'Tom cruise', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (321, 29, 209, 162, 201, 'Eva', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (322, 29, 210, 164, 182, 'Queen Elizabeth', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (323, 29, 210, 164, 212, 'Kylie Jenner ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (324, 29, 210, 164, 198, 'Hillary clinton', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (325, 29, 210, 164, 195, 'Iron man', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (326, 29, 210, 164, 208, 'Britney Spears ', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (327, 29, 209, 166, 208, 'Britney Spears ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (328, 29, 209, 166, 209, 'Justin Beiber ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (329, 29, 209, 166, 176, 'Johnny Depp', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (330, 29, 209, 166, 206, 'Michael jordan', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (331, 29, 209, 166, 211, 'Boris Johnson ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (332, 29, 209, 166, 201, 'Eva', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (333, 29, 209, 166, 199, 'Gladys', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (334, 29, 209, 166, 185, 'Pepe the frog', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (335, 29, 210, 167, 189, 'Josh Frydenberg', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (336, 29, 210, 167, 180, 'Peter Dutton', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (337, 29, 210, 167, 197, 'Monalisa', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (338, 29, 210, 167, 174, 'Tom cruise', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (339, 29, 210, 167, 200, 'Tom cruise', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (340, 29, 210, 167, 181, 'Albanese', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (341, 29, 210, 167, 186, 'Donald Trump', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (342, 29, 210, 167, 185, 'Pepe the frog', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (343, 29, 210, 167, 184, 'Tony Abbott', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (344, 29, 210, 167, 196, 'Madonna', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (345, 29, 210, 167, 207, 'Mark twain', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (346, 29, 210, 167, 203, 'Sponge bob', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (347, 29, 210, 167, 194, 'Donald trump', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (348, 29, 210, 167, 183, 'Picasso', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (349, 29, 209, 165, 213, 'The Pope ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (350, 29, 209, 165, 191, 'Harry Manson', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (351, 29, 209, 165, 188, 'Arnold Schwarzenegger', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (352, 29, 209, 165, 202, 'Fred Flintstone ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (353, 29, 209, 165, 178, 'Justin Beiber', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (354, 29, 209, 165, 193, 'Barack Obama', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (355, 29, 209, 165, 183, 'Picasso', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (356, 29, 210, 164, 190, 'Hugo Innes', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (357, 29, 210, 164, 183, 'Picasso', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (358, 30, 211, 170, 253, 'Queen victoria', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (359, 30, 211, 170, 262, 'Ringo Starr', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (360, 30, 212, 168, 254, 'Adolf Hitler', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (361, 30, 212, 168, 229, 'Mickey mouse', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (362, 30, 212, 168, 219, 'Seth McFarlane', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (363, 30, 211, 169, 264, 'Elon Musk', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (364, 30, 211, 169, 240, 'Mick jagger', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (365, 30, 212, 172, 262, 'Ringo Starr', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (366, 30, 212, 172, 265, 'Ivanka Trump', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (367, 30, 212, 172, 255, 'Smeagol / Gollum', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (368, 30, 212, 172, 214, 'Harry Potter', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (369, 30, 212, 172, 235, 'Auntie pauline', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (370, 30, 212, 172, 237, 'Princess margaret', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (371, 30, 212, 172, 217, 'Mel Gibson', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (372, 30, 211, 171, 246, 'Adele', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (373, 30, 211, 171, 227, 'Ted', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (374, 30, 211, 171, 268, 'Steve Jobs', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (375, 30, 211, 171, 251, 'Ramses II', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (376, 30, 211, 171, 258, 'Vladimir Putin', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (377, 30, 211, 171, 242, 'Kim kardashian', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (378, 30, 211, 171, 242, 'Kim kardashian', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (379, 30, 212, 173, 233, 'Putin', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (380, 30, 212, 173, 223, 'Santa Clause', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (381, 30, 212, 173, 260, 'Helena Bonham Carter', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (382, 30, 212, 173, 241, 'Kate bush', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (383, 30, 212, 173, 263, 'Alan Rickman', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (384, 30, 212, 173, 256, 'Jaimie Lannister', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (385, 30, 211, 170, 247, 'Gandalf', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (386, 30, 211, 170, 267, 'George Bush', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (387, 30, 211, 170, 225, 'Rob', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (388, 30, 211, 170, 219, 'Seth McFarlane', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (389, 30, 211, 170, 270, 'Julia Gillard', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (390, 30, 211, 170, 248, 'Dyanerys', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (391, 30, 212, 168, 221, 'Shrek', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (392, 30, 212, 168, 218, 'Justin Timberlake', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (393, 30, 212, 168, 266, 'Kate Bush', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (394, 30, 212, 168, 271, 'Bill Gates', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (395, 30, 212, 168, 249, 'Lady Di', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (396, 30, 212, 168, 250, 'Einsten', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (397, 30, 212, 168, 224, 'Jacinta Ardern', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (398, 30, 211, 169, 217, 'Mel Gibson', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (399, 30, 211, 169, 240, 'Mick jagger', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (400, 30, 211, 169, 272, 'Mark McGowan', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (401, 30, 211, 169, 231, 'George bush', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (402, 30, 211, 169, 234, 'Mark mcgowan', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (403, 30, 211, 169, 230, 'Osama bin Laden ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (404, 30, 211, 169, 261, 'Dwayne "the rock" johnson', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (405, 30, 211, 169, 238, 'Prince andrew', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (406, 30, 212, 172, 245, 'Cheer', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (407, 30, 212, 172, 220, 'Homer Simpson', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (408, 30, 212, 172, 239, 'King george IV', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (409, 30, 212, 172, 248, 'Dyanerys', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (410, 30, 211, 171, 248, 'Dyanerys', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (411, 30, 211, 171, 273, 'Sting (singer)', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (412, 30, 211, 171, 222, 'Prince Andrew', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (413, 30, 211, 171, 238, 'Prince andrew', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (414, 30, 211, 171, 215, 'Julia Gillard ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (415, 30, 211, 171, 259, 'Zelensky', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (416, 30, 212, 173, 224, 'Jacinta Ardern', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (417, 30, 211, 170, 257, 'Margaret Thatcher', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (418, 30, 211, 170, 243, 'Bob dylan', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (419, 30, 211, 170, 228, 'Popeye', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (420, 30, 211, 170, 224, 'Jacinta Ardern', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (421, 30, 211, 170, 269, 'Miley Cyrus', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (422, 30, 211, 170, 244, 'Peppa pig', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (423, 30, 211, 170, 236, 'Caroline potter', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (424, 30, 212, 168, 232, 'Kylie Minogue ', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (425, 30, 212, 168, 226, 'Cleo', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (426, 30, 212, 168, 259, 'Zelensky', 0, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (427, 30, 211, 169, 236, 'Caroline potter', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (428, 30, 211, 169, 259, 'Zelensky', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (429, 30, 211, 169, 252, 'Dracula', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (430, 30, 211, 169, 216, 'Melania Trump', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (431, 30, 211, 169, 256, 'Jaimie Lannister', 1, 1, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (432, 30, 211, 169, 234, 'Mark mcgowan', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (433, 30, 211, 169, 252, 'Dracula', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (434, 30, 211, 169, 263, 'Alan Rickman', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (435, 30, 211, 169, 266, 'Kate Bush', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (436, 30, 211, 169, 262, 'Ringo Starr', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (437, 30, 211, 169, 256, 'Jaimie Lannister', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (438, 30, 212, 172, 251, 'Ramses II', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (439, 30, 212, 172, 221, 'Shrek', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (440, 30, 212, 172, 233, 'Putin', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (441, 30, 212, 172, 270, 'Julia Gillard', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (442, 30, 212, 172, 268, 'Steve Jobs', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (443, 30, 212, 172, 257, 'Margaret Thatcher', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (444, 30, 212, 172, 224, 'Jacinta Ardern', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (445, 30, 212, 172, 258, 'Vladimir Putin', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (446, 30, 212, 172, 225, 'Rob', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (447, 30, 211, 171, 254, 'Adolf Hitler', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (448, 30, 211, 171, 260, 'Helena Bonham Carter', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (449, 30, 211, 171, 232, 'Kylie Minogue ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (450, 30, 211, 171, 223, 'Santa Clause', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (451, 30, 211, 171, 246, 'Adele', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (452, 30, 211, 171, 256, 'Jaimie Lannister', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (453, 30, 211, 171, 245, 'Cheer', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (454, 30, 212, 173, 230, 'Osama bin Laden ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (455, 30, 212, 173, 243, 'Bob dylan', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (456, 30, 212, 173, 249, 'Lady Di', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (457, 30, 212, 173, 244, 'Peppa pig', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (458, 30, 212, 173, 272, 'Mark McGowan', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (459, 30, 212, 173, 241, 'Kate bush', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (460, 30, 211, 170, 215, 'Julia Gillard ', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (461, 30, 211, 170, 241, 'Kate bush', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (462, 30, 211, 170, 255, 'Smeagol / Gollum', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (463, 30, 211, 170, 236, 'Caroline potter', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (464, 30, 211, 170, 216, 'Melania Trump', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (465, 30, 212, 168, 271, 'Bill Gates', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (466, 30, 212, 168, 242, 'Kim kardashian', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (467, 30, 212, 168, 253, 'Queen victoria', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (468, 30, 212, 168, 217, 'Mel Gibson', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (469, 30, 212, 168, 265, 'Ivanka Trump', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (470, 30, 212, 168, 219, 'Seth McFarlane', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (471, 30, 212, 168, 214, 'Harry Potter', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (472, 30, 212, 168, 240, 'Mick jagger', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (473, 30, 212, 168, 259, 'Zelensky', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (474, 30, 211, 169, 248, 'Dyanerys', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (475, 30, 211, 169, 218, 'Justin Timberlake', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (476, 30, 211, 169, 229, 'Mickey mouse', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (477, 30, 211, 169, 231, 'George bush', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (478, 30, 212, 172, 239, 'King george IV', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (479, 30, 212, 172, 226, 'Cleo', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (480, 30, 212, 172, 269, 'Miley Cyrus', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (481, 30, 212, 172, 261, 'Dwayne "the rock" johnson', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (482, 30, 212, 172, 228, 'Popeye', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (483, 30, 212, 172, 231, 'George bush', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (484, 30, 212, 172, 237, 'Princess margaret', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (485, 30, 212, 172, 259, 'Zelensky', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (486, 30, 212, 172, 222, 'Prince Andrew', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (487, 30, 211, 171, 222, 'Prince Andrew', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (488, 30, 211, 171, 267, 'George Bush', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (489, 30, 211, 171, 238, 'Prince andrew', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (490, 30, 211, 171, 273, 'Sting (singer)', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (491, 30, 211, 171, 247, 'Gandalf', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (492, 30, 211, 171, 235, 'Auntie pauline', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (493, 30, 211, 171, 227, 'Ted', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (494, 30, 211, 171, 216, 'Melania Trump', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (495, 30, 211, 171, 220, 'Homer Simpson', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (496, 30, 211, 171, 245, 'Cheer', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (497, 30, 212, 173, 264, 'Elon Musk', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (498, 30, 212, 173, 245, 'Cheer', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (499, 30, 212, 173, 250, 'Einsten', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (500, 30, 212, 173, 225, 'Rob', 0, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (501, 30, 211, 170, 225, 'Rob', 1, 2, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (502, 30, 211, 170, 248, 'Dyanerys', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (503, 30, 211, 170, 223, 'Santa Clause', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (504, 30, 211, 170, 264, 'Elon Musk', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (505, 30, 211, 170, 251, 'Ramses II', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (506, 30, 211, 170, 226, 'Cleo', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (507, 30, 211, 170, 241, 'Kate bush', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (508, 30, 212, 168, 222, 'Prince Andrew', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (509, 30, 212, 168, 240, 'Mick jagger', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (510, 30, 212, 168, 241, 'Kate bush', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (511, 30, 212, 168, 263, 'Alan Rickman', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (512, 30, 212, 168, 239, 'King george IV', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (513, 30, 212, 168, 235, 'Auntie pauline', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (514, 30, 211, 169, 225, 'Rob', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (515, 30, 211, 169, 273, 'Sting (singer)', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (516, 30, 211, 169, 219, 'Seth McFarlane', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (517, 30, 211, 169, 253, 'Queen victoria', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (518, 30, 211, 169, 245, 'Cheer', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (519, 30, 211, 169, 229, 'Mickey mouse', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (520, 30, 211, 169, 228, 'Popeye', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (521, 30, 211, 169, 242, 'Kim kardashian', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (522, 30, 212, 172, 243, 'Bob dylan', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (523, 30, 212, 172, 235, 'Auntie pauline', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (524, 30, 212, 172, 217, 'Mel Gibson', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (525, 30, 212, 172, 233, 'Putin', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (526, 30, 211, 171, 216, 'Melania Trump', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (527, 30, 211, 171, 270, 'Julia Gillard', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (528, 30, 211, 171, 250, 'Einsten', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (529, 30, 211, 171, 262, 'Ringo Starr', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (530, 30, 211, 171, 255, 'Smeagol / Gollum', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (531, 30, 211, 171, 268, 'Steve Jobs', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (532, 30, 212, 173, 215, 'Julia Gillard ', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (533, 30, 212, 173, 254, 'Adolf Hitler', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (534, 30, 212, 173, 218, 'Justin Timberlake', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (535, 30, 212, 173, 230, 'Osama bin Laden ', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (536, 30, 212, 173, 271, 'Bill Gates', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (537, 30, 212, 173, 268, 'Steve Jobs', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (538, 30, 212, 173, 260, 'Helena Bonham Carter', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (539, 30, 212, 173, 257, 'Margaret Thatcher', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (540, 30, 211, 170, 249, 'Lady Di', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (541, 30, 211, 170, 259, 'Zelensky', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (542, 30, 211, 170, 257, 'Margaret Thatcher', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (543, 30, 211, 170, 244, 'Peppa pig', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (544, 30, 211, 170, 232, 'Kylie Minogue ', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (545, 30, 211, 170, 265, 'Ivanka Trump', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (546, 30, 211, 170, 258, 'Vladimir Putin', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (547, 30, 211, 170, 220, 'Homer Simpson', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (548, 30, 211, 170, 237, 'Princess margaret', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (549, 30, 211, 170, 231, 'George bush', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (550, 30, 212, 168, 238, 'Prince andrew', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (551, 30, 212, 168, 233, 'Putin', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (552, 30, 212, 168, 272, 'Mark McGowan', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (553, 30, 212, 168, 214, 'Harry Potter', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (554, 30, 212, 168, 261, 'Dwayne "the rock" johnson', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (555, 30, 212, 168, 234, 'Mark mcgowan', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (556, 30, 212, 168, 224, 'Jacinta Ardern', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (557, 30, 212, 168, 247, 'Gandalf', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (558, 30, 212, 168, 256, 'Jaimie Lannister', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (559, 30, 212, 168, 236, 'Caroline potter', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (560, 30, 212, 168, 227, 'Ted', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (561, 30, 212, 168, 266, 'Kate Bush', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (562, 30, 211, 169, 269, 'Miley Cyrus', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (563, 30, 211, 169, 221, 'Shrek', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (564, 30, 211, 169, 266, 'Kate Bush', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (565, 30, 211, 169, 246, 'Adele', 0, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (566, 30, 212, 172, 231, 'George bush', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (567, 30, 212, 172, 246, 'Adele', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (568, 30, 212, 172, 267, 'George Bush', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (569, 30, 212, 172, 252, 'Dracula', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (570, 30, 212, 172, 242, 'Kim kardashian', 1, 3, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (571, 30, 211, 171, 268, 'Steve Jobs', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (572, 30, 211, 171, 226, 'Cleo', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (573, 30, 211, 171, 265, 'Ivanka Trump', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (574, 30, 211, 171, 272, 'Mark McGowan', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (575, 30, 212, 173, 250, 'Einsten', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (576, 30, 212, 173, 233, 'Putin', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (577, 30, 212, 173, 230, 'Osama bin Laden ', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (578, 30, 211, 170, 236, 'Caroline potter', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (579, 30, 211, 170, 223, 'Santa Clause', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (580, 30, 211, 170, 243, 'Bob dylan', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (581, 30, 211, 170, 228, 'Popeye', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (582, 30, 211, 170, 242, 'Kim kardashian', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (583, 30, 211, 170, 255, 'Smeagol / Gollum', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (584, 30, 211, 170, 221, 'Shrek', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (585, 30, 212, 168, 254, 'Adolf Hitler', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (586, 30, 212, 168, 234, 'Mark mcgowan', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (587, 30, 212, 168, 260, 'Helena Bonham Carter', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (588, 30, 212, 168, 272, 'Mark McGowan', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (589, 30, 212, 168, 253, 'Queen victoria', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (590, 30, 212, 168, 231, 'George bush', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (591, 30, 212, 168, 215, 'Julia Gillard ', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (592, 30, 211, 169, 244, 'Peppa pig', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (593, 30, 211, 169, 259, 'Zelensky', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (594, 30, 211, 169, 258, 'Vladimir Putin', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (595, 30, 211, 169, 270, 'Julia Gillard', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (596, 30, 212, 172, 238, 'Prince andrew', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (597, 30, 212, 172, 230, 'Osama bin Laden ', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (598, 30, 212, 172, 264, 'Elon Musk', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (599, 30, 212, 172, 221, 'Shrek', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (600, 30, 211, 171, 251, 'Ramses II', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (601, 30, 211, 171, 241, 'Kate bush', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (602, 30, 211, 171, 218, 'Justin Timberlake', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (603, 30, 211, 171, 239, 'King george IV', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (604, 30, 211, 171, 246, 'Adele', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (605, 30, 211, 171, 219, 'Seth McFarlane', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (606, 30, 212, 173, 222, 'Prince Andrew', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (607, 30, 212, 173, 263, 'Alan Rickman', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (608, 30, 212, 173, 225, 'Rob', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (609, 30, 212, 173, 227, 'Ted', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (610, 30, 212, 173, 271, 'Bill Gates', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (611, 30, 212, 173, 216, 'Melania Trump', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (612, 30, 211, 170, 224, 'Jacinta Ardern', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (613, 30, 211, 170, 237, 'Princess margaret', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (614, 30, 211, 170, 219, 'Seth McFarlane', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (615, 30, 211, 170, 232, 'Kylie Minogue ', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (616, 30, 212, 168, 273, 'Sting (singer)', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (617, 30, 212, 168, 235, 'Auntie pauline', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (618, 30, 212, 168, 216, 'Melania Trump', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (619, 30, 212, 168, 266, 'Kate Bush', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (620, 30, 212, 168, 247, 'Gandalf', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (621, 30, 212, 168, 214, 'Harry Potter', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (622, 30, 212, 168, 261, 'Dwayne "the rock" johnson', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (623, 30, 212, 168, 257, 'Margaret Thatcher', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (624, 30, 212, 168, 217, 'Mel Gibson', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (625, 30, 212, 168, 270, 'Julia Gillard', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (626, 30, 211, 169, 221, 'Shrek', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (627, 30, 211, 169, 270, 'Julia Gillard', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (628, 30, 211, 169, 256, 'Jaimie Lannister', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (629, 30, 211, 169, 252, 'Dracula', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (630, 30, 212, 172, 262, 'Ringo Starr', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (631, 30, 212, 172, 220, 'Homer Simpson', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (632, 30, 211, 171, 240, 'Mick jagger', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (633, 30, 211, 171, 267, 'George Bush', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (634, 30, 211, 171, 252, 'Dracula', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (635, 30, 211, 171, 269, 'Miley Cyrus', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (636, 30, 211, 171, 248, 'Dyanerys', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (637, 30, 212, 173, 229, 'Mickey mouse', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (638, 30, 212, 173, 245, 'Cheer', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (639, 30, 212, 173, 215, 'Julia Gillard ', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (640, 30, 211, 170, 249, 'Lady Di', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (641, 30, 211, 170, 220, 'Homer Simpson', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (642, 30, 211, 170, 248, 'Dyanerys', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (643, 30, 211, 170, 215, 'Julia Gillard ', 1, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (644, 30, 211, 170, 232, 'Kylie Minogue ', 0, 4, NULL, NULL);
+INSERT INTO public.answers (answer_id, game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish) OVERRIDING SYSTEM VALUE VALUES (645, 30, 212, 168, 232, 'Kylie Minogue ', 1, 4, NULL, NULL);
+
+
+--
+-- TOC entry 3364 (class 0 OID 16648)
+-- Dependencies: 221
+-- Data for Name: games; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (30, 'New new fam gam', true, 3, 4, 2, 10, 60, 1, 1, 1, 1, '2022-06-11 20:29:20.289937');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (29, 'NEW FAMILY GAME', true, 3, 4, 2, 10, 60, 1, 1, 1, 1, '2022-06-11 19:24:51.417087');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (1, 'Insert Name Here', false, 3, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-05 15:08:45.45293');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (2, 'Insert Name Here', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 15:09:20.530039');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (3, 'Insert Name Here', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 15:35:09.792856');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (6, 'AA', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 16:05:21.346796');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (5, 'A', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-05 16:05:10.986097');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (4, 'test', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 16:02:08.979768');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (7, 'Aaaaaa', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 16:39:28.761938');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (8, 'Toms game', false, 3, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-05 16:51:27.482552');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (10, 'Insert Name Here', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-05 20:58:45.447094');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (9, 'speed the fwuk', false, 1, 4, 2, 3, 60, 1, 1, 1, 1, '2022-06-05 20:58:10.840079');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (28, 'Mcelhinney-dev-chandler', false, 3, 4, 2, 10, 60, 1, 1, 1, 1, '2022-06-11 19:18:22.313993');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (25, 'New game', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-09 20:58:41.974859');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (31, 'hacks', true, 1, 1, 3, 10, 60, 1, 1, 1, 1, '2022-06-11 22:22:13.804869');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (15, 'Insert Name Here', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 22:11:35.951052');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (19, 'ad', false, 1, 4, 3, 10, 60, 0, 0, 0, 1, '2022-06-08 21:47:45.797228');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (18, '', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 21:45:24.202915');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (17, '', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 21:45:20.18301');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (16, '', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 21:24:34.120732');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (14, 'Insert Name Here', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-05 22:07:40.07143');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (13, 'Insert Name Here', false, 3, 4, 1, 10, 60, 1, 1, 1, 1, '2022-06-05 21:50:53.129052');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (12, 'Insert Name Here', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-05 21:50:00.192262');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (20, 'n', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 22:15:36.413768');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (21, 'lm', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 22:20:55.497407');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (22, 'aa', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 22:26:14.499237');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (23, 'Cnnd', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 22:27:59.298271');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (24, 'asx', false, 1, 4, 3, 10, 60, 1, 1, 1, 1, '2022-06-08 22:29:52.977684');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (11, 'not the munns distance', false, 3, 4, 2, 3, 60, 1, 1, 1, 1, '2022-06-05 21:19:35.14889');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (27, 'AAAAAAAAA', false, 3, 4, 2, 10, 60, 1, 1, 1, 1, '2022-06-09 21:52:35.797105');
+INSERT INTO public.games (game_id, game_name, active, stage, round, number_teams, number_names, time_limit, round1, round2, round3, round4, date_created) OVERRIDING SYSTEM VALUE VALUES (26, 'Test ppl', false, 3, 4, 2, 10, 60, 1, 1, 1, 1, '2022-06-09 21:39:13.11183');
+
+
+--
+-- TOC entry 3362 (class 0 OID 16644)
+-- Dependencies: 219
+-- Data for Name: mp3_order; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.mp3_order (number_stops, current_stop, number_starts, current_start) VALUES (13, 1, 18, 11);
+
+
+--
+-- TOC entry 3359 (class 0 OID 16545)
+-- Dependencies: 216
+-- Data for Name: names; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (80, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (81, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (82, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (83, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (84, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (85, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (86, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (87, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (88, 2, 118, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (89, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (90, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (91, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (92, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (93, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (94, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (95, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (96, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (97, 3, 119, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (98, 4, 120, 'Tom McElhinney 1');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (99, 4, 120, 'Tom McElhinney 2');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (100, 4, 120, 'Tom McElhinney 3');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (101, 4, 120, 'Tom McElhinney 4');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (102, 4, 120, 'Tom McElhinney 5');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (103, 4, 120, 'Tom McElhinney 6');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (104, 4, 120, 'Tom McElhinney 7');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (105, 4, 120, 'Tom McElhinney 8');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (106, 4, 120, 'Tom McElhinney 9');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (107, 4, 120, 'Tom McElhinney 10');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (108, 6, 122, 'Tom McElhinney 1');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (109, 6, 122, 'Tom McElhinney 2');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (110, 6, 122, 'Tom McElhinney 6');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (111, 6, 122, 'Tom McElhinney 3');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (112, 6, 122, 'Tom McElhinney 4');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (113, 6, 122, 'Tom McElhinney 5');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (114, 6, 122, 'Tom McElhinney 7');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (115, 6, 122, 'Tom McElhinney 8');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (116, 6, 122, 'Tom McElhinney 9');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (117, 6, 122, 'Tom McElhinney 10');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (118, 7, 123, 'Tom McElhinney 1');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (119, 7, 123, 'Tom McElhinney 2');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (120, 7, 123, 'Tom McElhinney 3');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (121, 7, 123, 'Tom McElhinney4 ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (122, 7, 123, 'Tom McElhinney 5');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (123, 7, 123, 'Tom McElhinney 6');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (124, 7, 123, 'Tom McElhinney 7');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (125, 8, 124, 'Jk rowling');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (126, 8, 124, 'Dumbledore');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (127, 8, 124, 'Amber heard');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (128, 8, 124, 'Jake Gyllenhaal');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (129, 8, 124, 'Frosty the snowman');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (130, 8, 124, 'Peter knight');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (131, 8, 124, 'Sarah knight');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (132, 8, 126, 'Dwayne the rock johnson');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (133, 8, 125, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (134, 8, 125, 'Harry Manson');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (135, 8, 125, 'Paul Francis');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (136, 8, 125, 'Hugo Innes');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (137, 8, 125, 'Anna Chandler');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (138, 11, 130, 'viper');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (139, 11, 130, 'james');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (140, 11, 130, 'windi');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (141, 11, 131, 'Smeagol / Gollum');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (142, 11, 131, 'The whomping willow');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (143, 11, 131, 'Pudge');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (144, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (145, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (146, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (147, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (148, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (149, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (150, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (151, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (152, 13, 133, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (153, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (154, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (155, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (156, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (157, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (158, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (159, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (160, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (161, 15, 135, 'Tom McElhinney');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (162, 25, 147, 'fuck');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (163, 25, 147, 'lol');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (164, 25, 147, 'tom');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (165, 25, 147, 'jorge');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (166, 25, 147, 'daniel nguyen');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (167, 25, 147, 'asdf');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (168, 25, 147, 'bongo');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (169, 27, 153, 'aaaaaa');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (170, 27, 153, 'dddddddd');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (171, 27, 153, 'fffffff');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (172, 27, 153, 'cccccccc');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (173, 28, 156, 'Tom cruise');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (174, 29, 165, 'Tom cruise');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (175, 29, 165, 'Amber Heard');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (176, 29, 165, 'Johnny Depp');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (177, 29, 165, 'Donald Trump');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (178, 29, 165, 'Justin Beiber');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (179, 29, 165, 'Scomo');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (180, 29, 165, 'Peter Dutton');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (181, 29, 165, 'Albanese');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (182, 29, 165, 'Queen Elizabeth');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (183, 29, 165, 'Picasso');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (184, 29, 166, 'Tony Abbott');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (185, 29, 166, 'Pepe the frog');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (186, 29, 166, 'Donald Trump');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (187, 29, 166, 'Bolsonaro');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (188, 29, 166, 'Arnold Schwarzenegger');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (189, 29, 166, 'Josh Frydenberg');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (190, 29, 166, 'Hugo Innes');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (191, 29, 166, 'Harry Manson');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (192, 29, 166, 'Anthea');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (193, 29, 166, 'Barack Obama');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (194, 29, 162, 'Donald trump');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (195, 29, 162, 'Iron man');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (196, 29, 162, 'Madonna');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (197, 29, 162, 'Monalisa');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (198, 29, 162, 'Hillary clinton');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (199, 29, 162, 'Gladys');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (200, 29, 162, 'Tom cruise');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (201, 29, 162, 'Eva');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (202, 29, 162, 'Fred Flintstone ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (203, 29, 162, 'Sponge bob');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (204, 29, 167, 'Tom cruise');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (205, 29, 167, 'Ànthony albonese');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (206, 29, 167, 'Michael jordan');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (207, 29, 167, 'Mark twain');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (208, 29, 167, 'Britney Spears ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (209, 29, 167, 'Justin Beiber ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (210, 29, 167, 'Donald Trump ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (211, 29, 167, 'Boris Johnson ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (212, 29, 167, 'Kylie Jenner ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (213, 29, 167, 'The Pope ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (214, 30, 170, 'Harry Potter');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (215, 30, 170, 'Julia Gillard ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (216, 30, 170, 'Melania Trump');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (217, 30, 170, 'Mel Gibson');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (218, 30, 170, 'Justin Timberlake');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (219, 30, 170, 'Seth McFarlane');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (220, 30, 170, 'Homer Simpson');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (221, 30, 170, 'Shrek');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (222, 30, 170, 'Prince Andrew');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (223, 30, 170, 'Santa Clause');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (224, 30, 171, 'Jacinta Ardern');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (225, 30, 171, 'Rob');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (226, 30, 171, 'Cleo');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (227, 30, 171, 'Ted');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (228, 30, 171, 'Popeye');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (229, 30, 171, 'Mickey mouse');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (230, 30, 171, 'Osama bin Laden ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (231, 30, 171, 'George bush');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (232, 30, 171, 'Kylie Minogue ');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (233, 30, 171, 'Putin');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (234, 30, 172, 'Mark mcgowan');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (235, 30, 172, 'Auntie pauline');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (236, 30, 172, 'Caroline potter');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (237, 30, 172, 'Princess margaret');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (238, 30, 172, 'Prince andrew');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (239, 30, 172, 'King george IV');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (240, 30, 172, 'Mick jagger');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (241, 30, 172, 'Kate bush');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (242, 30, 172, 'Kim kardashian');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (243, 30, 172, 'Bob dylan');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (244, 30, 173, 'Peppa pig');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (245, 30, 173, 'Cheer');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (246, 30, 173, 'Adele');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (247, 30, 173, 'Gandalf');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (248, 30, 173, 'Dyanerys');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (249, 30, 173, 'Lady Di');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (250, 30, 173, 'Einsten');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (251, 30, 173, 'Ramses II');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (252, 30, 173, 'Dracula');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (253, 30, 173, 'Queen victoria');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (254, 30, 168, 'Adolf Hitler');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (255, 30, 168, 'Smeagol / Gollum');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (256, 30, 168, 'Jaimie Lannister');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (257, 30, 168, 'Margaret Thatcher');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (258, 30, 168, 'Vladimir Putin');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (259, 30, 168, 'Zelensky');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (260, 30, 168, 'Helena Bonham Carter');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (261, 30, 168, 'Dwayne "the rock" johnson');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (262, 30, 168, 'Ringo Starr');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (263, 30, 168, 'Alan Rickman');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (264, 30, 169, 'Elon Musk');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (265, 30, 169, 'Ivanka Trump');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (266, 30, 169, 'Kate Bush');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (267, 30, 169, 'George Bush');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (268, 30, 169, 'Steve Jobs');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (269, 30, 169, 'Miley Cyrus');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (270, 30, 169, 'Julia Gillard');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (271, 30, 169, 'Bill Gates');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (272, 30, 169, 'Mark McGowan');
+INSERT INTO public.names (name_id, game_id, user_inst_id, name) OVERRIDING SYSTEM VALUE VALUES (273, 30, 169, 'Sting (singer)');
+
+
+--
+-- TOC entry 3361 (class 0 OID 16624)
+-- Dependencies: 218
+-- Data for Name: players_turn_order; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (146, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (165, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (205, '{34,35}', 2, 1);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (206, '{40}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (210, '{42,45}', 2, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (209, '{43,44,46}', 3, 1);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (149, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (155, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (170, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (158, '{38}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (159, '{37}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (157, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (202, '{40,34,35}', 3, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (208, '{42,45}', 2, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (150, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (207, '{43,44,46}', 3, 1);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (156, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (203, '{40,35}', 2, 1);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (204, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (174, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (151, '{34}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (166, '{38}', 1, 0);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (212, '{43,44,46}', 3, 2);
+INSERT INTO public.players_turn_order (team_id, players_array, number_players, current_player) VALUES (211, '{42,45,47}', 3, 0);
+
+
+--
+-- TOC entry 3357 (class 0 OID 16486)
+-- Dependencies: 214
+-- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (146, 1, 'bmiR2', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (147, 1, 'QxKLO', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (148, 1, 'jLwLh', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (149, 2, 'c0Z2v', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (150, 3, 'Zugm3', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (151, 4, 'eAE7v', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (152, 5, 'SxDIh', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (153, 5, 'aCoOz', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (154, 5, 'eCXDt', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (155, 6, 'TEAM', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (156, 7, 'weLsR', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (157, 8, 'TFNXi', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (158, 8, 'p8ISg', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (159, 8, 'IDHOV', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (162, 10, 'xBhAw', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (163, 10, 'IbxGy', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (164, 10, 'K3nCo', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (161, 9, 'dwadwawdsasdsad', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (160, 9, 'WWWWWWW', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (165, 11, 'the pilkos', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (166, 11, 'Tomes Teames', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (167, 12, '0NPmx', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (168, 12, '2dtsv', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (169, 12, 'xWTh3', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (170, 13, 'xNeaa', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (171, 14, 'yijry', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (172, 14, 'Hbw3i', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (173, 14, 'xAyZ2', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (174, 15, 'PJQzc', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (175, 16, 'Corwh', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (176, 16, 'PbAjF', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (177, 16, '5NRjo', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (178, 17, '2p3De', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (179, 17, 'zfRK8', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (180, 17, 'HYqqp', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (181, 18, '6c9fa', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (182, 18, 'Vzcg6', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (183, 18, '5CoeK', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (184, 19, 'XlBJM', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (185, 19, 'o6TCx', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (186, 19, 'oMsx5', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (187, 20, 'Hwgw0', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (188, 20, 'uT0fp', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (189, 20, 'DEV58', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (190, 21, 'sIkDB', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (191, 21, 'QBMcx', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (192, 21, 'LvNzQ', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (193, 22, 'zUwue', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (194, 22, '0dTxZ', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (195, 22, 'a9ByR', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (196, 23, 'dALSy', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (197, 23, '1LCU1', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (198, 23, 'I37N5', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (199, 24, '0vQMC', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (200, 24, 'chwzI', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (201, 24, 'P5bHN', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (202, 25, 'The Teamies', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (203, 26, 'qbLY9', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (204, 26, 'BGr3g', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (206, 27, 'the phones', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (205, 27, 'the PCs', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (208, 28, 'Beans', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (207, 28, 'Team?', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (209, 29, 'Couch', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (210, 29, 'Bed', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (211, 30, 'Bed', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (212, 30, 'Couch', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (213, 31, 'PlhlY', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (214, 31, 'j3Cvw', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.teams (team_id, game_id, team_name, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (215, 31, '4xOAP', NULL, NULL, NULL, NULL, NULL);
+
+
+--
+-- TOC entry 3360 (class 0 OID 16616)
+-- Dependencies: 217
+-- Data for Name: teams_turn_order; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (1, '{146}', 3, 1);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (11, '{165,166}', 2, 1);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (27, '{205,206}', 2, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (29, '{209,210}', 2, 1);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (2, '{149}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (6, '{155}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (13, '{170}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (25, '{202}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (8, '{157,158,159}', 3, 1);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (28, '{208,207}', 2, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (3, '{150}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (7, '{156}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (26, '{203,204}', 2, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (15, '{174}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (4, '{151}', 1, 0);
+INSERT INTO public.teams_turn_order (game_id, teams_array, number_teams, current_team) VALUES (30, '{211,212}', 2, 1);
+
+
+--
+-- TOC entry 3355 (class 0 OID 16468)
+-- Dependencies: 212
+-- Data for Name: user_instance; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (117, 34, 'cxlQY', 146, 1, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (118, 34, 'cxlQY', 149, 2, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (119, 34, 'cxlQY', 150, 3, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (120, 34, 'cxlQY', 151, 4, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (121, 34, 'cxlQY', NULL, 5, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (122, 34, 'CHROME', 155, 6, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (123, 34, 'CHROME', 156, 7, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (157, 44, 'Jorge', 207, 28, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (125, 34, 'CHROME', 157, 8, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (124, 38, 'Tom Phone', 158, 8, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (126, 37, 'Iphone', 159, 8, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (159, 42, 'Dev', 208, 28, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (156, 45, 'Michael ', 208, 28, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (161, 46, 'Tom', 207, 28, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (129, 35, 'WTWXo', 160, 9, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (127, 34, 'mildwadawdmildwa', 160, 9, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (160, 43, 'Anna', 207, 28, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (128, 38, 'Tom Phone', 161, 9, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (130, 34, 'milko', 165, 11, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (131, 38, 'Tom Phone', 166, 11, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (132, 34, 'milko', 167, 12, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (133, 34, 'milko', 170, 13, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (134, 34, 'milko', 171, 14, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (135, 34, 'milko', 174, 15, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (136, 39, 'UL9no', NULL, 12, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (137, 34, 'milko', NULL, 20, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (138, 34, 'milko', NULL, 21, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (139, 34, 'milko', NULL, 22, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (143, 39, 'UL9no', NULL, 24, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (144, 40, 'FTOzu', NULL, 24, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (164, 42, 'Dev', 210, 29, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (165, 43, 'Anna', 209, 29, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (147, 35, 'edge', 202, 25, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (146, 34, 'chrome', 202, 25, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (145, 40, 'Tom phone', 202, 25, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (162, 44, 'Jorge', 209, 29, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (166, 46, 'Tom', 209, 29, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (148, 34, 'chrome', 204, 26, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (149, 35, 'edge', 203, 26, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (167, 45, 'Michael ', 210, 29, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (152, 40, 'Tom phone', 203, 26, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (153, 35, 'edge', 205, 27, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (154, 34, 'chrome', 205, 27, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (155, 40, 'Tom phone', 206, 27, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (172, 43, 'Anna', 212, 30, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (171, 45, 'Michael ', 211, 30, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (170, 47, 'Mel', 211, 30, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (169, 42, 'Dev', 211, 30, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (168, 46, 'Tom', 212, 30, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (173, 44, 'Jorge', 212, 30, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO public.user_instance (user_inst_id, user_id, username, team_id, game_id, round1score, round2score, round3score, round4score, final_score) OVERRIDING SYSTEM VALUE VALUES (174, 48, '8K48G', NULL, 31, NULL, NULL, NULL, NULL, NULL);
+
+
+--
+-- TOC entry 3353 (class 0 OID 16456)
+-- Dependencies: 210
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (36, 'AlrMX');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (38, 'Tom Phone');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (37, 'Iphone');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (39, 'UL9no');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (40, 'Tom phone');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (35, 'edge');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (34, 'chrome');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (41, 'nv5Kz');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (44, 'Jorge');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (43, 'Anna');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (46, 'Tom');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (45, 'Michael ');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (42, 'Dev');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (47, 'Mel');
+INSERT INTO public.users (user_id, username) OVERRIDING SYSTEM VALUE VALUES (48, '8K48G');
+
+
+--
+-- TOC entry 3373 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: answers_answer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.answers_answer_id_seq', 645, true);
+
+
+--
+-- TOC entry 3374 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: games_game_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.games_game_id_seq', 31, true);
+
+
+--
+-- TOC entry 3375 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: names_name_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.names_name_id_seq', 273, true);
+
+
+--
+-- TOC entry 3376 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: teams_team_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.teams_team_id_seq', 215, true);
+
+
+--
+-- TOC entry 3377 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: user_instance_user_inst_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.user_instance_user_inst_id_seq', 174, true);
+
+
+--
+-- TOC entry 3378 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 48, true);
+
+
+-- Completed on 2022-06-11 22:25:25
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Database "postgres" dump
+--
+
+\connect postgres
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.3
+-- Dumped by pg_dump version 14.3
+
+-- Started on 2022-06-11 22:25:25
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+-- Completed on 2022-06-11 22:25:26
+
+--
+-- PostgreSQL database dump complete
+--
+
+-- Completed on 2022-06-11 22:25:26
+
+--
+-- PostgreSQL database cluster dump complete
+--
+

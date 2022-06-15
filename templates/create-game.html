@@ -6,14 +6,17 @@
         <title>The Name Game</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
     </head>
-    <body class="flex-v"> 
+    <body class="lobby"> 
         <h1 class="heading subheading">CREATE GAME</h1>
-            <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
+        <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
+            
+            <div class="">
                 <h1 class="heading subheading2">SETTINGS</h1>
                 <label for="game_name">Game Name:</label>
-                <input type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'">
-
-                <label for="number_teams">Number of Teams:</label>
+                <div class="flex-h-left">
+                    <input type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'">
+                </div>
+                    <label for="number_teams">Number of Teams:</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_teams" name="number_teams" value="3" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>3</output>
@@ -28,6 +31,9 @@
                     <input type="range" id="time_limit" name="time_limit" value="60" max="120" min="30" oninput="this.nextElementSibling.value = this.value">
                     <output>60</output>
                 </div>
+                <br>
+            </div>
+            <div class="">
                 <h1 class="heading subheading2">ROUNDS</h2>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round1' name="round1" checked=True><span class="slider round"></span></label>
@@ -45,8 +51,9 @@
                     <label class="switch"><input type="checkbox" id='round4' name="round4" checked=True><span class="slider round"></span></label>
                     <label for="round4">Round 4: &nbsp; Mime</label>
                 </div>
-            </form>
-        <div class="flex-h">
+            </div>
+        </form>
+        <div class="flex-h pad-10pct-v">
             <button class="button1" onclick="submit()">Create Game</button>
             <button class="button1" onclick="location.href='/';">Home</button>
         </div>
@@ -63,7 +70,9 @@
             if(all.length !== 0){
                 game_name = document.getElementById('game_name').value
                 if(game_name.length !== 0){
-                    document.getElementById("form").submit()
+                    if(!game_name.includes("'")){
+                        document.getElementById("form").submit()
+                    } else {alert("single quote character (') is not allowed")}
                 } else {alert("Enter the name of the game")}
             } else {alert("you can't have zero rounds")}
         }

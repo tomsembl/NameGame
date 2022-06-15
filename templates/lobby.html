@@ -214,11 +214,13 @@
             new_username = document.getElementById("username_change").value
             if (!new_username.length){alert("name must be longer")}
             else {
-                fetch("/username_change",{
-                    method:"POST", 
-                    body: JSON.stringify({"new_username":new_username,"user_inst_id":"{{user_inst_id}}","game_id":"{{game_id}}"}),
-                    headers: new Headers({"content-type": "application/json"}) 
-                })
+                if(!new_username.includes("'")){
+                    fetch("/username_change",{
+                        method:"POST", 
+                        body: JSON.stringify({"new_username":new_username,"user_inst_id":"{{user_inst_id}}","game_id":"{{game_id}}"}),
+                        headers: new Headers({"content-type": "application/json"}) 
+                    })
+                } else {alert("single quote character (') is not allowed")}
             }
         }
 
@@ -228,11 +230,13 @@
             if (team_id === ''){alert("select a team");return}
             if (!new_team_name.length){alert("name must be longer")}
             else {
-                fetch("/team_name_change",{
-                    method:"POST", 
-                    body: JSON.stringify({"new_team_name":new_team_name,"team_id":team_id,"game_id":"{{game_id}}"}),
-                    headers: new Headers({ "content-type": "application/json"}) 
-                })
+                if(!new_team_name.includes("'")){
+                    fetch("/team_name_change",{
+                        method:"POST", 
+                        body: JSON.stringify({"new_team_name":new_team_name,"team_id":team_id,"game_id":"{{game_id}}"}),
+                        headers: new Headers({ "content-type": "application/json"}) 
+                    })
+                } else {alert("single quote character (') is not allowed")}
             }
         }
 
@@ -266,12 +270,23 @@
             }
         }
         function advance_game(){
-            if (teammembers.null){alert(`not every player is assigned to a team: ${teammembers.null}`)}
+            for (var team_div of document.getElementById("teams").children){
+                var team_id_2 = team_div.id.slice(11)
+                if (!(teammembers[team_id_2])) {
+                    team_name = document.getElementById(`team-label${team_id_2}`).innerHTML
+                    alert(`not every team has a player: ${team_name}`)
+                    return
+                }
+            }
+            if (teammembers.null){
+                alert(`not every player is assigned to a team: ${teammembers.null}`)
+                return
+            }
             else{
                 if (confirm("do you want to start")){
                     fetch("/advance_game",{
                         method:"POST", 
-                        body: JSON.stringify({"game_id":"{{game_id}}","stage":3}),
+                        body: JSON.stringify({"game_id":"{{game_id}}","stage":2}),
                         headers: new Headers({"content-type": "application/json"}) 
                     })
                 }
