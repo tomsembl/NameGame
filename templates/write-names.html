@@ -13,17 +13,17 @@
        
         <div class="flex-v form pad-10pct">
             <p>
-                Write names that at least a few players will know.<br>Eg. celebrities, fictional characters, et cetera.<br>Players will need to read and describe them.
+                Write names that at least a few players will know.<br>Eg. celebrities, fictional characters, et cetera.<br>Players will need to read and describe them.<br><br>
             </p>
                 {% for name_number in range(game_deets['number_names']) %}
-                    <div id="name_div{{name_number}}">
+                    <div class="vmar-tiny" id="name_div{{name_number}}">
                         <input class="name_input" type="text" id="name_input{{name_number}}" maxlength="40">
                     </div>
                 {% endfor %}
                 </div>
             </div>
         </div>
-
+        <br>
         <h1 id="waiting-on" class="heading subheading2">Waiting on: &nbsp;</h1>
 
         <div class="flex-h mar-1em">

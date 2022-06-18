@@ -26,7 +26,7 @@
                 <table class="">
                         <tr class="table-row slight-v-gradient">
                             <td class="td-left"><strong>Name: </strong></td>
-                            <td class="td-left"><p id="game_name">{{game_deets['game_name']}}</p></td>
+                            <td class="td-right"><p id="game_name">{{game_deets['game_name']}}&nbsp;</p></td>
                         </tr>
                     </table>
                     <table class="">
@@ -208,6 +208,8 @@
             if(team_selected_option){document.getElementById(team_selected_option).classList.remove("selected")}
             team_selected_option = elem.id
             document.getElementById(team_selected_option).classList.add("selected")
+            team_name_change_input = document.getElementById("team_name_change")
+            team_name_change_input.value = document.getElementById(`team-label${team_selected_option.slice(11)}`).innerHTML
         }
 
         function username_change(){

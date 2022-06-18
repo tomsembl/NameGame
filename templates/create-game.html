@@ -12,9 +12,10 @@
             
             <div class="">
                 <h1 class="heading subheading2">SETTINGS</h1>
+                <br>
                 <label for="game_name">Game Name:</label>
                 <div class="flex-h-left">
-                    <input type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'">
+                    <input type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'" maxlength="40">
                 </div>
                     <label for="number_teams">Number of Teams:</label>
                 <div class="flex-h-left">
@@ -35,6 +36,7 @@
             </div>
             <div class="">
                 <h1 class="heading subheading2">ROUNDS</h2>
+                <br>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round1' name="round1" checked=True><span class="slider round"></span></label>
                     <label for="round1">Round 1: &nbsp; Unlimited</label>

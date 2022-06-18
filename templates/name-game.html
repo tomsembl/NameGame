@@ -119,6 +119,8 @@
             socket.on('start_timer',function(msg) {
                 if(!my_turn){
                     var count = parseInt("{{game_deets['time_limit']}}")
+                    document.getElementById('countdown').innerHTML=count;
+                    count--;
                     interval = setInterval(function(){
                         document.getElementById('countdown').innerHTML=count;
                         count--;
@@ -132,8 +134,8 @@
             })
 
             socket.on('stop_timer',function(msg) { 
-                document.getElementById('countdown').innerHTML='0';
                 clearInterval(interval) 
+                document.getElementById('countdown').innerHTML='0';
             }) 
 
             socket.on('get_mp3_number',function(msg) {
@@ -195,11 +197,15 @@
         }
 
         function done() {
+            document.getElementById("done_button").blur()
             score_answer(current_name['name_id'], is_success=1)
             previous_name = current_name
             socket.emit("emit_next_name","{{game_id}}","{{user_id}}")
             document.getElementById("done_button").setAttribute("disabled","")
-            setTimeout(()=>{document.getElementById("done_button").removeAttribute("disabled")}, 400)
+            setTimeout(()=>{
+                document.getElementById("done_button").removeAttribute("disabled")
+                document.body.click()
+            }, 400)
 
         }
 
