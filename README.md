@@ -7,7 +7,7 @@ A web-based game for mobiles. A Jackbox-style implementation of The Name Game
 <p>
   The Name Game has players join teams and write out custom names of celebrities, fictional characters, et cetera.<br>
   Names are drawn at random from the list of names created by all players at the start of the game.<br>
-  Teams take turns, with one player explaining and their team attempting to guess the names.<br>
+  Teams take turns, with one player describing the names and their team attempting to guess the names.<br>
   The goal of each team is to get as many names guessed correctly within the time limit.<br>
   <br>
   <ul>
