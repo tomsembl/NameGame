@@ -68,21 +68,28 @@ A web-based game for mobiles. A Jackbox-style implementation of The Name Game
   Rules
 </h2>
 <h4>When Describing</h4>
-<p>If you break any of these rules, you'll need to end your turn early using the concede button:</p>
+<p>If you break any of these rules, you'll need to end your turn early using the concede button.<br>
+  Make up your own house rules if you like. I've found these rules make for the fairest gameplay.
+</p>
 <ol>
-  <li>You must adhere to the restrictions of the current round (shown at the top of the game screen)</li>
+  <li>Adhere to the restrictions of the current round (shown at the top of the game screen)</li>
   <ul>
+    <li><em>In Round x: Your explanation can use y words:</em></li>
     <li>Round 1: Unlimited words.</li>
-    <li>Round 2: Use up to 3 words.</li>
-    <li>Round 3: Use up to 1 word.</li>
+    <li>Round 2: Up to 3 words.</li>
+    <li>Round 3: Up to 1 word.</li>
     <li>Round 4: No words, miming only.</li>
   </ul>
-  <li>You must not use the name itself, or part of the name, in your explanation</li>
+  <li>Don't use the name itself, or part of the name, in your explanation</li>
   <ul>
     <li>eg. Name: <em>John Howard</em>&nbsp; Don't say: <em>"first name <strong>John</strong>, PM with big eyebrows"</em></li>
   </ul>
-  <li>You must not use a letter within name or part of the name in your explanation</li>
+  <li>Don't use a letter within name or part of the name in your explanation</li>
   <ul>
     <li>eg. Name: <em>Amber Heard</em>&nbsp; Don't say: <em>"Johnny Depp's ex, starts with an <strong>A</strong>" or "ends with an <strong>E</strong>"</em></li>
+  </ul>
+  <li>Don't use a "Rhymes with x" in your explanation</li>
+  <ul>
+    <li>eg. Name: <em>Bilbo Baggins</em>&nbsp; Don't say: <em>"Rhymes with<strong>Schmilbo Schmaggins</strong>"</em></li>
   </ul>
 </ol>
