@@ -91,6 +91,7 @@
                 if (`${current_turn_user_id}` === "{{user_id}}"){
                     if (!my_turn){
                         your_turn()
+                        clearInterval(interval)
                         document.getElementById("the_name").innerHTML = "Your Turn"
                     }
                 }
@@ -151,6 +152,13 @@
                 
             }) 
 
+            socket.on('alert',function(msg) { 
+                alert(msg);
+                if (msg == "ERROR: there is an ongoing turn"){
+                    document.getElementById("done_button").classList.add("invisible")
+                }
+            })
+
             socket.emit("emit_teams","{{game_id}}","{{user_id}}")
             socket.emit("emit_players","{{game_id}}","{{user_id}}")
             socket.emit("emit_current_turn","{{game_id}}","{{user_id}}")
@@ -180,7 +188,7 @@
                 document.getElementById("concede_button").removeAttribute("disabled")
                 document.getElementById("done_button").classList.remove("invisible")
                 var count = parseInt("{{game_deets['time_limit']}}")
-                socket.emit("start_timer","{{game_id}}")
+                socket.emit("start_timer","{{game_id}}","{{user_id}}")
                 document.getElementById('countdown').innerHTML=count;
                 count--
                 interval = setInterval(function(){
@@ -204,8 +212,7 @@
             document.getElementById("done_button").setAttribute("disabled","")
             setTimeout(()=>{
                 document.getElementById("done_button").removeAttribute("disabled")
-                document.body.click()
-            }, 400)
+            }, 500)
 
         }
 
@@ -225,7 +232,7 @@
             
         }
         function concede(names_ran_out=false) {
-            socket.emit('stop_timer',"{{game_id}}")
+            socket.emit('stop_timer',"{{game_id}}","{{user_id}}")
             document.getElementById('countdown').innerHTML='0';
             end_turn(names_ran_out)
             clearInterval(interval)

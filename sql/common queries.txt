@@ -1,0 +1,33 @@
+--STATS
+--get team totals
+	select team_id, count(*) from answers
+	where success = 1
+	and round = 1 --by round
+	group by team_id
+
+-- get player totals
+	select user_inst_id, count(*) from answers
+	where success = 1
+	and round = 1 --by round
+	group by user_inst_id
+
+--most flunked names
+    select name, count(*) from answers
+	where success = 0
+	AND GAME_ID = 86
+	group by name
+	order by count(*) desc
+	
+--who put in what names
+    SELECT NAME, USERNAME,* 
+    FROM NAMES N
+    JOIN USER_INSTANCE U ON U.USER_INST_ID = N.USER_INST_ID
+    ORDER BY NAME_ID DESC
+
+--time taken per answer
+    SELECT NAME, USERNAME, DATE_PART('second',TIME_FINISH-time_start) seconds,* FROM ANSWERS A
+    JOIN USER_INSTANCE U ON U.USER_INST_ID = A.USER_INST_ID
+    WHERE SUCCESS = 1 and
+    a.game_id = 86 and
+    time_finish is not null
+    ORDER BY TIME_FINISH-time_start desc

@@ -19,8 +19,8 @@
                 </div>
                     <label for="number_teams">Number of Teams:</label>
                 <div class="flex-h-left">
-                    <input type="range" id="number_teams" name="number_teams" value="3" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
-                    <output>3</output>
+                    <input type="range" id="number_teams" name="number_teams" value="2" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
+                    <output>2</output>
                 </div>
                 <label for="number_names">Each Player Will Submit # Names:</label>
                 <div class="flex-h-left">
@@ -72,9 +72,9 @@
             if(all.length !== 0){
                 game_name = document.getElementById('game_name').value
                 if(game_name.length !== 0){
-                    if(!game_name.includes("'")){
+                    // if(!game_name.includes("'")){
                         document.getElementById("form").submit()
-                    } else {alert("single quote character (') is not allowed")}
+                    // } else {alert("single quote character (') is not allowed")}
                 } else {alert("Enter the name of the game")}
             } else {alert("you can't have zero rounds")}
         }

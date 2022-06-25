@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 from flask_socketio import SocketIO, send, join_room, leave_room
-import psycopg2, random, string, os, logging
+import psycopg2, random, string, os, logging, time
 
 app = Flask(__name__)
 
@@ -130,13 +130,35 @@ def advance_round_sql(game_id):
         q_sql(f"update games set round = %(round)s",{'round':all_rounds[next_index]})
         emit_current_round(game_id)
 
+def add_turn_sql(game_id,user_id):
+    user_inst_id = get_user_inst_id(user_id,game_id)
+    round = get_round(game_id)
+    time_limit = q_sql(f"select time_limit from games where game_id = %(game_id)s",{'game_id':game_id})[0][0]
+    has_ongoing_turns = q_sql(f"select user_inst_id from turns where game_id = %(game_id)s and round = %(round)s and now() < time_finish and active",{'game_id':game_id,'round':round,'user_inst_id':user_inst_id})
+    if has_ongoing_turns:
+        username = q_sql(f"select username from user_instance where user_inst_id = %(user_inst_id)s",{'user_inst_id':has_ongoing_turns[0][0]})[0][0]
+        alert(game_id,f"ERROR: {username} has an ongoing turn, please concede",user_id)
+    else: 
+        q_sql(f"insert into turns (user_inst_id,game_id,round,time_start,time_finish,active) values (%(user_inst_id)s,%(game_id)s,%(round)s,now(),now() + interval '%(time_limit)s second', TRUE)",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round,'time_limit':time_limit})
+        socketio.emit('start_timer', room=f"game{game_id}")
+
+def end_turn_sql(game_id,user_id):
+    user_inst_id = get_user_inst_id(user_id,game_id)
+    round = get_round(game_id)
+    turn_id = q_sql(f"select turn_id from turns where user_inst_id = %(user_inst_id)s and game_id = %(game_id)s and round = %(round)s order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0][0]
+    q_sql(f"update turns set active = FALSE where turn_id = %(turn_id)s",{'turn_id':turn_id})
+
+
 def score_answer_sql(game_id, user_id, name_id, success):
     user_inst_id = get_user_inst_id(user_id, game_id)
     round = get_round(game_id)
     name = get_name_by_id(name_id)
     team_id = get_teamid_by_userinst(user_inst_id)
-    query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round) values (%(game_id)s, %(team_id)s, %(user_inst_id)s, %(name_id)s, %(name)s, %(success)s, %(round)s)"
-    q_sql(query, {'game_id':game_id, 'team_id':team_id, 'user_inst_id':user_inst_id, 'name_id':name_id, 'name':name, 'success':success, 'round':round})
+    turn_id, time_start = q_sql(f"select turn_id, time_start from turns where user_inst_id = %(user_inst_id)s and game_id = %(game_id)s and round = %(round)s order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
+    latest_time_finish = q_sql(f"select time_finish from answers where turn_id = %(turn_id)s order by answer_id desc limit 1",{'turn_id':turn_id})
+    if latest_time_finish: time_start = latest_time_finish[0][0]
+    query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (%(game_id)s, %(team_id)s, %(user_inst_id)s, %(name_id)s, %(name)s, %(success)s, %(round)s, %(time_start)s, now(), %(turn_id)s)"
+    q_sql(query, {'game_id':game_id, 'team_id':team_id, 'user_inst_id':user_inst_id, 'name_id':name_id, 'name':name, 'success':success, 'round':round, 'turn_id':turn_id, 'time_start':time_start})
 
 def get_scores(game_id, is_team=False):
     if is_team:  results = q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and a.game_id = %(game_id)s group by t.team_name order by count(*) desc",{'game_id':game_id})
@@ -144,6 +166,29 @@ def get_scores(game_id, is_team=False):
     scorers, scores = [], []
     [(scorers.append(x),scores.append(y)) for x,y in results]
     return scorers, scores
+
+def random_shuffle_teams_sql(game_id):
+    if not get_game_stage(game_id) == 1: return
+    teams = [x[0] for x in get_team_names(game_id)]
+    user_insts = [x[0] for x in get_user_inst_ids_by_game(game_id)]
+    random.shuffle(teams)
+    random.shuffle(user_insts)
+    players_per_team = -(-len(user_insts)//len(teams))
+    for team_id in teams:
+        for _ in range(players_per_team):
+            if user_insts:
+                user_inst_id = user_insts.pop()
+                q_sql(f"update user_instance set team_id = %(team_id)s where user_inst_id = %(user_inst_id)s", {'team_id':team_id, 'user_inst_id':user_inst_id})
+
+def player_team_change_sql(user_id,team_id,game_id): 
+    if get_game_stage(game_id) == 1:
+        q_sql(f"update user_instance set team_id= %(team_id)s where user_id = %(user_id)s and game_id=%(game_id)s", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
+
+def get_random_default_name(): return random.choice(q_sql(f"select name from default_names"))[0]
+
+def get_game_stage(game_id): return q_sql(f"select stage from games where game_id = %(game_id)s", {'game_id':game_id})[0][0]
+
+def get_user_inst_ids_by_game(game_id): return q_sql(f"select user_inst_id from user_instance where game_id = %(game_id)s", {'game_id':game_id})
 
 def get_game_deets(game_id): return header_zip_query(f"select * from games where game_id = %(game_id)s", data = {'game_id':game_id})
 
@@ -172,8 +217,6 @@ def get_players_by_game_id(game_id): return q_sql(f"select user_id, username fro
 def update_username(new_username,user_id,user_inst_id): q_sql(f"update users set username = %(new_username)s where user_id = %(user_id)s; update user_instance set username= %(new_username)s where user_inst_id = %(user_inst_id)s",{'user_id':user_id,'user_inst_id':user_inst_id,'new_username':new_username})
 
 def update_team_name(team_id, new_team_name): q_sql(f"update teams set team_name = %(new_team_name)s where team_id = %(team_id)s;", {'team_id':team_id, 'new_team_name':new_team_name})
-
-def player_team_change_sql(user_id,team_id,game_id): q_sql(f"update user_instance set team_id= %(team_id)s where user_id = %(user_id)s and game_id=%(game_id)s", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
 
 def has_user_submitted_names(user_inst_id): return q_sql(f"select name_id from names where user_inst_id = %(user_inst_id)s", {'user_inst_id':user_inst_id})
 
@@ -215,6 +258,11 @@ def emit_teams(game_id,user_id=None):
     team_names = get_team_names(game_id)
     teams = {x[0]:x[1] for x in team_names}
     socketio.emit('emit_teams', teams , room=f"user{user_id}" if user_id else f"game{game_id}")
+
+@socketio.on('random_shuffle_teams')
+def random_shuffle_teams(game_id): 
+    random_shuffle_teams_sql(game_id)
+    emit_players(game_id)
 
 @socketio.on('advance_game_emit')
 def advance_game_emit(game_id):
@@ -264,6 +312,10 @@ def emit_current_round(game_id,user_id=None,is_new_round=False):
     round = get_round(game_id)
     socketio.emit('emit_current_round',[round,is_new_round], room=f"user{user_id}" if user_id else f"game{game_id}")
 
+@socketio.on('alert')
+def alert(game_id,message,user_id=None):
+    socketio.emit('alert',message, room=f"user{user_id}" if user_id else f"game{game_id}")
+
 @socketio.on('advance_turn')
 def advance_turn(game_id,user_id=None):
     advance_turn_order(game_id)
@@ -275,15 +327,17 @@ def advance_round(game_id,user_id=None):
     emit_current_round(game_id,is_new_round=True)
 
 @socketio.on('start_timer')
-def start_timer(game_id):
-    socketio.emit('start_timer', room=f"game{game_id}")
+def start_timer(game_id,user_id):
+    add_turn_sql(game_id,user_id)
 
 @socketio.on('stop_timer')
-def stop_timer(game_id):
+def stop_timer(game_id,user_id):
     socketio.emit('stop_timer', room=f"game{game_id}")
+    end_turn_sql(game_id,user_id)
 
 @socketio.on('score_answer')
-def score_answer(game_id, user_id, name_id, success): score_answer_sql(game_id, user_id, name_id, success)
+def score_answer(game_id, user_id, name_id, success): 
+    score_answer_sql(game_id, user_id, name_id, success)
 
 @socketio.on('get_mp3_number')
 def get_mp3_number(user_id,start_or_stop):
@@ -295,6 +349,11 @@ def get_mp3_number(user_id,start_or_stop):
 def emit_scores(game_id,user_id,is_team=False):
     res = get_scores(game_id, is_team)
     socketio.emit('emit_scores',[res,is_team], room= f"user{user_id}")
+
+@socketio.on('get_random_name')
+def get_random_name():
+    return get_random_default_name()
+
 
 
 
@@ -340,8 +399,9 @@ def advance_game():
     game_id, stage = data["game_id"], data["stage"]
     advance_game_sql(game_id,stage)
     if stage == 3:
-        if not is_turn_order_init(game_id): init_turn_order(game_id)
-        for _ in range(random.randint(0,15)): advance_turn_order(game_id)
+        if not is_turn_order_init(game_id): 
+            init_turn_order(game_id)
+            for _ in range(random.randint(0,15)): advance_turn_order(game_id)
     advance_game_emit(game_id)
     return make_response("",200)
 
@@ -365,6 +425,7 @@ def join_game(game_id):
             return redirect(url_for('name_game',game_id=game_id))
         if game_deets["stage"] == 4:
             return redirect(url_for('graphs',game_id=game_id))
+        else: return redirect(url_for('join_game'))
     else: return redirect(url_for('join_game'))
 
 
@@ -459,7 +520,7 @@ def name_game(game_id):
 def graphs(game_id):
     user_id = request.cookies.get('user_id')
     game_deets = get_game_deets(game_id)
-    round = q_sql(f"select round from answers where game_id = {game_id} order by round desc limit 1")[0][0]
+    round = get_latest_round_from_answers(game_id)
     return render_template('graphs.html', game_id=game_id, user_id=user_id, round=round, game_deets=game_deets)
 
 

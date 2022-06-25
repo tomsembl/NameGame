@@ -86,13 +86,18 @@
                         <div class="option small-option space-between slight-v-gradient" onclick="team_option_select(this)" id="team-option{{team_id}}">
                             <input type="hidden" value="{{team_id}}">
                             <p><strong id="team-label{{team_id}}">{{team_name}}</strong></p>
-                            <table id="users_table{{team_id}}">
+                            <table class="team-players-table" id="users_table{{team_id}}">
                                 <tr>
                                 </tr>
                             </table>
                         </div>
                     {% endfor %}
                     </div>
+                <h1 class="heading subheading2 pad-05em">
+                    <div class="flex-h">
+                        <button class="button2" onclick="shuffle()">Shuffle</button>
+                    </div>
+                </h1>
             </div>
         </div>
         <div class="flex-h center vmar">
@@ -109,6 +114,12 @@
             <button class="button1" onclick="location.href='/';">Home</button>
         </div>
     </body>
+
+
+
+
+
+
     <script>
         var socket
         var teammembers
@@ -140,6 +151,9 @@
 
             socket.emit("emit_players","{{game_id}}","{{user_id}}")
         })
+
+
+
 
 
         function update_lobby_players(msg) {
@@ -209,20 +223,20 @@
             team_selected_option = elem.id
             document.getElementById(team_selected_option).classList.add("selected")
             team_name_change_input = document.getElementById("team_name_change")
-            team_name_change_input.value = document.getElementById(`team-label${team_selected_option.slice(11)}`).innerHTML
+            if(!team_name_change_input.value){team_name_change_input.value = document.getElementById(`team-label${team_selected_option.slice(11)}`).innerHTML}
         }
 
         function username_change(){
             new_username = document.getElementById("username_change").value
             if (!new_username.length){alert("name must be longer")}
             else {
-                if(!new_username.includes("'")){
-                    fetch("/username_change",{
-                        method:"POST", 
-                        body: JSON.stringify({"new_username":new_username,"user_inst_id":"{{user_inst_id}}","game_id":"{{game_id}}"}),
-                        headers: new Headers({"content-type": "application/json"}) 
-                    })
-                } else {alert("single quote character (') is not allowed")}
+                // if(!new_username.includes("'")){
+                fetch("/username_change",{
+                    method:"POST", 
+                    body: JSON.stringify({"new_username":new_username,"user_inst_id":"{{user_inst_id}}","game_id":"{{game_id}}"}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                })
+                // } else {alert("single quote character (') is not allowed")}
             }
         }
 
@@ -232,13 +246,13 @@
             if (team_id === ''){alert("select a team");return}
             if (!new_team_name.length){alert("name must be longer")}
             else {
-                if(!new_team_name.includes("'")){
-                    fetch("/team_name_change",{
-                        method:"POST", 
-                        body: JSON.stringify({"new_team_name":new_team_name,"team_id":team_id,"game_id":"{{game_id}}"}),
-                        headers: new Headers({ "content-type": "application/json"}) 
-                    })
-                } else {alert("single quote character (') is not allowed")}
+                // if(!new_team_name.includes("'")){
+                fetch("/team_name_change",{
+                    method:"POST", 
+                    body: JSON.stringify({"new_team_name":new_team_name,"team_id":team_id,"game_id":"{{game_id}}"}),
+                    headers: new Headers({ "content-type": "application/json"}) 
+                })
+                // } else {alert("single quote character (') is not allowed")}
             }
         }
 
@@ -259,16 +273,17 @@
             }
         }
 
+        function shuffle() {
+            socket.emit("random_shuffle_teams","{{game_id}}")
+        }
+
         function kick() {
             user_id = player_selected_option.slice(13)
-            team_id = team_selected_option.slice(11)
+            //team_id = team_selected_option.slice(11)
             if (user_id === ''){alert("select a player")}
             else {
-                if (team_id === ''){
-                    conf = confirm("are you sure you want to kick the selected player from the game?")
-                    if (conf) {socket.emit("deletion_kick","{{game_id}}","{{username}}",user_id)}
-                }
-                //remove user_instance
+                conf = confirm("are you sure you want to kick the selected player from the game?")
+                if (conf) {socket.emit("deletion_kick","{{game_id}}","{{username}}",user_id)}
             }
         }
         function advance_game(){

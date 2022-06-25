@@ -1,15 +1,17 @@
 import psycopg2
-try: conn = psycopg2.connect("dbname='namegame' user='postgres' host='localhost' password='sqlpass123'")
+
+#connect DB
+try: conn = psycopg2.connect("dbname='namegame' user='webserver_namegame' host='localhost' password='sqlpass123'")
 except: print("I am unable to connect to the database")
 conn.autocommit = True
 
 
 # DATABASE FUNCTIONS
 
-def query_sql(query,get_header=False):
+def q_sql(query,data=None,get_header=False):
     # TODO: fix SQL injection literally everywhere
     cur = conn.cursor()
-    cur.execute(query)
+    cur.execute(query,data)
     output = ""
     try: 
         output = cur.fetchall()
@@ -21,12 +23,12 @@ def query_sql(query,get_header=False):
 
 game_id = 30
 def get_line_graph_data(game_id, is_team=False):
-    rounds = list(map(lambda x: x[0],query_sql(f"select distinct(round) from answers where game_id = {game_id} order by round")))
+    rounds = list(map(lambda x: x[0],q_sql(f"select distinct(round) from answers where game_id = %(game_id)s order by round",{'game_id':game_id})))
     #teams
     all_rounds_data = []
     for round in rounds:
-        if is_team: data = query_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and round = {round} and a.game_id = {game_id} group by t.team_name order by count(*) desc")
-        else: data = query_sql(f"select u.username, count(*) from answers a join user_instance u on u.user_inst_id = a.user_inst_id where success = 1 and round = {round} and a.game_id = {game_id} group by u.username order by count(*) desc")
+        if is_team: data = q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and round = %(round)s and a.game_id = %(game_id)s group by t.team_name order by count(*) desc", {'round':round,'game_id':game_id})
+        else: data = q_sql(f"select u.username, count(*) from answers a join user_instance u on u.user_inst_id = a.user_inst_id where success = 1 and round = %(round)s and a.game_id = %(game_id)s group by u.username order by count(*) desc", {'round':round,'game_id':game_id})
         all_rounds_data.append(data)
     dicti = {x:[] for x in [y[0] for y in all_rounds_data[0]]}
     dicti2 = {x:[] for x in [y[0] for y in all_rounds_data[0]]}

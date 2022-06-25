@@ -12,12 +12,15 @@
         <h1 class="heading subheading">WRITE {{game_deets['number_names']}} NAMES</h1>
        
         <div class="flex-v form pad-10pct">
-            <p>
-                Write names that at least a few players will know.<br>Eg. celebrities, fictional characters, et cetera.<br>Players will need to read and describe them.<br><br>
+            <p class="write-names-p">
+                Write names that at least a few players will know.<br>Eg. celebrities, fictional characters, et cetera.<br>Players will need to read and describe them.<br>Use the random generator if you're struggling.<br><br>
             </p>
                 {% for name_number in range(game_deets['number_names']) %}
-                    <div class="vmar-tiny" id="name_div{{name_number}}">
+                    <div class="vmar-tiny flex-h" id="name_div{{name_number}}">
                         <input class="name_input" type="text" id="name_input{{name_number}}" maxlength="40">
+                        <button class="button2 dice-button" id="button{{name_number}}" onclick="get_random_name(this)">
+                            <img class="dice" src="{{ url_for('static',filename='dice.png') }}">
+                        </button>
                     </div>
                 {% endfor %}
                 </div>
@@ -60,10 +63,10 @@
             const number_names = parseInt("{{game_deets['number_names']}}")
             var names = []
             //check for singlequotes
-            for(var i=0; i<number_names; i++) {
-                var val = document.getElementById(`name_input${i}`).value
-                if(val.includes("'")){alert(`Single quote character (') is not allowed. Name #${i+1}: ${val}`);return}
-            }
+            // for(var i=0; i<number_names; i++) {
+            //     var val = document.getElementById(`name_input${i}`).value
+            //     if(val.includes("'")){alert(`Single quote character (') is not allowed. Name #${i+1}: ${val}`);return}
+            // }
 
             for(var i=0; i<number_names; i++) {
                 var elem = document.getElementById(`name_input${i}`)
@@ -97,6 +100,13 @@
                     headers: new Headers({"content-type": "application/json"}) 
                 })
             }
+        }
+
+        function get_random_name(elem){
+            socket.emit("get_random_name", (answer) => {
+                var input_id = elem.id.slice(6)
+                document.getElementById(`name_input${input_id}`).value = answer
+            });
         }
 
     </script>
