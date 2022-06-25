@@ -99,7 +99,7 @@ A web-based game for mobiles. A Jackbox-style implementation of The Name Game
     <li>eg. Name: <em>John Howard</em>&nbsp; Don't say: <em>"first name <strong>John</strong>, PM with big eyebrows"</em></li>
   </ul>
   <br>
-  <li>Don't use a letter within name or part of the name in your explanation</li>
+  <li>Don't use a letter within the name in your explanation</li>
   <ul>
     <li>eg. Name: <em>Amber Heard</em>&nbsp; Don't say: <em>"Johnny Depp's ex, starts with an <strong>A</strong>" or "ends with a <strong>D</strong>"</em></li>
   </ul>
