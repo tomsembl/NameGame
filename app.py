@@ -173,12 +173,10 @@ def random_shuffle_teams_sql(game_id):
     user_insts = [x[0] for x in get_user_inst_ids_by_game(game_id)]
     random.shuffle(teams)
     random.shuffle(user_insts)
-    players_per_team = -(-len(user_insts)//len(teams))
-    for team_id in teams:
-        for _ in range(players_per_team):
-            if user_insts:
-                user_inst_id = user_insts.pop()
-                q_sql(f"update user_instance set team_id = %(team_id)s where user_inst_id = %(user_inst_id)s", {'team_id':team_id, 'user_inst_id':user_inst_id})
+    current_team_index = 0
+    for user_inst_id in user_insts:
+        q_sql(f"update user_instance set team_id = %(team_id)s where user_inst_id = %(user_inst_id)s",{'team_id':teams[current_team_index],'user_inst_id':user_inst_id})
+        current_team_index = (current_team_index + 1) % len(teams)
 
 def player_team_change_sql(user_id,team_id,game_id): 
     if get_game_stage(game_id) == 1:
