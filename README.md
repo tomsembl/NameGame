@@ -126,10 +126,11 @@ A web-based, multiplayer game for mobiles. A Jackbox-style implementation of The
 </ul>
 <h4>Setup</h4>
 <ol>
-  <li>download/install python</li>
-  <li>install pip</li>
+  <li>download/install python 3</li>
+  <li>download/install pip</li>
   <li>run setup.bat to install python libraries</li>
-  <li>install postgresql (https://www.postgresql.org/download/)</li>
+  <li>download/install postgresql (https://www.postgresql.org/download/)</li>
+  <li>ensure pgAdmin is included during installation</li>
   <li>open pgAdmin</li>
   <ol>
     <li>set master password as desired</li>
