@@ -8,11 +8,12 @@ A web-based game for mobiles. A Jackbox-style implementation of The Name Game
   The Name Game has players join teams and write out custom names of celebrities, fictional characters, et cetera.<br>
   Names are drawn at random from the list of names created by all players at the start of the game.<br>
   Teams take turns, with one player describing the names and their team attempting to guess the names.<br>
+  Each round gets progressively harder, with more restrictions on the describing of names.<br>
   The goal of each team is to get as many names guessed correctly within the time limit.<br>
   <br>
   <ul>
     <li>Suitable for 4+ players, however best at 6-12 players.</li>
-    <li>Best played in-person, but it's also okay over a video call, preferrably with cameras turned on for round 4.</li>
+    <li>Best played in-person, but it's also okay over a video call, going to need cameras turned on for round 4.</li>
     <li>Each Player will need to join via their own device (best optimised for smartphone).</li>
   </ul>
 </p>
