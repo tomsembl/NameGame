@@ -1,5 +1,5 @@
 # NameGame
-A web-based game for mobiles. A Jackbox-style implementation of The Name Game
+A web-based, multiplayer game for mobiles. A Jackbox-style implementation of The Name Game
 
 <h2>
   Summary
