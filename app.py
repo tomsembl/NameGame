@@ -523,6 +523,10 @@ def graphs(game_id):
     round = get_latest_round_from_answers(game_id)
     return render_template('graphs.html', game_id=game_id, user_id=user_id, round=round, game_deets=game_deets)
 
+@app.route('/readme', methods=["GET"])
+def readme():
+    return render_template('readme.html')
+
 
 
 
