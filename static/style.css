@@ -94,10 +94,10 @@ video {
     border-radius: 0.3em;
     box-shadow: inset 0 3px 10px rgb(0 0 0 / 0.3);
 }
-.button1:hover,.button2:hover{
+/* .button1:hover,.button2:hover{
     background-color:rgba(30, 30, 30, 0.40); 
     transition: 0.2s;
-}
+} */
 .button1:disabled,.button2:disabled{
     color:rgb(58, 58, 58); 
     background-color:rgba(53, 53, 53, 0.308);
@@ -198,6 +198,21 @@ table, th, td, tr {
     background-image: linear-gradient(to bottom, rgb(251, 210, 62), #ffb100); 
 }
 .white{color:rgb(255, 255, 255)}
+.team-players-table{display: block;}
+.team-players-table td{display: inline-block;}
+.dice{
+    height: 2.1em; 
+    width: 2.1em; 
+    filter:invert(100%);
+    margin-top: 0.2em;
+}
+.dice-button{
+    height: 3em;
+    width: 3em;
+    background-color:rgba(0, 0, 0, 0.55);
+    margin-left: 0.6em;
+}
+.write-names-p{font-size:3.2vw }
 
 
 
