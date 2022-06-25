@@ -115,7 +115,7 @@ A web-based, multiplayer game for mobiles. A Jackbox-style implementation of The
 </h2>
 <h4>Prerequisites</h4>
 <ul>
-  <li>Python >= 3</li>
+  <li>Python 3</li>
   <ul>
     <li>flask</li>
     <li>flask-socketio</li>
@@ -124,3 +124,20 @@ A web-based, multiplayer game for mobiles. A Jackbox-style implementation of The
   <li>postgresql server</li>
   <li>pgadmin</li>
 </ul>
+<h4>Setup</h4>
+<ol>
+  <li>download/install python</li>
+  <li>install pip</li>
+  <li>run setup.bat to install python libraries</li>
+  <li>install postgresql (https://www.postgresql.org/download/)<li>
+  <li>open pgAdmin<li>
+  <ol>
+    <li>set master password as desired<li>
+    <li>create a default database (postgres)<li>
+    <li>open a query window<li>
+    <li>run <strong>CREATE DATABASE namegame</strong><li>
+    <li>open a new query window under the database<strong>namegame</strong><li>
+    <li>run the contents of the file sql\full_db_script_with data wiped.sql<li>
+  </ol>
+  <li>run app.py<li>
+</ol>
