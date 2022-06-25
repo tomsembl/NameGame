@@ -290,294 +290,256 @@ ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
 );
 
 
---
--- Data for Name: answers; Type: TABLE DATA; Schema: public; Owner: -
---
 
 --
 -- Data for Name: default_names; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.default_names (name_id, name) FROM stdin;
-1	Donald Trump
-2	Che Guevara
-3	Pope Francis
-4	Muhammad Ali
-5	Jimmy Carter
-6	Stephen Hawking
-7	Pope John Paul II
-8	Mikhail Gorbachev
-9	Yuri Gagarin
-10	Sylvester Stallone
-11	Steve Jobs
-12	Freddie Mercury
-13	Malcolm X
-14	Elvis Presley
-15	Bob Marley
-16	Fidel Castro
-17	Vladimir Putin
-18	Neil Armstrong
-19	Steven Spielberg
-20	Saddam Hussein
-21	Bruce Lee
-22	Martin Scorsese
-23	Pope Benedict XVI
-24	John Lennon
-25	Prince Philip
-26	Ennio Morricone
-27	Pablo Escobar
-28	Michael Jackson
-29	Boris Yeltsin
-30	Clint Eastwood
-31	Al Pacino
-32	Bill Gates
-33	Muammar Gaddafi
-34	14th Dalai Lama
-35	Marlon Brando
-36	Yasser Arafat
-37	Charles Manson
-38	Kim Jong-il
-39	Stanley Kubrick
-40	Anthony Hopkins
-41	Andy Warhol
-42	Robert De Niro
-43	Luciano Pavarotti
-44	Sean Connery
-45	Morgan Freeman
-46	Jeff Bezos
-47	Martin Luther King Jr.
-48	Arnold Schwarzenegger
-49	Elon Musk
-50	Warren Buffett
-51	Roman Polanski
-52	Jack Nicholson
-53	Pol Pot
-54	George W. Bush
-55	Prince Charles
-56	Noam Chomsky
-57	Danny DeVito
-58	Joe Biden
-59	Dustin Hoffman
-60	Patrick Swayze
-61	Leonard Cohen
-62	Elizabeth II
-63	Marilyn Monroe
-64	Hillary Clinton
-65	Anne Frank
-66	Margaret Thatcher
-67	Cher
-68	Audrey Hepburn
-69	Angela Merkel
-70	Janis Joplin
-71	Judy Garland
-72	Princess Margaret
-73	Tina Turner
-74	Meryl Streep
-75	Maggie Smith
-76	Yoko Ono
-77	Grace Kelly
-78	Princess Diana
-79	Madonna
-80	Barbra Streisand
-81	Judi Dench
-82	Patti Smith
-83	Whitney Houston
-84	Aretha Franklin
-85	Helen Mirren
-86	Sigourney Weaver
-87	J. K. Rowling
-88	Julie Andrews
-89	Gwyneth Paltrow
-90	Cameron Diaz
-91	Sandra Bullock
-92	Margaret Atwood
-93	Anatoly Dyatlov
-94	Angelina Jolie
-95	Muhammad
-96	Genghis Khan
-97	Leonardo da Vinci
-98	Isaac Newton
-99	Ludwig van Beethoven
-100	Alexander the Great
-101	Aristotle
-102	Napoleon
-103	Julius Caesar
-104	Wolfgang Amadeus Mozart
-105	Plato
-106	Jesus
-107	Adolf Hitler
-108	Galileo Galilei
-109	Marco Polo
-110	Socrates
-111	Johann Sebastian Bach
-112	Albert Einstein
-113	Michelangelo
-114	William Shakespeare
-115	Martin Luther
-116	Christopher Columbus
-117	Moses
-118	Archimedes
-119	Abraham
-120	Sigmund Freud
-121	Confucius
-122	Vincent van Gogh
-123	Nicolaus Copernicus
-124	Ferdinand Magellan
-125	Gautama Buddha
-126	Charles Darwin
-127	Karl Marx
-128	Immanuel Kant
-129	Thomas Jefferson
-130	Joseph Stalin
-131	Thomas Edison
-132	Vladimir Lenin
-133	Homer
-134	Pablo Picasso
-135	Nikola Tesla
-136	Antonio Vivaldi
-137	Nelson Mandela
-138	Friedrich Nietzsche
-139	Mahatma Gandhi
-140	Frederic Chopin
-141	J. R. R. Tolkien
-142	Niccola Machiavelli
-143	Hans Christian Andersen
-144	Charlie Chaplin
-145	Salvador Dali
-146	Mary, mother of Jesus
-147	Joan of Arc
-148	Elizabeth I
-149	Marie Curie
-150	Frida Kahlo
-151	Queen Victoria
-152	Marie Antoinette
-153	Nefertiti
-154	Maria Theresa
-155	Agatha Christie
-156	Mary, Queen of Scots
-157	Pocahontas
-158	Anne Boleyn
-159	Catherine the Great
-160	Mary Magdalene
-161	Mother Teresa
-162	Florence Nightingale
-163	Eleanor Roosevelt
-164	Cleopatra
-165	Coco Chanel
-166	Jane Austen
-167	Wallis Simpson
-168	Maria Montessori
-169	Baba Vanga
-170	Virginia Woolf
-171	Eva Braun
-172	Kim Jong-un
-173	Novak Djokovic
-174	Chris Hemsworth
-175	Roger Federer
-176	Mark Zuckerberg
-177	PewDiePie
-178	Prince William
-179	Shia LaBeouf
-180	Usain Bolt
-181	Drake
-182	Daniel Radcliffe
-183	Edward Snowden
-184	Rafael Nadal
-185	Lil Wayne
-186	Avicii
-187	LeBron James
-188	Liam Hemsworth
-189	Eddie Redmayne
-190	Andrew Garfield
-191	Rami Malek
-192	Justin Timberlake
-193	Justin Bieber
-194	Donald Glover
-195	Robert Pattinson
-196	Elijah Wood
-197	Rihanna
-198	Lady Gaga
-199	Natalie Portman
-200	Margot Robbie
-201	Scarlett Johansson
-202	Alicia Keys
-203	Anne Hathaway
-204	Emma Watson
-205	Britney Spears
-206	Amy Winehouse
-207	Avril Lavigne
-208	Keira Knightley
-209	Selena Gomez
-210	Beyonce
-211	Katy Perry
-212	Jessica Alba
-213	Ariana Grande
-214	Jennifer Lawrence
-215	Emilia Clarke
-216	Gal Gadot
-217	Kirsten Dunst
-218	Paris Hilton
-219	Emma Stone
-220	Kristen Stewart
-221	Meghan Markle
-222	Amber Heard
-223	Taylor Swift
-224	Kim Yo-jong
-225	Lindsay Lohan
-226	Megan Fox
-227	Miley Cyrus
-228	Billie Eilish
-229	Mila Kunis
-230	Lana Del Rey
-231	Greta Thunberg
-232	Serena Williams
-233	Kylie Jenner
-234	Dakota Johnson
-235	Nicki Minaj
-236	Adele
-\.
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (1, 'Donald Trump');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (2, 'Che Guevara');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (3, 'Pope Francis');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (4, 'Muhammad Ali');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (5, 'Jimmy Carter');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (6, 'Stephen Hawking');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (7, 'Pope John Paul II');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (8, 'Mikhail Gorbachev');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (9, 'Yuri Gagarin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (10, 'Sylvester Stallone');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (11, 'Steve Jobs');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (12, 'Freddie Mercury');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (13, 'Malcolm X');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (14, 'Elvis Presley');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (15, 'Bob Marley');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (16, 'Fidel Castro');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (17, 'Vladimir Putin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (18, 'Neil Armstrong');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (19, 'Steven Spielberg');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (20, 'Saddam Hussein');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (21, 'Bruce Lee');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (22, 'Martin Scorsese');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (23, 'Pope Benedict XVI');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (24, 'John Lennon');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (25, 'Prince Philip');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (26, 'Ennio Morricone');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (27, 'Pablo Escobar');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (28, 'Michael Jackson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (29, 'Boris Yeltsin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (30, 'Clint Eastwood');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (31, 'Al Pacino');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (32, 'Bill Gates');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (33, 'Muammar Gaddafi');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (34, '14th Dalai Lama');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (35, 'Marlon Brando');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (36, 'Yasser Arafat');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (37, 'Charles Manson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (38, 'Kim Jong-il');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (39, 'Stanley Kubrick');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (40, 'Anthony Hopkins');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (41, 'Andy Warhol');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (42, 'Robert De Niro');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (43, 'Luciano Pavarotti');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (44, 'Sean Connery');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (45, 'Morgan Freeman');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (46, 'Jeff Bezos');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (47, 'Martin Luther King Jr.');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (48, 'Arnold Schwarzenegger');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (49, 'Elon Musk');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (50, 'Warren Buffett');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (51, 'Roman Polanski');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (52, 'Jack Nicholson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (53, 'Pol Pot');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (54, 'George W. Bush');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (55, 'Prince Charles');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (56, 'Noam Chomsky');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (57, 'Danny DeVito');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (58, 'Joe Biden');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (59, 'Dustin Hoffman');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (60, 'Patrick Swayze');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (61, 'Leonard Cohen');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (62, 'Elizabeth II');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (63, 'Marilyn Monroe');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (64, 'Hillary Clinton');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (65, 'Anne Frank');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (66, 'Margaret Thatcher');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (67, 'Cher');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (68, 'Audrey Hepburn');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (69, 'Angela Merkel');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (70, 'Janis Joplin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (71, 'Judy Garland');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (72, 'Princess Margaret');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (73, 'Tina Turner');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (74, 'Meryl Streep');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (75, 'Maggie Smith');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (76, 'Yoko Ono');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (77, 'Grace Kelly');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (78, 'Princess Diana');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (79, 'Madonna');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (80, 'Barbra Streisand');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (81, 'Judi Dench');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (82, 'Patti Smith');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (83, 'Whitney Houston');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (84, 'Aretha Franklin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (85, 'Helen Mirren');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (86, 'Sigourney Weaver');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (87, 'J. K. Rowling');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (88, 'Julie Andrews');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (89, 'Gwyneth Paltrow');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (90, 'Cameron Diaz');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (91, 'Sandra Bullock');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (92, 'Margaret Atwood');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (93, 'Anatoly Dyatlov');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (94, 'Angelina Jolie');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (95, 'Muhammad');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (96, 'Genghis Khan');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (97, 'Leonardo da Vinci');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (98, 'Isaac Newton');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (99, 'Ludwig van Beethoven');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (100, 'Alexander the Great');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (101, 'Aristotle');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (102, 'Napoleon');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (103, 'Julius Caesar');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (104, 'Wolfgang Amadeus Mozart');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (105, 'Plato');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (106, 'Jesus');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (107, 'Adolf Hitler');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (108, 'Galileo Galilei');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (109, 'Marco Polo');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (110, 'Socrates');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (111, 'Johann Sebastian Bach');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (112, 'Albert Einstein');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (113, 'Michelangelo');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (114, 'William Shakespeare');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (115, 'Martin Luther');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (116, 'Christopher Columbus');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (117, 'Moses');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (118, 'Archimedes');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (119, 'Abraham');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (120, 'Sigmund Freud');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (121, 'Confucius');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (122, 'Vincent van Gogh');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (123, 'Nicolaus Copernicus');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (124, 'Ferdinand Magellan');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (125, 'Gautama Buddha');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (126, 'Charles Darwin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (127, 'Karl Marx');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (128, 'Immanuel Kant');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (129, 'Thomas Jefferson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (130, 'Joseph Stalin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (131, 'Thomas Edison');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (132, 'Vladimir Lenin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (133, 'Homer');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (134, 'Pablo Picasso');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (135, 'Nikola Tesla');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (136, 'Antonio Vivaldi');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (137, 'Nelson Mandela');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (138, 'Friedrich Nietzsche');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (139, 'Mahatma Gandhi');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (140, 'Frederic Chopin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (141, 'J. R. R. Tolkien');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (142, 'Niccola Machiavelli');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (143, 'Hans Christian Andersen');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (144, 'Charlie Chaplin');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (145, 'Salvador Dali');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (146, 'Mary, mother of Jesus');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (147, 'Joan of Arc');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (148, 'Elizabeth I');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (149, 'Marie Curie');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (150, 'Frida Kahlo');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (151, 'Queen Victoria');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (152, 'Marie Antoinette');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (153, 'Nefertiti');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (154, 'Maria Theresa');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (155, 'Agatha Christie');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (156, 'Mary, Queen of Scots');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (157, 'Pocahontas');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (158, 'Anne Boleyn');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (159, 'Catherine the Great');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (160, 'Mary Magdalene');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (161, 'Mother Teresa');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (162, 'Florence Nightingale');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (163, 'Eleanor Roosevelt');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (164, 'Cleopatra');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (165, 'Coco Chanel');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (166, 'Jane Austen');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (167, 'Wallis Simpson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (168, 'Maria Montessori');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (169, 'Baba Vanga');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (170, 'Virginia Woolf');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (171, 'Eva Braun');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (172, 'Kim Jong-un');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (173, 'Novak Djokovic');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (174, 'Chris Hemsworth');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (175, 'Roger Federer');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (176, 'Mark Zuckerberg');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (177, 'PewDiePie');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (178, 'Prince William');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (179, 'Shia LaBeouf');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (180, 'Usain Bolt');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (181, 'Drake');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (182, 'Daniel Radcliffe');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (183, 'Edward Snowden');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (184, 'Rafael Nadal');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (185, 'Lil Wayne');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (186, 'Avicii');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (187, 'LeBron James');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (188, 'Liam Hemsworth');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (189, 'Eddie Redmayne');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (190, 'Andrew Garfield');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (191, 'Rami Malek');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (192, 'Justin Timberlake');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (193, 'Justin Bieber');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (194, 'Donald Glover');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (195, 'Robert Pattinson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (196, 'Elijah Wood');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (197, 'Rihanna');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (198, 'Lady Gaga');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (199, 'Natalie Portman');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (200, 'Margot Robbie');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (201, 'Scarlett Johansson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (202, 'Alicia Keys');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (203, 'Anne Hathaway');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (204, 'Emma Watson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (205, 'Britney Spears');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (206, 'Amy Winehouse');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (207, 'Avril Lavigne');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (208, 'Keira Knightley');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (209, 'Selena Gomez');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (210, 'Beyonce');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (211, 'Katy Perry');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (212, 'Jessica Alba');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (213, 'Ariana Grande');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (214, 'Jennifer Lawrence');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (215, 'Emilia Clarke');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (216, 'Gal Gadot');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (217, 'Kirsten Dunst');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (218, 'Paris Hilton');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (219, 'Emma Stone');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (220, 'Kristen Stewart');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (221, 'Meghan Markle');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (222, 'Amber Heard');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (223, 'Taylor Swift');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (224, 'Kim Yo-jong');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (225, 'Lindsay Lohan');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (226, 'Megan Fox');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (227, 'Miley Cyrus');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (228, 'Billie Eilish');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (229, 'Mila Kunis');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (230, 'Lana Del Rey');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (231, 'Greta Thunberg');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (232, 'Serena Williams');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (233, 'Kylie Jenner');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (234, 'Dakota Johnson');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (235, 'Nicki Minaj');
+INSERT INTO public.default_names OVERRIDING SYSTEM VALUE VALUES (236, 'Adele');
 
-
---
--- Data for Name: games; Type: TABLE DATA; Schema: public; Owner: -
---
 
 
 --
 -- Data for Name: mp3_order; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.mp3_order (number_stops, current_stop, number_starts, current_start) FROM stdin;
-13	2	18	6
-\.
+INSERT INTO public.mp3_order VALUES (13, 2, 18, 6);
 
-
---
--- Data for Name: players_turn_order; Type: TABLE DATA; Schema: public; Owner: -
---
-
---
--- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: -
---
-
---
--- Data for Name: teams_turn_order; Type: TABLE DATA; Schema: public; Owner: -
---
-
-
---
--- Data for Name: turns; Type: TABLE DATA; Schema: public; Owner: -
---
-
-
---
--- Data for Name: user_instance; Type: TABLE DATA; Schema: public; Owner: -
---
-
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
---
 
 
 --
@@ -633,7 +595,7 @@ SELECT pg_catalog.setval('public.user_instance_user_inst_id_seq', 294, true);
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 114, true);
+SELECT pg_catalog.setval('public.users_user_id_seq', 115, true);
 
 
 --
