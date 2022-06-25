@@ -110,3 +110,17 @@ A web-based game for mobiles. A Jackbox-style implementation of The Name Game
     <li>eg. Name: <em>Bilbo Baggins</em>&nbsp; Don't say: <em>"Rhymes with <strong>Schmilbo Schmaggins</strong>"</em></li>
   </ul>
 </ol>
+<h2>
+  Setup
+</h2>
+<h4>Prerequisites</h4>
+<ul>
+  <li>Python >= 3</li>
+  <ul>
+    <li>flask</li>
+    <li>flask-socketio</li>
+    <li>psycopg2</li>
+  </ul>
+  <li>postgresql server</li>
+  <li>pgadmin</li>
+</ul>
