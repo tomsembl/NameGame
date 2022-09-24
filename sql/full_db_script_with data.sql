@@ -1,7 +1,3 @@
---first run this
---CREATE DATABASE NameGame
---then in a new query window under that db, run the below
-
 --
 -- PostgreSQL database dump
 --
@@ -25,14 +21,8 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: User; Type: USER; -
---
-
-CREATE USER webserver_namegame WITH PASSWORD 'sqlpass123';
---
 -- Name: answers; Type: TABLE; Schema: public; Owner: -
 --
-
 
 CREATE TABLE public.answers (
     answer_id integer NOT NULL,
