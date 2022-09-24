@@ -179,8 +179,7 @@ def random_shuffle_teams_sql(game_id):
         current_team_index = (current_team_index + 1) % len(teams)
 
 def player_team_change_sql(user_id,team_id,game_id): 
-    if get_game_stage(game_id) == 1:
-        q_sql(f"update user_instance set team_id= %(team_id)s where user_id = %(user_id)s and game_id=%(game_id)s", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
+    if get_game_stage(game_id) == 1: q_sql(f"update user_instance set team_id= %(team_id)s where user_id = %(user_id)s and game_id=%(game_id)s", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
 
 def get_random_default_name(): return random.choice(q_sql(f"select name from default_names"))[0]
 
@@ -510,8 +509,9 @@ def name_game(game_id):
     teams = get_team_names(game_id)
     players = get_players_by_game_id(game_id)
     team_id = get_teamid_by_userinst(user_inst_id)
+    _, teammembers = get_teams(game_id)
     if game_deets['stage'] >= 4: return redirect(url_for(f"graphs", game_id=game_id))
-    return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, username=username, user_inst_id=user_inst_id, teams=teams, team_id=team_id)
+    return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, username=username, user_inst_id=user_inst_id, teams=teams, team_id=team_id, teammembers=teammembers)
 
 #graphs
 @app.route('/graphs/<game_id>', methods=["GET"])
@@ -539,10 +539,11 @@ if __name__ == '__main__':
     socketio.run(
         app,
         #host="192.168.137.1",
-        #host="192.168.0.106",
-        host="0.0.0.0",
+        #host="192.168.1.17",
+        host="192.168.0.106",
+        #host="0.0.0.0",
         #port=8, 
-        port=65112, 
+        port=8, 
         log_output=True,
         debug=True,
         use_reloader=True
