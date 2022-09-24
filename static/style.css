@@ -212,7 +212,8 @@ table, th, td, tr {
     background-color:rgba(0, 0, 0, 0.55);
     margin-left: 0.6em;
 }
-.write-names-p{font-size:3.2vw }
+.write-names-p{font-size:3.2vw ;}
+.self-centered{align-self: center;}
 
 
 
