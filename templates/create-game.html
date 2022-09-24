@@ -5,24 +5,27 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <title>The Name Game</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        
     </head>
     <body class="lobby"> 
         <h1 class="heading subheading">CREATE GAME</h1>
         <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
-            
+            <div id="app"></div>
             <div class="">
                 <h1 class="heading subheading2">SETTINGS</h1>
                 <br>
                 <label for="game_name">Game Name:</label>
-                <div class="flex-h-left">
-                    <input type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'" maxlength="40">
-                </div>
+                <input class="input" type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'" maxlength="40">
                     <label for="number_teams">Number of Teams:</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_teams" name="number_teams" value="2" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>2</output>
                 </div>
-                <label for="number_names">Each Player Will Submit # Names:</label>
+                <label for="number_names">Each Player Will Submit _ Names:</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_names" name="number_names" value="10" max="16" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>10</output>
@@ -60,6 +63,39 @@
             <button class="button1" onclick="location.href='/';">Home</button>
         </div>
     </body>
+    <script type="text/babel">
+        function App() {
+
+            const [notifState, setNotifState] = React.useState({
+                message: "",
+                isSuccess: true,
+                isVisible: false,
+            })
+
+            const notification = (
+                <div class="position-top mt-5" id="notification">
+                    <div class={`notification ${notifState.isSuccess ? "is-success" : "is-danger"} blurry has-text-left px-6 ${notifState.isVisible ? "" : "is-hidden"}`}>
+                        <button class="delete" onClick={() => {
+                            setNotifState({
+                                ...notifState,
+                                isVisible: false,
+                            })
+                        }}></button>
+                        {notifState.message}
+                    </div>
+                </div>
+            )
+
+            return (
+                <div>
+                    {notification}
+                </div>
+            )
+        }
+        ReactDOM.render(<App />, document.querySelector("#app"))
+
+    </script>
+
     <script>
         function submit(){
             var all=[]

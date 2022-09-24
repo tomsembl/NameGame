@@ -69,10 +69,12 @@
             // }
 
             for(var i=0; i<number_names; i++) {
-                var elem = document.getElementById(`name_input${i}`)
-                var val = elem.value
-                elem.value = ""
-                elem.setAttribute('disabled','')
+                var name_input = document.getElementById(`name_input${i}`)
+                var random_button = document.getElementById(`button${i}`)
+                var val = name_input.value
+                name_input.value = ""
+                random_button.setAttribute('disabled','')
+                name_input.setAttribute('disabled','')
                 if (val !== ""){
                     names.push(val)
                 }

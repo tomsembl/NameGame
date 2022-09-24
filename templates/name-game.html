@@ -35,6 +35,7 @@
         <div id="whos_up" class="flex-v pad-10pct">
             <p class="white" id="current_player" class=""></p>
             <p class="white" id="current_team" class=""></p>
+            <p class="white" id="teammates" class=""></p>
         </div>
 
         <div class="flex-h mar-1em">
@@ -46,20 +47,13 @@
         </div>
     </body>
     <script>
-        var socket
-        var current_name
-        var previous_name
-        var interval
-        var current_turn_user_id
-        var current_team_id
-        var teams
-        var players
-        var my_turn = false
-        var start_mp3
-        var finish_mp3
+        var socket, current_name, previous_name, interval, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers
+        var teammates  = []
+        var my_turn = false 
         var current_round = parseInt("{{game_deets['round']}}")
         var audio1 = new Audio(`/static/start/0.mp3`);
         var audio2 = new Audio(`/static/stop/0.mp3`);
+        var audio3 = new Audio(`/static/Ding.mp3`);
 
         $(document).ready(function(){
             socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
@@ -86,8 +80,12 @@
             socket.on('emit_current_turn',function(msg) {
                 current_turn_user_id = msg[1]
                 current_team_id = msg[0]
-                document.getElementById("current_player").innerHTML = "Current Player: " + players[current_turn_user_id]
-                document.getElementById("current_team").innerHTML = "Team: " + teams[current_team_id]
+                current_player = players[current_turn_user_id]
+                teammates = JSON.parse(JSON.stringify(teammembers[current_team_id]))
+                teammates.splice(teammates.indexOf(current_player))
+                document.getElementById("current_player").innerHTML = `<strong>Current Player:</strong> &nbsp; ${current_player}`
+                document.getElementById("current_team").innerHTML = `<strong>Team Name:</strong> &nbsp; &nbsp; &nbsp;${teams[current_team_id]}`
+                document.getElementById("teammates").innerHTML = teammates.length !== 0 ? `<strong>Teammates:</strong> &nbsp; &nbsp; &nbsp;${teammates.join(", ")}` : ""
                 if (`${current_turn_user_id}` === "{{user_id}}"){
                     if (!my_turn){
                         your_turn()
@@ -97,17 +95,20 @@
                 }
                 else if (`${current_team_id}` === "{{team_id}}"){
                     document.getElementById("body").classList.add("myteam-background")
-                    document.getElementById("the_name").innerHTML = players[current_turn_user_id] + "'s Turn<br>You're Guessing"
+                    document.getElementById("the_name").innerHTML = current_player + "'s Turn<br>You're Guessing"
                 } else {
                     document.getElementById("body").classList.remove("myteam-background")
-                    document.getElementById("the_name").innerHTML = players[current_turn_user_id] + "'s Turn"
+                    document.getElementById("the_name").innerHTML = current_player + "'s Turn"
                 }
 
             }) 
 
             socket.on('emit_teams',function(msg) { teams = msg }) 
 
-            socket.on('emit_players',function(msg) { players = msg[0] }) 
+            socket.on('emit_players',function(msg) { 
+                players = msg[0] 
+                teammembers = msg[1]
+            }) 
 
             socket.on('emit_current_round',function(msg) {
                 current_round = msg[0] ; is_new_round = msg[1]
@@ -213,6 +214,7 @@
             setTimeout(()=>{
                 document.getElementById("done_button").removeAttribute("disabled")
             }, 500)
+            audio3.play()
 
         }
 
