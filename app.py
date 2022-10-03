@@ -5,7 +5,7 @@ import psycopg2, random, string, os, logging, time
 app = Flask(__name__)
 
 #connect DB
-try: conn = psycopg2.connect("dbname='namegame' user='webserver_namegame' host='localhost' password='sqlpass123'")
+try: conn = psycopg2.connect("dbname='d8hufsfsu5nqe9' user='cfucyizewwtosh' host='ec2-34-230-153-41.compute-1.amazonaws.com' password='02b2bd480dfca87f4a9de6a13077077bce09b13f9ae42a45c2f49039cfbc9ca4'")
 except: print("I am unable to connect to the database")
 conn.autocommit = True
 
