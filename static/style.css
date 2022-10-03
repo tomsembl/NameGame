@@ -2,14 +2,17 @@
     font-family: 'poppins';
     src: url('poppins.woff2') format('woff2');
   }
-
+html{
+    background-color:rgb(255, 255, 255)
+}
 body{ 
     margin: 0; 
-    font-family: "poppins"; 
+    font-family: "poppins" !important ;
     width: 100vw;
     height: 100vh; 
     font-size: large;
 }
+.lobby-body{height: auto;}
 .space-between{
     display: flex;
     flex-direction: row;
@@ -47,6 +50,7 @@ body{
     background-image: url("namegamebackground.jpg"); 
     background-size:cover;
     background-position: center center;
+    height: 100vh;
 }
 video {
     width: 100%;
@@ -59,13 +63,16 @@ video {
 .heading{
     color: white;
     font-size: 11vw;
+    font-weight: 800;
     text-align: center;
     backdrop-filter: blur(5px);
     background-color:rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 3px 10px rgb(0 0 0 / 0.3);
 }
-.subheading{font-size: 6vw;}
-.subheading2{font-size: 4vw; margin:0em 0em 0em 0em}
+.subheading{font-size: 6vw !important;}
+.subheading2{font-size: 4vw !important; margin:0em 0em 0em 0em}
+.subheading3{font-size: 30px!important;}
+.subheading4{font-size: 20px !important; margin:0em 0em 0em 0em}
 .button1{
     font-family: "poppins"; 
     align-self: center;
@@ -83,16 +90,30 @@ video {
 }
 .button2{
     font-family: "poppins"; 
-    width: 15vw;
-    height: 5vw;
+    width: auto;
+    height: auto;
+    padding-inline:0.4em;
+    padding-block:0.2em;
     background-color:rgba(0, 0, 0, 0.35); 
     color:white; 
     z-index:999;
     backdrop-filter: blur(5px);
-    font-size: 2.6vw;
+    font-size: 0.8em;
     border: none;
     border-radius: 0.3em;
     box-shadow: inset 0 3px 10px rgb(0 0 0 / 0.3);
+}
+.button3{
+    width:140px;
+    height: 50px;
+    min-height: 0;
+    font-size: 16px;
+}
+.button3:active{
+    transform: scale(0.95);
+}
+.button-green{
+    background-color:hsl(141, 72%, 42%); 
 }
 /* .button1:hover,.button2:hover{
     background-color:rgba(30, 30, 30, 0.40); 
@@ -103,25 +124,30 @@ video {
     background-color:rgba(53, 53, 53, 0.308);
 }
 .form{    min-height: 60vh;}
-.pad-10pct{padding: 0 10vw 0 10vw;}
-.pad-10pct-v{padding: 10vw 0vw 10vw 0vw ;}
+.pad-10pct{padding: 0 10% 0 10%;}
+.pad-10pct-v{padding: 5vh 0 5vh 0 ;}
+.pad-10pct-vw{padding: 10vw 0vw 10vw 0vw ;}
 .pad-05em{padding: 0.5em}
 .pad-1em{padding: 1em}
 .mar-05em{margin: 0.5em}
 .mar-1em{margin: 1em}
+.mar-b20{margin-bottom: 20px;}
 /*input[type="checkbox"]{
     height: 1.5em; 
     width: 1.3em; 
     margin-right: 0.9em;}*/
 input[type="text"]{
     font-family: "poppins"; 
-    font-size: 3.6vw;
+    font-size: 1em;
     padding: 0.3em 0.6em 0.3em 0.6em;
     box-shadow: inset 0 0px 5px rgb(0 0 0 / 0.4);
     border: none;
     border-radius: 0.3em;
     background-color:rgba(0, 0, 0, 0.35);
     color:white;
+}
+input[type="text"]#game_name{
+    font-size: 1em;
 }
 input[type="text"]:disabled {background-color:rgba(97, 97, 97, 0.523);}
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -138,11 +164,11 @@ output{
 }
 .option{
     /* border: 0.1em solid black; */
-    font-size: 3.6vw;
+    font-size: 1em;
     padding: 0.3em 0.7em 0.3em 0.7em;
 }
 .small-option{
-    font-size: 3.2vw;
+    font-size: 1em;
     padding: 0.2em 0.5em 0.2em 0.5em;
 }
 .td-right{text-align: right;}
@@ -151,22 +177,27 @@ output{
     background-color: rgb(80, 80, 241) !important;
     color: white;
 }
-.vw40{width:40vw}
-.vw86{width:86vw}
-.vh40{width:40vh}
+.vw40{width:40%}
+.vw86{width:86%}
+.vh40{width:40%}
 p{margin:0}
 td p, td strong, .game-details p{
-    font-size: 2.6vw;
+    font-size: 14px;
 }
 td strong{    padding: 0.2em 0.5em 0.2em 0.5em;}
 .lobby{
     background-color: rgb(73, 255, 237);
-    background-image: linear-gradient(to bottom, rgb(0, 240, 216), rgb(46, 162, 151));
-    background-attachment:fixed;
-
-    flex:1;
+    background: linear-gradient(55deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 85%);
+    background-repeat: repeat;
+  background-attachment:scroll;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+@media (min-width: 768px) {
+    .lobby{
+        width: 768px;
+        margin-inline: auto;
+    }
 }
 .zbehind{z-index:-1}
 table, th, td, tr {
@@ -188,15 +219,22 @@ table, th, td, tr {
 }
 .name_input{width: 21em !important }
 .invisible{visibility:hidden}
-.name_big{font-size:8vw}
-.myturn-background{
-    background-color:rgb(251, 62, 62);
-    background-image: linear-gradient(to bottom, rgb(251, 62, 62), rgb(192, 45, 45));
+.name_big{
+    font-size:8vw;
+    white-space: pre-wrap;
+}
+/* .myturn-background{
+    background: linear-gradient(55deg, rgb(192, 45, 114), rgb(251, 62, 62), rgb(255, 180, 0));
 }
 .myteam-background{
-    background-color:rgb(251, 207, 62);
-    background-image: linear-gradient(to bottom, rgb(251, 210, 62), #ffb100); 
+    background: linear-gradient(55deg, rgb(255, 180, 0),rgb(246, 255, 0), rgb(0, 255, 191));
 }
+.notmyteam-background{
+    background: linear-gradient(55deg, rgb(0, 255, 191),rgb(186, 129, 255),rgb(254, 153, 200));
+}
+.a{
+background: linear-gradient(55deg,rgb(192, 45, 114), rgb(251, 62, 62), rgb(255, 180, 0),rgb(246, 255, 0), rgb(0, 255, 191),rgb(186, 129, 255),rgb(254, 153, 200));
+} */
 .white{color:rgb(255, 255, 255)}
 .team-players-table{display: block;}
 .team-players-table td{display: inline-block;}
@@ -215,6 +253,70 @@ table, th, td, tr {
 .write-names-p{font-size:3.2vw ;}
 .self-centered{align-self: center;}
 
+/*background that took me way too long*/
+.rainbow-gradient-bg{
+    background: linear-gradient(55deg,rgb(192, 45, 114), rgb(251, 62, 62), rgb(255, 180, 0),rgb(246, 255, 0), rgb(0, 255, 191),rgb(186, 129, 255),rgb(254, 153, 200));
+    background-size: 260% 260%;
+}
+@keyframes animate-your-team{
+    0%{background-position: 0% 100%;
+        background-size: 260% 260%;}
+    100%{background-position: 50% 50%;
+        background-size: 220% 220%;}
+}
+@keyframes animate-your-not{
+    0%{background-position: 0% 100%;}
+    100%{background-position: 100% 0%;}
+}
+@keyframes animate-team-not{
+    0%{background-position: 50% 50%;
+        background-size: 220% 220%;}
+    100%{background-position: 100% 0%;
+        background-size: 260% 260%;}
+}
+@keyframes animate-team-your{
+    0%{background-position: 50% 50%;
+        background-size: 220% 220%;}
+    100%{background-position: 0% 100%;
+        background-size: 260% 260%;}
+}
+@keyframes animate-not-team{
+    0%{background-position: 100% 0%;
+        background-size: 260% 260%;}
+    100%{background-position: 50% 50%;
+        background-size: 220% 220%;}
+}
+@keyframes animate-not-your{
+    0%{background-position: 100% 0%;}
+    100%{background-position: 0% 100%;}
+}
+
+.animate-your-team{
+    background-position: 50% 50%;
+    background-size: 220% 220%;
+    animation: animate-your-team 4s ease 1;
+}
+.animate-your-not{
+    background-position: 100% 0%;
+    animation: animate-your-not 4s ease 1;
+}
+.animate-team-not{
+    background-position: 100% 0%;
+    animation: animate-team-not 4s ease 1;
+}
+.animate-team-your{
+    background-position: 0% 100%;
+    animation: animate-team-your 4s ease 1;
+}
+.animate-not-team{
+    background-position: 50% 50%;
+    background-size: 220% 220%;
+    animation: animate-not-team 4s ease 1;
+}
+.animate-not-your{
+    background-position: 0% 100%;
+    animation: animate-not-your 4s ease 1;
+}
 
 
 
@@ -224,9 +326,9 @@ table, th, td, tr {
 /*toggle switch*/
 .switch { margin: 0em 0.6em 2px 4px; position: relative; display: inline-block; width: 45px; height: 26px; }
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(72, 72, 72, 0.676); -webkit-transition: .4s; transition: .4s; border-radius: 2px; 
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(72, 72, 72, 0.676); -webkit-transition: .2s; transition: .2s; border-radius: 2px; 
     box-shadow: inset 0 3px 10px rgb(0 0 0 / 0.3);}
-.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s; border-radius: 2px;}
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .2s; transition: .2s; border-radius: 2px;}
 input:checked + .slider { background-color: rgba(0, 0, 0, 0.2) }
 input:focus + .slider { box-shadow: 0 0 1px linear-gradient(to bottom right, #e0e0e0, #F7F7F7); }
 input:checked + .slider:before { -webkit-transform: translateX(19px); -ms-transform: translateX(19px); transform: translateX(19px); }

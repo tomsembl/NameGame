@@ -1,0 +1,8 @@
+.lobby{
+    background-color: rgb(73, 255, 237);
+    background-image: linear-gradient(to bottom, rgb(0, 240, 216), rgb(46, 162, 151));
+    background-attachment:fixed;
+    flex:1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
