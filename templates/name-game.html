@@ -7,240 +7,354 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
         <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='react.production.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='react-dom.production.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='babel.min.js') }}"></script>
     </head>
-    <body id="body" class="flex-v-space lobby"> 
-        <h1 id="heading" class="heading subheading">THE NAME GAME</h1>
+    <div id="app"></div>
 
-        <div class="flex-v">
-            <h1 id="round" class="heading subheading">
-                {% if game_deets['round'] == 1 %}
-                    Round 1: &nbsp;Unlimited
-                {% elif game_deets['round'] == 2 %}
-                    Round 2: &nbsp3 Words Max
-                {% elif game_deets['round'] == 3 %}
-                    Round 3: &nbsp1 Word Only
-                {% elif game_deets['round'] == 4 %}
-                    Round 4: &nbspMime
-                {% endif %}
-            </h1>
-        </div>
-        
-        <div class="flex-v">
-            <h1 id="the_name" class=" heading subheading pad-10pct-v name_big">&nbsp;</h1>
-            <button id="done_button" class="button1 invisible" onclick="done()" disabled>They Guessed It</button>
-            <h1  class="heading subheading">Timer<br><span id="countdown">{{game_deets['time_limit']}}</span></h1>
-        </div>
+    <script type="text/babel">
+        function App() {
+            var time_limit = parseInt("{{game_deets['time_limit']}}")
+            const [state, setState] = React.useState({
+                userID: parseInt("{{user_id}}"),
+                teamID: parseInt("{{team_id}}"),
+                myTurn: false,
+                myTeamsTurn: false,
+                currentRound: parseInt("{{game_deets['round']}}"),
+                timeLimit: time_limit,
+                roundTexts: {1:'Round 1: \xa0Unlimited',2:'Round 2: \xa03 Words Max',3:'Round 3: \xa01 Word Only',4:'Round 4: \xa0Mime'},
+                currentTurnUserID: null,
+                currentTeamID: null,
+                currentPlayer: null,
+                teammates: [],
+                players: [],
+                teams: [],
+                teammembers: [],
+                turnStarted: false,
+                doneButtonEnabled: true,
+                whosUpVisible: true,
+                startButtonEnabled: true,
+                prevPhase: -1,
+                phase: -1,
 
-        <!-- TODO: show turn order of players -->
-        <div id="whos_up" class="flex-v pad-10pct">
-            <p class="white" id="current_player" class=""></p>
-            <p class="white" id="current_team" class=""></p>
-            <p class="white" id="teammates" class=""></p>
-        </div>
-
-        <div class="flex-h mar-1em">
-            <button id="start_button" class="button1" onclick="start()" disabled>Start</button>
-            <button id="concede_button" class="button1" onclick="concede()" disabled>Concede</button>
-        </div>
-        <div class="flex-h mar-1em">
-            <button class="button2" onclick="location.href='/';">Home</button>
-        </div>
-    </body>
-    <script>
-        var socket, current_name, previous_name, interval, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers
-        var teammates  = []
-        var my_turn = false 
-        var current_round = parseInt("{{game_deets['round']}}")
-        var audio1 = new Audio(`/static/start/0.mp3`);
-        var audio2 = new Audio(`/static/stop/0.mp3`);
-        var audio3 = new Audio(`/static/Ding.mp3`);
-
-        $(document).ready(function(){
-            socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
-
-            socket.on('advance_game_emit',function(msg) {
-                alert("game started")
-                location.href='/name_game/{{game_id}}';
-            }) 
-
-            socket.on('emit_next_name',function(name_data) {
-                if (name_data == "no more names"){
-                    concede(names_ran_out=true)
-                }
-                document.getElementById("the_name").innerHTML = name_data['name']
-                current_name = name_data
             })
+            const [countdown, setCountdown] = React.useState(time_limit)
+            const [name, setName] = React.useState(null)
+            var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, teammates, is_new_round, start_or_stop, stop_mp3, current_round
+            var audio1 = new Audio(`/static/start/0.mp3`)
+            var audio2 = new Audio(`/static/stop/0.mp3`)
+            var audio3 = new Audio(`/static/Ding.mp3`)
+            const nameRef = React.useRef()
+            const socket = React.useRef()
+            const interval = React.useRef()
+            const myTurnRef = React.useRef()
+            React.useEffect(()=>{
+                nameRef.current = name
+                myTurnRef.current = state.myTurn
+            },[name,state.myTurn])
 
-            socket.on('your_turn',function(msg) {
-                if (!my_turn){
-                    your_turn()
-                }
-            })
-
-            socket.on('emit_current_turn',function(msg) {
-                current_turn_user_id = msg[1]
-                current_team_id = msg[0]
-                current_player = players[current_turn_user_id]
-                teammates = JSON.parse(JSON.stringify(teammembers[current_team_id]))
-                teammates.splice(teammates.indexOf(current_player))
-                document.getElementById("current_player").innerHTML = `<strong>Current Player:</strong> &nbsp; ${current_player}`
-                document.getElementById("current_team").innerHTML = `<strong>Team Name:</strong> &nbsp; &nbsp; &nbsp;${teams[current_team_id]}`
-                document.getElementById("teammates").innerHTML = teammates.length !== 0 ? `<strong>Teammates:</strong> &nbsp; &nbsp; &nbsp;${teammates.join(", ")}` : ""
-                if (`${current_turn_user_id}` === "{{user_id}}"){
-                    if (!my_turn){
-                        your_turn()
-                        clearInterval(interval)
-                        document.getElementById("the_name").innerHTML = "Your Turn"
-                    }
-                }
-                else if (`${current_team_id}` === "{{team_id}}"){
-                    document.getElementById("body").classList.add("myteam-background")
-                    document.getElementById("the_name").innerHTML = current_player + "'s Turn<br>You're Guessing"
-                } else {
-                    document.getElementById("body").classList.remove("myteam-background")
-                    document.getElementById("the_name").innerHTML = current_player + "'s Turn"
-                }
-
-            }) 
-
-            socket.on('emit_teams',function(msg) { teams = msg }) 
-
-            socket.on('emit_players',function(msg) { 
-                players = msg[0] 
-                teammembers = msg[1]
-            }) 
-
-            socket.on('emit_current_round',function(msg) {
-                current_round = msg[0] ; is_new_round = msg[1]
-                round_texts = {1:'Round 1: &nbspUnlimited',2:'Round 2: &nbsp3 Words Max',3:'Round 3: &nbsp1 Word Only',4:'Round 4: &nbspMime'}
-                document.getElementById("round").innerHTML = round_texts[current_round]
-                if (is_new_round){location.href="/graphs/{{game_id}}"}
+            React.useEffect(()=>{
                 
-            }) 
+                const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})
 
-            socket.on('start_timer',function(msg) {
-                if(!my_turn){
-                    var count = parseInt("{{game_deets['time_limit']}}")
-                    document.getElementById('countdown').innerHTML=count;
-                    count--;
-                    interval = setInterval(function(){
-                        document.getElementById('countdown').innerHTML=count;
-                        count--;
-                        if (count <= -1){
-                            document.getElementById('countdown').innerHTML='0';
-                            socket.emit("emit_current_turn","{{game_id}}","{{user_id}}")
-                            clearInterval(interval);
+                newSocket.onAny((eventName, ...args) => {
+                    console.log(eventName, args)
+                })
+
+                newSocket.on('emit_teams',function(msg) { 
+                    teams = msg 
+                    setState(prevState=>({
+                        ...prevState,
+                        teams: teams,
+                    }))
+                }) 
+
+                newSocket.on('emit_players',function(msg) { 
+                    players = msg[0] 
+                    teammembers = msg[1]
+                    setState(prevState=>({
+                        ...prevState,
+                        players: msg[0],
+                        teammembers: msg[1],
+                    }))
+                }) 
+
+                newSocket.on('emit_current_turn',function(msg) {
+                    current_turn_user_id = msg[1]
+                    current_team_id = msg[0]
+                    
+                    setState(prevState=>{
+                        var current_player = prevState.players[current_turn_user_id]
+                        var my_turn = current_turn_user_id === prevState.userID
+                        var my_teams_turn = current_team_id === prevState.teamID
+                        var temp_teammates = prevState.teammembers[current_team_id]
+                        var new_phase = getPhaseNumber(current_player, my_teams_turn, my_turn)
+                        teammates = []
+                        if (temp_teammates) { teammates = JSON.parse(JSON.stringify(temp_teammates)) }
+                        teammates.splice(teammates.indexOf(current_player),1)
+                        return {
+                            ...prevState,
+                            currentTurnUserID: current_turn_user_id,
+                            currentTeamID: current_team_id,
+                            currentPlayer: current_player,
+                            teammates: teammates,
+                            myTurn: my_turn,
+                            myTeamsTurn: my_teams_turn,
+                            prevPhase: prevState.phase==new_phase ? prevState.prevPhase : prevState.phase, //this log is to handle the case of mulitple runs of this function, which would accidentally flushing prevPhase
+                            phase: new_phase
                         }
-                    }, 1000)
-                }
-            })
+                    })
+                }) 
 
-            socket.on('stop_timer',function(msg) { 
-                clearInterval(interval) 
-                document.getElementById('countdown').innerHTML='0';
-            }) 
+                newSocket.on('emit_current_round',function(msg) {
+                    current_round = msg[0] ; is_new_round = msg[1]
+                    setState(prevState=>({
+                        ...prevState,
+                        currentRound: current_round,
+                    })) 
+                    if (is_new_round){location.href="/graphs/{{game_id}}"}
+                }) 
 
-            socket.on('get_mp3_number',function(msg) {
-                start_or_stop = msg['start_or_stop']
-                if(start_or_stop==="start"){
-                    start_mp3 = msg['mp3_number']
-                    audio1 = new Audio(`/static/start/${start_mp3}.mp3`);
-                }
-                if(start_or_stop==="stop"){
-                    stop_mp3 = msg['mp3_number']
-                    audio2 = new Audio(`/static/stop/${stop_mp3}.mp3`);
-                }
+                newSocket.on('advance_game_emit',function(msg) {
+                    location.href='/name_game/{{game_id}}';
+                }) 
+
+                newSocket.on('emit_next_name',function(name_data) {
+                    if (name_data == "no more names"){
+                        concede(true)
+                    } else {
+                        setName(name_data)
+                        nameRef.current = name_data
+                    }
+                })
+
+                newSocket.on('your_turn',function(msg) {
+                    setState(prevState=>({
+                        ...prevState,
+                        myTurn: true,
+                    }))
+                })
+
+                newSocket.on('start_timer',function(msg) {
+                    if(!myTurnRef.current){
+                        console.log("this should only run for idle players",myTurnRef.current)
+                        startCountdown(false)
+                    }
+                })
+
+                newSocket.on('stop_timer',function(msg) { endCountdown() }) 
+
+                newSocket.on('get_mp3_number',function(msg) {
+                    start_or_stop = msg['start_or_stop']
+                    if(start_or_stop==="start"){
+                        start_mp3 = msg['mp3_number']
+                        audio1 = new Audio(`/static/start/${start_mp3}.mp3`);
+                    }
+                    if(start_or_stop==="stop"){
+                        stop_mp3 = msg['mp3_number']
+                        audio2 = new Audio(`/static/stop/${stop_mp3}.mp3`);
+                    }
+                    
+                }) 
+
+                newSocket.on('alert',function(msg) { 
+                    alert(msg);
+                    if (msg == "ERROR: there is an ongoing turn"){
+                        setState(prevState=>({
+                            ...prevState,
+                            doneButtonEnabled: false,
+                        }))
+                    }
+                })
+
+                newSocket.emit("emit_teams","{{game_id}}",state.userID)
+                newSocket.emit("emit_players","{{game_id}}",state.userID)
+                newSocket.emit("emit_current_turn","{{game_id}}",state.userID)
+                newSocket.emit("emit_current_round","{{game_id}}",state.userID)
+
+                socket.current = newSocket
                 
-            }) 
+            },[])
 
-            socket.on('alert',function(msg) { 
-                alert(msg);
-                if (msg == "ERROR: there is an ongoing turn"){
-                    document.getElementById("done_button").classList.add("invisible")
-                }
-            })
-
-            socket.emit("emit_teams","{{game_id}}","{{user_id}}")
-            socket.emit("emit_players","{{game_id}}","{{user_id}}")
-            socket.emit("emit_current_turn","{{game_id}}","{{user_id}}")
-            socket.emit("emit_current_round","{{game_id}}","{{user_id}}")
-            
-        })
-
-
-        function score_answer(name_id, is_success){
-            socket.emit("score_answer","{{game_id}}","{{user_id}}",name_id,is_success)
-        }
-
-        function your_turn() {
-            my_turn = true
-            socket.emit("get_mp3_number","{{user_id}}","start")
-            socket.emit("get_mp3_number","{{user_id}}","stop")
-            document.getElementById("start_button").removeAttribute("disabled")
-            document.getElementById("body").classList.add("myturn-background")
-            document.getElementById("whos_up").classList.add("invisible")
-        }
-
-        function start() {
-            document.getElementById("start_button").setAttribute("disabled",'')
-            document.getElementById("done_button").removeAttribute("disabled")
-            audio1.addEventListener('ended', function(){
-                socket.emit("emit_next_name","{{game_id}}","{{user_id}}")
-                document.getElementById("concede_button").removeAttribute("disabled")
-                document.getElementById("done_button").classList.remove("invisible")
-                var count = parseInt("{{game_deets['time_limit']}}")
-                socket.emit("start_timer","{{game_id}}","{{user_id}}")
-                document.getElementById('countdown').innerHTML=count;
-                count--
-                interval = setInterval(function(){
-                    document.getElementById('countdown').innerHTML=count;
-                    count--;
-                    if (count <= -1){
-                        document.getElementById('countdown').innerHTML='0';
-                        end_turn()
-                        clearInterval(interval);
-                }
-            }, 1000)
-            })
-            audio1.play()
-        }
-
-        function done() {
-            document.getElementById("done_button").blur()
-            score_answer(current_name['name_id'], is_success=1)
-            previous_name = current_name
-            socket.emit("emit_next_name","{{game_id}}","{{user_id}}")
-            document.getElementById("done_button").setAttribute("disabled","")
-            setTimeout(()=>{
-                document.getElementById("done_button").removeAttribute("disabled")
-            }, 500)
-            audio3.play()
-
-        }
-
-        function end_turn(names_ran_out=false) {
-            my_turn = false
-            audio2.play()
-            if (!names_ran_out){
-                score_answer(current_name['name_id'], is_success=0)
-                socket.emit('advance_turn',"{{game_id}}","{{user_id}}") //if names run out and round ends, then advance_turn is handled in app.py > emit_next_name() - 
+            function endCountdown(){
+                clearInterval(interval.current)
+                setCountdown(time_limit)
             }
-            document.getElementById("the_name").innerHTML = "&nbsp;"
-            document.getElementById("start_button").setAttribute("disabled",'')
-            document.getElementById("concede_button").setAttribute("disabled","")
-            document.getElementById("body").classList.remove("myturn-background")
-            document.getElementById("whos_up").classList.remove("invisible")
-            document.getElementById("done_button").classList.add("invisible")
-            
-        }
-        function concede(names_ran_out=false) {
-            socket.emit('stop_timer',"{{game_id}}","{{user_id}}")
-            document.getElementById('countdown').innerHTML='0';
-            end_turn(names_ran_out)
-            clearInterval(interval)
-            if (!names_ran_out){console.log("conceded")}
-        }
 
+            function score_answer(name_id, is_success){
+                socket.current.emit("score_answer","{{game_id}}",state.userID,name_id,is_success)
+            }
+            
+            function your_turn() {
+                socket.current.emit("get_mp3_number",state.userID,"start")
+                socket.current.emit("get_mp3_number",state.userID,"stop")
+                setState(prevState=>({
+                    ...prevState,
+                    whosUpVisible: false,
+                }))
+            }
+            React.useEffect(()=>{
+                if (state.myTurn){
+                    your_turn()
+                    endCountdown()
+                }
+            },[state.myTurn])
+
+            function decrementCountdown(is_player=true){
+                setCountdown((prev) => {
+                    if(prev === 0) {
+                        endCountdown();
+                        if(is_player){
+                            end_turn()
+                        } else {
+                            socket.current.emit("emit_current_turn","{{game_id}}",state.userID)
+                        }
+                        return null
+                    }
+                    return prev - 1;
+                });
+            }
+
+            function startCountdown(is_player=true){
+                    interval.current = setInterval(() => {
+                    decrementCountdown(is_player);
+                    }, 1000);
+                };
+
+            function start() {
+                setState(prevState=>({
+                        ...prevState,
+                        startButtonEnabled: false,
+                    }))
+                audio1.addEventListener('ended', startAfterAudio)
+                audio1.play()
+            }
+
+            function startAfterAudio(){
+                socket.current.emit("emit_next_name","{{game_id}}",state.userID)
+                setState(prevState=>({
+                    ...prevState,
+                    turnStarted: true,
+                    startButtonEnabled: true,
+                }))
+                socket.current.emit("start_timer","{{game_id}}",state.userID)
+                startCountdown()
+            }
+
+            function done() {
+                audio3.play()
+                document.getElementById("done_button").blur()
+                score_answer(nameRef.current.name_id, 1)
+                socket.current.emit("emit_next_name","{{game_id}}",state.userID)
+                setState(prevState=>({
+                    ...prevState,
+                    doneButtonEnabled: false,
+                }))
+                setTimeout(()=>{
+                    setState(prevState=>({
+                    ...prevState,
+                    doneButtonEnabled: true,
+                    })
+                )}, 500)
+            }
+
+            function end_turn(names_ran_out=false) {
+                audio2.play()
+                score_answer(nameRef.current.name_id, 0)
+                setState({
+                    ...state,
+                    turnStarted: false,
+                })
+                if (!names_ran_out){
+                    socket.current.emit('advance_turn',"{{game_id}}",state.userID) //if names run out and round ends, then advance_turn is handled in app.py > emit_next_name() - 
+                }
+            }
+            function concede(names_ran_out=false) {
+                socket.current.emit('stop_timer',"{{game_id}}",state.userID)
+                endCountdown()
+                end_turn(names_ran_out)
+                if (!names_ran_out){console.log("conceded")}
+            }
+            function getPhaseNumber(currentPlayer, myTeamsTurn, myTurn){
+                if (currentPlayer === null){ return -1}
+                if(myTeamsTurn) {
+                    if(myTurn) {return 0}
+                    else {return 1}
+                } else{ return 2}
+            }
+            function getTextForTheName(){
+                if (state.turnStarted & name!=null){
+                    return name.name
+                }
+                switch(state.phase){
+                    case 0: return "Your Turn"
+                    case 1: return state.currentPlayer+"'s Turn\nYou're Guessing"
+                    case 2: return state.currentPlayer+"'s Turn"
+                    default: return ""
+                }
+            }
+            function phaseTranslate(phase){
+                switch(phase){
+                    case 0: return "your"
+                    case 1: return "team"
+                    default: return "not"
+                }
+            }
+            function getBackground(){
+                var pp = state.prevPhase
+                const p = state.phase
+                if (pp==-1 & p==2){
+                    pp = 0
+                }
+                return `animate-${phaseTranslate(pp)}-${phaseTranslate(p)}`
+            }
+
+
+            return (
+                <body id="body" class={`flex-v-space rainbow-gradient-bg ${getBackground()}`}> 
+                    <h1 id="heading" class="heading subheading3">THE NAME GAME</h1>
+
+                    <div class="flex-v">
+                        <h1 id="round" class="heading subheading4">
+                            {state.roundTexts[state.currentRound]}
+                        </h1>
+                    </div>
+                    
+                    <div class="flex-v">
+                        {/*<h1 id="the_name" class=" heading subheading3 pad-10pct-v name_big">{theName}</h1>*/}
+                        <h1 id="the_name" class=" heading subheading3 pad-10pct-v name_big">{getTextForTheName()}</h1>
+                        <button id="done_button" class={`button1 button-green ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>They Guessed It</button>
+                        <h1  class="heading subheading4">Timer<br/><span id="countdown">{countdown}</span></h1>
+                    </div>
+
+                    <div id="whos_up" class={`flex-v pad-10pct ${state.whosUpVisible?"":"invisible"}`}>
+                        <p class="white" id="current_player">
+                            <strong>{"Current Player: \xa0"}</strong>{state.currentPlayer}
+                        </p>
+                        <p class="white" id="current_team">
+                            <strong>{"Team Name: \xa0 \xa0 \xa0"}</strong>{state.teams[state.currentTeamID]}
+                        </p>
+                        <p class="white" id="teammates">
+                            <strong>{state.teammates.length ? "Teammates: \xa0 \xa0 \xa0":""}</strong>{state.teammates.join(", ")}
+                        </p>
+                    </div>
+
+                    <div class="flex-h mar-1em">
+                        <button id="start_button" class="button1 button3" onClick={start} disabled={!state.myTurn|state.turnStarted|!state.startButtonEnabled}>Start</button>
+                        <button id="concede_button" class="button1 button3" onClick={()=>{concede(false)}} disabled={!state.myTurn|!state.turnStarted}>End</button>
+                    </div>
+                    <div class="flex-h mar-1em">
+                        <button class="button2" onClick={()=>{location.href='/';}}>Home</button>
+                        {/* <button class="button2" onClick={()=>{console.log("state",state)}}>Print state</button>
+                        <h1>{state.phase==-1?"null":state.phase}</h1>
+                        <h1>{state.prevPhase==-1?"null":state.prevPhase}</h1> */}
+                    </div>
+                </body>
+            )
+        }
+        ReactDOM.render(<App />, document.querySelector("#app"));
     </script>
+    
 </html>
         

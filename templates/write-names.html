@@ -8,7 +8,7 @@
         <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
     </head>
-    <body class="lobby"> 
+    <body class="lobby lobby-body"> 
         <h1 class="heading subheading">WRITE {{game_deets['number_names']}} NAMES</h1>
        
         <div class="flex-v form pad-10pct">
@@ -45,7 +45,6 @@
             socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
 
             socket.on('advance_game_emit',function(msg) {
-                alert("game started")
                 location.href='/name_game/{{game_id}}';
             }) 
 
@@ -62,11 +61,6 @@
         function submit_names(){
             const number_names = parseInt("{{game_deets['number_names']}}")
             var names = []
-            //check for singlequotes
-            // for(var i=0; i<number_names; i++) {
-            //     var val = document.getElementById(`name_input${i}`).value
-            //     if(val.includes("'")){alert(`Single quote character (') is not allowed. Name #${i+1}: ${val}`);return}
-            // }
 
             for(var i=0; i<number_names; i++) {
                 var name_input = document.getElementById(`name_input${i}`)
@@ -95,13 +89,13 @@
 
         function advance_game(){
             if(waiting_on_list.length > 0) {alert(`waiting on players:  ${waiting_on_list.join(",  ")}`);return}
-            if (confirm("do you want to start")){
+            //if (confirm("do you want to start")){
                 fetch("/advance_game",{
                     method:"POST", 
                     body: JSON.stringify({"game_id":"{{game_id}}","stage":3}),
                     headers: new Headers({"content-type": "application/json"}) 
                 })
-            }
+            //}
         }
 
         function get_random_name(elem){

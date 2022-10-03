@@ -9,10 +9,10 @@
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
     </head>
     <body class="lobby"> 
-        <h1 class="heading subheading">JOIN GAME</h1>
+        <h1 class="heading subheading3">JOIN GAME</h1>
         <div class="flex-v form pad-10pct">
             <div class="flex-v-start"> 
-                <h1 class="heading subheading2">SELECT A GAME</h1>
+                <h1 class="heading subheading4">SELECT A GAME</h1>
                 <div class="text-box" id="games">
                 {% for id, name in games %}
                     <div class="option slight-v-gradient" onclick="option_select(this)" id="option{{id}}">
@@ -23,13 +23,13 @@
                 </div>
             </div>
         </div>
-        <div class="flex-h mar-1em">
-            <button class="button1" onclick="submit()">Join Game</button>
-            <button class="button1" onclick="submit(true)">Delete Game</button>
+        <div class="flex-h center">
+            <button class="button1 button3 mar-1em" onclick="submit()">Join Game</button>
+            <button class="button1 button3 mar-1em" onclick="submit(true)">Delete Game</button>
         </div>
-        <div class="flex-h mar-1em">
-            <button class="button1" onclick="location.href='join_game';">Refresh</button>
-            <button class="button1" onclick="home()">Home</button>
+        <div class="flex-h center">
+            <button class="button1 button3 mar-1em" onclick="location.href='join_game';">Refresh</button>
+            <button class="button1 button3 mar-1em" onclick="home()">Home</button>
         </div>
     </body>
     <script>

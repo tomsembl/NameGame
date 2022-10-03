@@ -8,10 +8,10 @@
         <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
     </head>
-    <body class="flex-v-start lobby"> 
-        <h1 class="heading subheading">LOBBY</h1>
+    <body class="flex-v-start lobby lobby-body"> 
+        <h1 class="heading subheading3">LOBBY</h1>
         <div class="flex-h center vmar">
-            <h1 class="heading subheading2 pad-05em">
+            <h1 class="heading subheading4 pad-05em">
                 Edit Player Name
                 <div class="flex-h-start">
                     <input type="text" id="username_change" value="{{username}}" maxlength="16">
@@ -22,7 +22,7 @@
         <div class="flex-h vmar">
 
             <div class="flex-v-start vw40 game-details">
-                <h1 class="heading subheading2">Game Details</h1>
+                <h1 class="heading subheading4">Game Details</h1>
                 <table class="">
                         <tr class="table-row slight-v-gradient">
                             <td class="td-left"><strong>Name: </strong></td>
@@ -61,7 +61,7 @@
                 </table>
             </div>
             <div class="flex-v-start vw40">
-                <h1 class="heading subheading2">Players</h1>
+                <h1 class="heading subheading4">Players</h1>
                 <div class="text-box" id="players">
                     {% for user_id, username in players %}
                         <div class="option small-option slight-v-gradient" onclick="player_option_select(this)" id="player-option{{user_id}}">
@@ -70,7 +70,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <h1 class="heading subheading2 pad-05em">
+                <h1 class="heading subheading4 pad-05em">
                     <div class="flex-h">
                         <button class="button2" onclick="assign()">Assign</button>
                         <button class="button2" onclick="kick()">Kick</button>
@@ -80,7 +80,7 @@
         </div>
         <div class="flex-h center vmar">
             <div id="teams-div" class="flex-v center vw86">
-                <h1 class="heading subheading2">Teams</h1>
+                <h1 class="heading subheading4">Teams</h1>
                 <div class="text-box" id="teams">
                     {% for team_id, team_name in teams %}
                         <div class="option small-option space-between slight-v-gradient" onclick="team_option_select(this)" id="team-option{{team_id}}">
@@ -93,7 +93,7 @@
                         </div>
                     {% endfor %}
                     </div>
-                <h1 class="heading subheading2 pad-05em">
+                <h1 class="heading subheading4 pad-05em">
                     <div class="flex-h">
                         <button class="button2" onclick="shuffle()">Shuffle</button>
                     </div>
@@ -101,7 +101,7 @@
             </div>
         </div>
         <div class="flex-h center vmar">
-            <h1 class="heading subheading2 pad-05em">
+            <h1 class="heading subheading4 pad-05em">
                 Edit Team Name
                 <div class="flex-h-start">
                     <input type="text" id="team_name_change" value="" maxlength="20">
@@ -110,8 +110,8 @@
             </h1>
         </div>
         <div class="flex-h vmar">
-            <button class="button1" onclick="advance_game()">Start Game</button>
-            <button class="button1" onclick="location.href='/';">Home</button>
+            <button class="button1 button3" onclick="advance_game()">Start Game</button>
+            <button class="button1 button3" onclick="location.href='/';">Home</button>
         </div>
     </body>
 
@@ -140,7 +140,6 @@
             })
 
             socket.on('advance_game_emit',function(msg) {
-                alert("game started")
                 location.href='/write_names/{{game_id}}';
             }) 
 
@@ -230,13 +229,11 @@
             new_username = document.getElementById("username_change").value
             if (!new_username.length){alert("name must be longer")}
             else {
-                // if(!new_username.includes("'")){
                 fetch("/username_change",{
                     method:"POST", 
                     body: JSON.stringify({"new_username":new_username,"user_inst_id":"{{user_inst_id}}","game_id":"{{game_id}}"}),
                     headers: new Headers({"content-type": "application/json"}) 
                 })
-                // } else {alert("single quote character (') is not allowed")}
             }
         }
 
@@ -246,13 +243,11 @@
             if (team_id === ''){alert("select a team");return}
             if (!new_team_name.length){alert("name must be longer")}
             else {
-                // if(!new_team_name.includes("'")){
                 fetch("/team_name_change",{
                     method:"POST", 
                     body: JSON.stringify({"new_team_name":new_team_name,"team_id":team_id,"game_id":"{{game_id}}"}),
                     headers: new Headers({ "content-type": "application/json"}) 
                 })
-                // } else {alert("single quote character (') is not allowed")}
             }
         }
 
