@@ -312,8 +312,8 @@
 
 
             return (
-                <body id="body" class={`flex-v-space rainbow-gradient-bg ${getBackground()}`}> 
-                    <h1 id="heading" class="heading subheading3">THE NAME GAME</h1>
+                <body id="body" class={`lobby2 flex-v rainbow-gradient-bg ${getBackground()}`}> 
+                    {!state.myTurn && <h1 id="heading" class="heading subheading3">THE NAME GAME</h1>}
 
                     <div class="flex-v">
                         <h1 id="round" class="heading subheading4">
@@ -324,11 +324,11 @@
                     <div class="flex-v">
                         {/*<h1 id="the_name" class=" heading subheading3 pad-10pct-v name_big">{theName}</h1>*/}
                         <h1 id="the_name" class=" heading subheading3 pad-10pct-v name_big">{getTextForTheName()}</h1>
-                        <button id="done_button" class={`button1 button-green ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>They Guessed It</button>
+                        {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>}
                         <h1  class="heading subheading4">Timer<br/><span id="countdown">{countdown}</span></h1>
                     </div>
 
-                    <div id="whos_up" class={`flex-v pad-10pct ${state.whosUpVisible?"":"invisible"}`}>
+                    {!state.myTurn && <div id="whos_up" class="flex-v pad-10pct">
                         <p class="white" id="current_player">
                             <strong>{"Current Player: \xa0"}</strong>{state.currentPlayer}
                         </p>
@@ -338,7 +338,7 @@
                         <p class="white" id="teammates">
                             <strong>{state.teammates.length ? "Teammates: \xa0 \xa0 \xa0":""}</strong>{state.teammates.join(", ")}
                         </p>
-                    </div>
+                    </div>}
 
                     <div class="flex-h mar-1em">
                         <button id="start_button" class="button1 button3" onClick={start} disabled={!state.myTurn|state.turnStarted|!state.startButtonEnabled}>Start</button>

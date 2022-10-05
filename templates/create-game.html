@@ -5,35 +5,34 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <title>The Name Game</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style2.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
         <script type="text/javascript" src="{{ url_for('static',filename='react.production.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='react-dom.production.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='babel.min.js') }}"></script>
         
     </head>
-    <body class="lobby"> 
+    <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
         <h1 class="heading subheading3">CREATE GAME</h1>
         <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
             <div id="app"></div>
             <div class="">
                 <h1 class="heading subheading4">SETTINGS</h1>
                 <br>
-                <label for="game_name">Game Name:</label>
+                <label for="game_name" class="label label1">Game Name:</label>
                 <input class="input" type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'" maxlength="40">
-                    <label for="number_teams">Number of Teams:</label>
+                    <label for="number_teams" class="label label1">Number of Teams:</label>
                 <div class="flex-h-left">
-                    <input type="range" id="number_teams" name="number_teams" value="2" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
+                    <input class="range" type="range" id="number_teams" name="number_teams" value="2" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>2</output>
                 </div>
-                <label for="number_names">Each Player Will Submit _ Names:</label>
+                <label for="number_names" class="label label1">Each Player Will Submit _ Names:</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_names" name="number_names" value="10" max="16" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>10</output>
                 </div>
-                <label for="time_limit">Turn Time Limit (s):</label>
+                <label for="time_limit" class="label label1">Turn Time Limit (s):</label>
                 <div class="flex-h-left">
-                    <input type="range" id="time_limit" name="time_limit" value="60" max="120" min="30" oninput="this.nextElementSibling.value = this.value">
+                    <input type="range" id="time_limit" name="time_limit" value="60" max="120" min="10" oninput="this.nextElementSibling.value = this.value">
                     <output>60</output>
                 </div>
                 <br>
@@ -43,19 +42,19 @@
                 <br>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round1' name="round1" checked=True><span class="slider round"></span></label>
-                    <label for="round1">Round 1: &nbsp; Unlimited</label>
+                    <label for="round1" class="label">Round 1: &nbsp; Unlimited</label>
                 </div>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round2' name="round2" checked=True><span class="slider round"></span></label>
-                    <label for="round2">Round 2: &nbsp; 3 Words Max</label>
+                    <label for="round2" class="label">Round 2: &nbsp; 3 Words Max</label>
                 </div>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round3' name="round3" checked=True><span class="slider round"></span></label>
-                    <label for="round3">Round 3: &nbsp; 1 Word Only</label>
+                    <label for="round3" class="label">Round 3: &nbsp; 1 Word Only</label>
                 </div>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round4' name="round4" checked=True><span class="slider round"></span></label>
-                    <label for="round4">Round 4: &nbsp; Mime</label>
+                    <label for="round4" class="label">Round 4: &nbsp; Mime</label>
                 </div>
             </div>
         </form>

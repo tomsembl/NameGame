@@ -8,8 +8,8 @@
         <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
     </head>
-    <body class="lobby lobby-body"> 
-        <h1 class="heading subheading">WRITE {{game_deets['number_names']}} NAMES</h1>
+    <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
+        <h1 class="heading subheading3">WRITE {{game_deets['number_names']}} NAMES</h1>
        
         <div class="flex-v form pad-10pct">
             <p class="write-names-p">
@@ -27,15 +27,15 @@
             </div>
         </div>
         <br>
-        <h1 id="waiting-on" class="heading subheading2">Waiting on: &nbsp;</h1>
+        <h1 id="waiting-on" class="heading subheading4">Waiting on: &nbsp;</h1>
 
         <div class="flex-h mar-1em">
-            <button class="button1" onclick="submit_names()">Submit</button>
+            <button class="button1 button3" onclick="submit_names()">Submit</button>
             <!-- TODO: disable start game button until all players have submitted names, and show list of players that haven't submitted names yet -->
-            <button class="button1" onclick="advance_game()">Start Game</button>
+            <button class="button1 button3" onclick="advance_game()">Start Game</button>
         </div>
         <div class="flex-h mar-1em">
-            <button class="button1" onclick="location.href='/';">Home</button>
+            <button class="button2" onclick="location.href='/';">Home</button>
         </div>
     </body>
     <script>
