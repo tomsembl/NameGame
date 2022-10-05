@@ -407,6 +407,8 @@ def advance_game():
 @app.route('/join_game/<game_id>', methods=["GET"])
 def join_game(game_id):    
     user_id = request.cookies.get('user_id')
+    if not user_id:
+        return redirect(url_for('homepage'))
     if not game_id:
         ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
         user_id, username = db_cookie(user_id=user_id,username=None,ip=ip)[0]
