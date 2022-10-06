@@ -7,69 +7,95 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
         <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='react.production.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='react-dom.production.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='babel.min.js') }}"></script>
     </head>
-    <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
-        <h1 class="heading subheading3">JOIN GAME</h1>
-        <div class="flex-v form pad-10pct">
-            <div class="flex-v-start"> 
-                <h1 class="heading subheading4">SELECT A GAME</h1>
-                <div class="text-box" id="games">
-                {% for id, name in games %}
-                    <div class="option slight-v-gradient" onclick="option_select(this)" id="option{{id}}">
-                        <input type="hidden" value="{{id}}">
-                        {{name}}
-                    </div>
-                {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="flex-h center">
-            <button class="button1 button3 mar-1em" onclick="submit()">Join Game</button>
-            <button class="button1 button3 mar-1em" onclick="submit(true)">Delete Game</button>
-        </div>
-        <div class="flex-h center">
-            <button class="button1 button3 mar-1em" onclick="location.href='join_game';">Refresh</button>
-            <button class="button1 button3 mar-1em" onclick="home()">Home</button>
-        </div>
+    <body id="app" class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
     </body>
-    <script>
-        var socket
-        $(document).ready(function(){
-            socket = io.connect(window.origin, {query:"game_id=join"})
+    <script type="text/babel">
+        //use jinja to pass in the game id
+        //console.log(games_)
+        function App() {
+            const [games, setGames] = React.useState(()=>{
+                var state = {{games|safe}}
+                state.map((game)=>{
+                    game.selected = false
+                })
+                return state
+            });
+            const socket = React.useRef()
+            React.useEffect(()=>{
+                const newSocket = io.connect(window.origin, {query:"game_id=join"})
 
-            socket.on('refresh_join_game', function(msg) {
-                console.log("refresh_join_game")
-                location.reload();
-            })
+                newSocket.on('refresh_join_game', function(msg) {
+                    console.log("refresh_join_game")
+                    location.reload();
+                })
 
-        })
-
-        var selected_option = ''
-        function option_select(elem){
-            if(selected_option){selected_option.classList.remove("selected")}
-            selected_option = document.getElementById(elem.id)
-            selected_option.classList.add("selected")
-        }
-     
-        function submit(delete_=false){
-            game_id = ''
-            options = document.getElementById("games").children
-            for(var x of options){if (x.classList.contains('selected')){game_id = x.children[0].value}}
-            if (game_id === ''){alert("select one")}
-            else { 
-                if (delete_){
-                    socket.emit('delete_game',game_id)
-                    socket.emit('deletion_kick',game_id,'{{username}}')
-                    socket.emit('refresh_join_game')
-                } else { 
-                    location.href=`join_game/${game_id}`;
-                }
+                socket.current = newSocket
+            },[])
+        
+            function submit(deleteGame){
+                console.log(deleteGame)
+                const selectedGame = games.find(x=>x.selected)
+                if (selectedGame){
+                    if (deleteGame){
+                        socket.current.emit('delete_game',selectedGame.game_id)
+                        socket.current.emit('deletion_kick',selectedGame.game_id,'{{username}}')
+                        socket.current.emit('refresh_join_game')
+                    } else { location.href=`join_game/${selectedGame.game_id}`}
+                } else {alert("select one")}
             }
+            
+            function home(){
+                socket.current.disconnect()
+                location.href='/';
+            }
+
+            const gameOption = games.map(gameObject=>{return(
+                <div class={`option slight-v-gradient ${games.find(x=>x.game_id === gameObject.game_id).selected?"selected":""}`} onClick={()=>{
+                    setGames(games.map((game)=>{
+                        game.selected = (game.game_id === gameObject.game_id)
+                        return game
+                    }))
+                }}>
+                    {gameObject.game_name}
+                </div>
+            )})
+
+            return(
+                <div>
+                    <h1 class="heading subheading3">JOIN GAME</h1>
+                    <div class="flex-v form pad-10pct">
+                        <div class="flex-v-start"> 
+                            <h1 class="heading subheading4">SELECT A GAME</h1>
+                            <div class="text-box" id="games">
+                                {games.length>0 && <div>{gameOption}</div>}
+                                {games.length==0 && <p class="option slight-v-gradient">No Games...</p>}
+                            </div>
+                            {games.length==0 && <div class="flex-h">
+                                <button class="button1 button3  mar-1em" onClick={()=>{location.href='create_game'}}>Create Game</button>
+                            </div>}
+                        </div>
+                    </div>
+                    <div class="flex-h center">
+                        <button class="button1 button3 mar-1em" onClick={()=>{submit(false)}}>Join Game</button>
+                        <button class="button1 button3 mar-1em" onClick={()=>{submit(true)}}>Delete Game</button>
+                    </div>
+                    <div class="flex-h center">
+                        <button class="button1 button3 mar-1em" onClick={()=>{location.href='join_game'}}>Refresh</button>
+                        <button class="button1 button3 mar-1em" onClick={home}>Home</button>
+                    </div>
+                </div>
+            )
         }
-        function home(){
-            socket.disconnect()
-            location.href='/';
-        }
+        ReactDOM.render(<App />, document.querySelector("#app"));
+
+    </script>
+    
+    <script>
+     
 
     </script>
 </html>

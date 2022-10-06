@@ -10,21 +10,24 @@
     </head>
     <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
         <h1 class="heading subheading3">WRITE {{game_deets['number_names']}} NAMES</h1>
-       
         <div class="flex-v form pad-10pct">
-            <p class="write-names-p">
-                Write names that at least a few players will know.<br>Eg. celebrities, fictional characters, et cetera.<br>Players will need to read and describe them.<br>Use the random generator if you're struggling.<br><br>
-            </p>
-                {% for name_number in range(game_deets['number_names']) %}
-                    <div class="vmar-tiny flex-h" id="name_div{{name_number}}">
-                        <input class="name_input" type="text" id="name_input{{name_number}}" maxlength="40">
-                        <button class="button2 dice-button" id="button{{name_number}}" onclick="get_random_name(this)">
-                            <img class="dice" src="{{ url_for('static',filename='dice.png') }}">
-                        </button>
-                    </div>
-                {% endfor %}
-                </div>
+            <div class="mar-b20">
+                <h1 class="heading subheading4">INSTRUCTIONS</h1>
+                <p class="option instructions slight-v-gradient">Write names that at least a few players will know.</p>
+                <p class="option instructions slight-v-gradient">Eg. celebrities, fictional characters, et cetera.</p>
+                <p class="option instructions slight-v-gradient">Players will need to read and describe them.</p>
+                <p class="option instructions slight-v-gradient">Use the random generator if you're struggling.</p>
             </div>
+            <!-- <p class="write-names-p">
+            </p> -->
+            {% for name_number in range(game_deets['number_names']) %}
+                <div class="vmar-tiny flex-h" id="name_div{{name_number}}">
+                    <input class="name_input" type="text" id="name_input{{name_number}}" maxlength="40">
+                    <button class="button2 dice-button" id="button{{name_number}}" onclick="get_random_name(this)">
+                        <img class="dice" src="{{ url_for('static',filename='dice.png') }}">
+                    </button>
+                </div>
+            {% endfor %}
         </div>
         <br>
         <h1 id="waiting-on" class="heading subheading4">Waiting on: &nbsp;</h1>
