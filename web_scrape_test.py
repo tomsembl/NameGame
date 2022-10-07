@@ -16,17 +16,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
 import time,random
 
-
+def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 
 #VARIABLES
-game_name = f"web_scrape_test_{time.time()}"
+game_name = getGameName()
+game_id = None
 # websitehome = "http://namegame.ddns.net:42069"
-# websitehome = "http://192.168.0.113:42069"
-websitehome = "http://192.168.0.106:8"
-nameCount = 2
-WindowCount = 14
+websitehome = "http://192.168.0.113:42069"
+# websitehome = "http://192.168.0.106:8"
+nameCount = 4
+WindowCount = 4
 teamCount = WindowCount//2
 timeLimit = 1
 
@@ -37,6 +39,7 @@ chrome_options = Options()
 # chrome_options.add_experimental_option("detach", True)
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 windows = [webdriver.Chrome(options=chrome_options) for _ in range(WindowCount)]
+
 
 
 for w in range(WindowCount):
@@ -55,8 +58,9 @@ for w in range(WindowCount):
         d.find_element(By.XPATH,'/html/body/div/button[1]').click()
 
     # join game
-    if w != 0: d.get(websitehome+"/join_game")
-    d.find_element(By.XPATH,'/html/body/div[1]/div/div/div[1]').click()#last option
+    if w != 0: d.get(websitehome+f"/join_game")
+    d.find_element(By.XPATH,f'.//*[@id="games"]/div/div[text()="{game_name}"]').click()# matching game option
+    
     d.find_element(By.XPATH,'/html/body/div/div[2]/button[1]').click()#join game button
     d.find_element(By.ID,'username_change').send_keys(f" {w}")
     d.find_element(By.XPATH, '/html/body/div[1]/h1/div/button').click()
@@ -87,30 +91,35 @@ while True:
             string = ""
             for w in range(WindowCount):
                 d = windows[w]
-                string = d.find_element(By.XPATH, '/html/body/div/body/div[2]/h1[1]').text
-                if string=="Your Turn": 
+                if "-your" == d.find_element(By.ID,"body").get_attribute("class")[-5:]:
+                # string = d.find_element(By.XPATH, '/html/body/div/body/div[2]/h1[1]').text
+                # if string=="Your Turn": 
                     print(f"{w}'s turn")
                     break
-            try: WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.ID, 'start_button')))
+            if d.find_element(By.ID, 'start_button').get_attribute("disabled"):
+                #get a random integer and click a random number of times
+                for _ in range(random.randint(0,7)):
+                    try: WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div/body/div[2]/button')))
+                    except: break
+                    d.find_element(By.XPATH, '/html/body/div/body/div[2]/button').click() #They got it
+            try: 
+                WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.ID, 'start_button')))
+                d.find_element(By.ID, 'start_button').click() #Start Button
             except: continue
-            d.find_element(By.ID, 'start_button').click() #Start Button
-            #get a random integer
-
-
-            for _ in range(random.randint(0,10)):
-                try: WebDriverWait(d, 5).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div/body/div[2]/button')))
-                except: continue
-                d.find_element(By.XPATH, '/html/body/div/body/div[2]/button').click() #They got it
-            d.find_element(By.ID, 'concede_button').click() #End Button
-            time.sleep(0.1)
+            try:
+                d.find_element(By.ID, 'concede_button').click() #End Button
+                time.sleep(0.1)
+            except: continue
         except: continue
     else: 
         for w in range(WindowCount):
             d = windows[w]
-            d.find_element(By.XPATH, '/html/body/div[3]/button').click()
-
+            try: 
+                if d.find_element(By.XPATH, ".//*[@text='GAME OVER']"): break
+            except: pass
+            try: d.find_element(By.XPATH, '/html/body/div[3]/button').click()
+            except: break
+print("game_over")
 pass
-
-
 
 time.sleep(1000)
