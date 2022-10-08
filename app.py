@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 from flask_socketio import SocketIO, send, join_room, leave_room
-import psycopg2, random, string, os, logging, time
+import psycopg2, random, string, os, logging, time, json
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -41,6 +42,13 @@ def header_zip_query(query, data=None, multi=False):
     header, data = q_sql(query, data=data, get_header=True)
     if multi: return [dict(zip(header, d)) for d in data]
     return dict(zip(header, data[0]))
+
+def convert_dict_to_json(dict):
+    return dict
+    for key in dict.keys():
+        if type(dict[key]) == datetime: dict[key] = dict[key].strftime("%Y-%m-%d %H:%M:%S")
+        if type(dict[key]) is bool: dict[key] = str(dict[key]).lower()
+    return dict
 
 def db_user_instance(user_id,username,game_id):
     result = ""
@@ -207,7 +215,7 @@ def get_teamid_by_userinst(user_inst_id): return q_sql(f"select team_id from use
 
 def advance_game_sql(game_id,stage): q_sql(f"update games set stage = %(stage)s where game_id = %(game_id)s", {'game_id':game_id,'stage':stage})
 
-def get_joinable_games_for_user(user_id): return q_sql(f"select game_id, game_name from games where active=TRUE and (stage = 1 or game_id in (select game_id from user_instance where user_id = %(user_id)s)) order by game_id desc", {'user_id':user_id})
+def get_joinable_games_for_user(user_id): return header_zip_query(f"select game_id, game_name from games where active=TRUE and (stage = 1 or game_id in (select game_id from user_instance where user_id = %(user_id)s)) order by game_id desc", {'user_id':user_id}, multi=True)
 
 def get_players_by_game_id(game_id): return q_sql(f"select user_id, username from user_instance where game_id = %(game_id)s", {'game_id':game_id})
 
@@ -432,7 +440,7 @@ def join_game(game_id):
 @app.route('/lobby/<game_id>', methods=["GET"])
 def lobby(game_id):
     # TODO: if game has started, redirect to the started game
-    game_deets = get_game_deets(game_id)
+    game_deets = convert_dict_to_json(get_game_deets(game_id))
     user_id = request.cookies.get('user_id')
     username = request.cookies.get('username')
     db_user_instance(user_id,username,game_id)
@@ -544,9 +552,8 @@ if __name__ == '__main__':
         #host="192.168.1.17",
         host="192.168.0.106",
         #host="0.0.0.0",
-        #port=8, 
         port=8, 
         log_output=True,
         debug=True,
         use_reloader=True
-    ) # 192.168.0.106, port=8,
+    )
