@@ -15,13 +15,13 @@
 
     <script type="text/babel">
         function App() {
-            var time_limit = parseInt("{{game_deets['time_limit']}}")
+            var time_limit = {{game_deets['time_limit']}}
             const [state, setState] = React.useState({
-                userID: parseInt("{{user_id}}"),
-                teamID: parseInt("{{team_id}}"),
+                userID: {{user_id}},
+                teamID: {{team_id}},
                 myTurn: false,
                 myTeamsTurn: false,
-                currentRound: parseInt("{{game_deets['round']}}"),
+                currentRound: {{game_deets['round']}},
                 timeLimit: time_limit,
                 roundTexts: {1:'Round 1: \xa0Unlimited',2:'Round 2: \xa03 Words Max',3:'Round 3: \xa01 Word Only',4:'Round 4: \xa0Mime'},
                 currentTurnUserID: null,
@@ -37,23 +37,25 @@
                 startButtonEnabled: true,
                 prevPhase: -1,
                 phase: -1,
-
+                audio1: new Audio(`/static/start/0.mp3`),
+                audio2: new Audio(`/static/start/1.mp3`),
             })
             const [countdown, setCountdown] = React.useState(time_limit)
             const [name, setName] = React.useState(null)
             var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, teammates, is_new_round, start_or_stop, stop_mp3, current_round
-            var audio1 = new Audio(`/static/start/0.mp3`)
-            var audio2 = new Audio(`/static/stop/0.mp3`)
+            //var audio1 = new Audio(`/static/start/0.mp3`)
+            //var audio2 = new Audio(`/static/stop/0.mp3`)
             var audio3 = new Audio(`/static/Ding.mp3`)
             const nameRef = React.useRef()
             const socket = React.useRef()
             const interval = React.useRef()
             const myTurnRef = React.useRef()
-            React.useEffect(()=>{
-                nameRef.current = name
-                myTurnRef.current = state.myTurn
-            },[name,state.myTurn])
-
+            const audio1 = React.useRef()
+            const audio2 = React.useRef()
+            React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
+            React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
+            React.useEffect(()=>{audio1.current = state.audio1},[state.audio1])
+            React.useEffect(()=>{audio2.current = state.audio2},[state.audio2])
             React.useEffect(()=>{
                 
                 const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})
@@ -146,16 +148,15 @@
                 newSocket.on('stop_timer',function(msg) { endCountdown() }) 
 
                 newSocket.on('get_mp3_number',function(msg) {
-                    start_or_stop = msg['start_or_stop']
-                    if(start_or_stop==="start"){
-                        start_mp3 = msg['mp3_number']
-                        audio1 = new Audio(`/static/start/${start_mp3}.mp3`);
-                    }
-                    if(start_or_stop==="stop"){
-                        stop_mp3 = msg['mp3_number']
-                        audio2 = new Audio(`/static/stop/${stop_mp3}.mp3`);
-                    }
-                    
+                    const startOrStop = msg['start_or_stop']
+                    const mp3Num = msg['mp3_number']
+                    const i = ["stop","start"].indexOf(startOrStop)
+                    const newAudio = new Audio(`/static/${startOrStop}/${mp3Num}.mp3`) 
+                    setState(prevState=>({
+                        ...prevState,
+                        audio1: i ? newAudio : prevState.audio1,
+                        audio2: i ? prevState.audio2 : newAudio,
+                    }))
                 }) 
 
                 newSocket.on('alert',function(msg) { 
@@ -224,11 +225,11 @@
 
             function start() {
                 setState(prevState=>({
-                        ...prevState,
-                        startButtonEnabled: false,
-                    }))
-                audio1.addEventListener('ended', startAfterAudio)
-                audio1.play()
+                    ...prevState,
+                    startButtonEnabled: false,
+                }))
+                audio1.current.addEventListener('ended', startAfterAudio)
+                audio1.current.play()
             }
 
             function startAfterAudio(){
@@ -253,14 +254,14 @@
                 }))
                 setTimeout(()=>{
                     setState(prevState=>({
-                    ...prevState,
-                    doneButtonEnabled: true,
+                        ...prevState,
+                        doneButtonEnabled: true,
                     })
                 )}, 500)
             }
 
             function end_turn(names_ran_out=false) {
-                audio2.play()
+                audio2.current.play()
                 score_answer(nameRef.current.name_id, 0)
                 setState({
                     ...state,

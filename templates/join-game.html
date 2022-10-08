@@ -74,17 +74,15 @@
                                 {games.length>0 && <div>{gameOption}</div>}
                                 {games.length==0 && <p class="option slight-v-gradient">No Games...</p>}
                             </div>
-                            {games.length==0 && <div class="flex-h">
-                                <button class="button1 button3  mar-1em" onClick={()=>{location.href='create_game'}}>Create Game</button>
-                            </div>}
                         </div>
                     </div>
                     <div class="flex-h center">
-                        <button class="button1 button3 mar-1em" onClick={()=>{submit(false)}}>Join Game</button>
-                        <button class="button1 button3 mar-1em" onClick={()=>{submit(true)}}>Delete Game</button>
+                        <button class="button1 button3 mar-1em" onClick={()=>{submit(false)}} disabled={games.length==0}>Join Game</button>
+                        <button class="button1 button3 mar-1em" onClick={()=>{submit(true)}} disabled={games.length==0}>Delete Game</button>
                     </div>
                     <div class="flex-h center">
-                        <button class="button1 button3 mar-1em" onClick={()=>{location.href='join_game'}}>Refresh</button>
+                        {/* <button class="button1 button3 mar-1em" onClick={()=>{location.href='join_game'}}>Refresh</button> */}
+                        <button class="button1 button3 mar-1em" onClick={()=>{location.href='create_game'}}>Create Game</button>
                         <button class="button1 button3 mar-1em" onClick={home}>Home</button>
                     </div>
                 </div>
