@@ -28,7 +28,7 @@ game_id = None
 websitehome = "http://192.168.0.113:42069"
 # websitehome = "http://192.168.0.106:8"
 nameCount = 4
-WindowCount = 4
+WindowCount = 2
 teamCount = WindowCount//2
 timeLimit = 1
 
@@ -99,7 +99,7 @@ while True:
             if d.find_element(By.ID, 'start_button').get_attribute("disabled"):
                 #get a random integer and click a random number of times
                 for _ in range(random.randint(0,7)):
-                    try: WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div/body/div[2]/button')))
+                    try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div/body/div[2]/button')))
                     except: break
                     d.find_element(By.XPATH, '/html/body/div/body/div[2]/button').click() #They got it
             try: 
@@ -119,6 +119,7 @@ while True:
             except: pass
             try: d.find_element(By.XPATH, '/html/body/div[3]/button').click()
             except: break
+            
 print("game_over")
 pass
 
