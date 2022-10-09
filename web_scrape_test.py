@@ -32,7 +32,7 @@ websitehome = "http://namegame.pw"
 nameCount = 3
 WindowCount = 2
 teamCount = WindowCount//2
-timeLimit = 1
+timeLimit = 10
 
 
 #chrome setup
@@ -119,7 +119,7 @@ while True:
         for w in range(WindowCount):
             d = windows[w]
             try: 
-                if d.find_element(By.XPATH, ".//*[@text='GAME OVER']"): 
+                if d.find_element(By.XPATH, "/html/body/div[3]/h1").text == "GAME OVER":
                     exit = True
                     break
             except: pass
@@ -132,6 +132,4 @@ while True:
         if exit: break
             
 print("game_over")
-pass
-
-time.sleep(1000)
+# time.sleep(1000)
