@@ -22,12 +22,14 @@ import time,random
 def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 
 #VARIABLES
+screen_offsets = (2555, 0)
+#screen_offsets = (2555, -720)
 game_name = getGameName()
 game_id = None
 # websitehome = "http://namegame.ddns.net:42069"
-websitehome = "http://192.168.0.113:42069"
-# websitehome = "http://192.168.0.106:8"
-nameCount = 4
+# websitehome = "http://192.168.0.113:42069"
+websitehome = "http://192.168.0.106:8"
+nameCount = 3
 WindowCount = 2
 teamCount = WindowCount//2
 timeLimit = 1
@@ -46,7 +48,7 @@ for w in range(WindowCount):
     d = windows[w]
     # home page
     d.get(websitehome)
-    d.set_window_position(x=2555+((w%7)*500),y=-720+(w//7*1040))
+    d.set_window_position(x=screen_offsets[0]+((w%7)*500),y=screen_offsets[1]+(w//7*1040))
     d.set_window_size(width=516, height=1040)
     # create game
     if w == 0:
@@ -102,23 +104,32 @@ while True:
                     try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div/body/div[2]/button')))
                     except: break
                     d.find_element(By.XPATH, '/html/body/div/body/div[2]/button').click() #They got it
-            try: 
-                WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.ID, 'start_button')))
-                d.find_element(By.ID, 'start_button').click() #Start Button
-            except: continue
             try:
                 d.find_element(By.ID, 'concede_button').click() #End Button
                 time.sleep(0.1)
             except: continue
+            try: 
+                WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.ID, 'start_button')))
+                d.find_element(By.ID, 'start_button').click() #Start Button
+            except: continue
+            
         except: continue
     else: 
+        exit = False
         for w in range(WindowCount):
             d = windows[w]
             try: 
-                if d.find_element(By.XPATH, ".//*[@text='GAME OVER']"): break
+                if d.find_element(By.XPATH, ".//*[@text='GAME OVER']"): 
+                    exit = True
+                    break
             except: pass
-            try: d.find_element(By.XPATH, '/html/body/div[3]/button').click()
+            try: 
+                print(d.find_element(By.XPATH, '/html/body/div[3]/button').text)
+                for w in range(WindowCount):
+                    d = windows[w]
+                    d.find_element(By.XPATH, '/html/body/div[3]/button').click()
             except: break
+        if exit: break
             
 print("game_over")
 pass

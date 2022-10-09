@@ -14,7 +14,6 @@ conn.autocommit = True
 # DATABASE FUNCTIONS
 
 def q_sql(query,data=None,get_header=False):
-    # TODO: fix SQL injection literally everywhere
     cur = conn.cursor()
     cur.execute(query,data)
     output = ""
@@ -123,7 +122,6 @@ def get_turn_order(game_id, get_index=False):
     return team, player
 
 def advance_turn_order(game_id):
-    # TODO: if a player disconnects during their turn, they get another turn. This logic should happen serverside instead
     team, number_teams, current_team, number_players, current_player = get_turn_order(game_id,get_index=True)
     q_sql(f"update players_turn_order set current_player = %(current_player)s where team_id = %(team)s ; update teams_turn_order set current_team = %(current_team)s where game_id = %(game_id)s", {'current_player':(current_player+1)%number_players, 'team':team, 'current_team':(current_team+1)%number_teams, 'game_id':game_id})
 
@@ -139,22 +137,18 @@ def advance_round_sql(game_id):
         emit_current_round(game_id)
 
 def add_turn_sql(game_id,user_id):
-    user_inst_id = get_user_inst_id(user_id,game_id)
     round = get_round(game_id)
-    time_limit = q_sql(f"select time_limit from games where game_id = %(game_id)s",{'game_id':game_id})[0][0]
-    has_ongoing_turns = q_sql(f"select user_inst_id from turns where game_id = %(game_id)s and round = %(round)s and now() < time_finish and active",{'game_id':game_id,'round':round,'user_inst_id':user_inst_id})
+    has_ongoing_turns = q_sql(f"select user_inst_id from turns where game_id = %(game_id)s and round = %(round)s and now() < time_finish and active",{'game_id':game_id,'round':round})
     if has_ongoing_turns:
         username = q_sql(f"select username from user_instance where user_inst_id = %(user_inst_id)s",{'user_inst_id':has_ongoing_turns[0][0]})[0][0]
         alert(game_id,f"ERROR: {username} has an ongoing turn, please concede",user_id)
     else: 
+        time_limit = q_sql(f"select time_limit from games where game_id = %(game_id)s",{'game_id':game_id})[0][0]
+        user_inst_id = get_user_inst_id(user_id,game_id)
         q_sql(f"insert into turns (user_inst_id,game_id,round,time_start,time_finish,active) values (%(user_inst_id)s,%(game_id)s,%(round)s,now(),now() + interval '%(time_limit)s second', TRUE)",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round,'time_limit':time_limit})
         socketio.emit('start_timer', room=f"game{game_id}")
 
-def end_turn_sql(game_id,user_id):
-    user_inst_id = get_user_inst_id(user_id,game_id)
-    round = get_round(game_id)
-    turn_id = q_sql(f"select turn_id from turns where user_inst_id = %(user_inst_id)s and game_id = %(game_id)s and round = %(round)s order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0][0]
-    q_sql(f"update turns set active = FALSE where turn_id = %(turn_id)s",{'turn_id':turn_id})
+def end_turn_sql(game_id): q_sql(f"update turns set active = FALSE where game_id = %(game_id)s and active",{'game_id':game_id})
 
 
 def score_answer_sql(game_id, user_id, name_id, success):
@@ -251,7 +245,7 @@ def test_connect(auth):
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
     join_room(f"user{user_id}")
     join_room(f"game{game_id}")
-    print(f"\nUser_ID: {user_id}, Username: {username}, IP: {ip}\n")#,request.args["t"], request,"\n")
+    print(f"\nUser_ID: {user_id}, Username: {username}, IP: {ip}\n")
 
 @socketio.on('emit_players')
 def emit_players(game_id,user_id=None):
@@ -298,7 +292,6 @@ def emit_who_hasnt_written_name(game_id,user_id=None):
 def emit_current_turn(game_id,user_id=None):
     current_team_id, current_turn_user_id  = get_turn_order(game_id)
     socketio.emit('emit_current_turn', [current_team_id, current_turn_user_id], room=f"user{user_id}" if user_id else f"game{game_id}")
-    #socketio.emit('your_turn','', room=f"user{current_turn_user_id}")
 
 @socketio.on('emit_next_name')
 def emit_next_name(game_id,user_id):
@@ -338,7 +331,7 @@ def start_timer(game_id,user_id):
 @socketio.on('stop_timer')
 def stop_timer(game_id,user_id):
     socketio.emit('stop_timer', room=f"game{game_id}")
-    end_turn_sql(game_id,user_id)
+    end_turn_sql(game_id)
 
 @socketio.on('score_answer')
 def score_answer(game_id, user_id, name_id, success): 
