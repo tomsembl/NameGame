@@ -6,17 +6,17 @@
         <title>The Name Game</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-        <script type="text/javascript" src="{{ url_for('static',filename='react.production.min.js') }}"></script>
+        <!-- <script type="text/javascript" src="{{ url_for('static',filename='react.production.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static',filename='react-dom.production.min.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static',filename='babel.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='babel.min.js') }}"></script> -->
         
     </head>
-    <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
-        <h1 class="heading subheading3">CREATE GAME</h1>
+    <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow" id="body"> 
+        <h1 class="heading subheading3" id="heading">CREATE GAME</h1>
         <form id="form" class="flex-v form pad-10pct" action="{{ url_for('add_game')}}" method="post">
-            <div id="app"></div>
+            <!-- <div id="app"></div> -->
             <div class="">
-                <h1 class="heading subheading4">SETTINGS</h1>
+                <h1 class="heading subheading4" id="subheading_settings">SETTINGS</h1>
                 <br>
                 <label for="game_name" class="label label1">Game Name:</label>
                 <input class="input" type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'" maxlength="40">
@@ -38,7 +38,7 @@
                 <br>
             </div>
             <div class="">
-                <h1 class="heading subheading4">ROUNDS</h2>
+                <h1 class="heading subheading4" id="subheading rounds">ROUNDS</h2>
                 <br>
                 <div class="flex-h-left margin-v">
                     <label class="switch"><input type="checkbox" id='round1' name="round1" checked=True><span class="slider round"></span></label>
@@ -59,11 +59,11 @@
             </div>
         </form>
         <div class="flex-h py-6 pad-10pct pad">
-            <button class="button1 button3" onclick="submit()">Create Game</button>
-            <button class="button1 button3" onclick="location.href='/';">Home</button>
+            <button class="button1 button3" onclick="submit()" id="create_game">Create Game</button>
+            <button class="button1 button3" onclick="location.href='/';" id="home">Home</button>
         </div>
     </body>
-    <script type="text/babel">
+    <!-- <script type="text/babel">
         function App() {
 
             const [notifState, setNotifState] = React.useState({
@@ -94,7 +94,7 @@
         }
         ReactDOM.render(<App />, document.querySelector("#app"))
 
-    </script>
+    </script> -->
 
     <script>
         function submit(){
