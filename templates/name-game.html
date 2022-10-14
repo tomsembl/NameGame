@@ -115,7 +115,10 @@
                         ...prevState,
                         currentRound: current_round,
                     })) 
-                    if (is_new_round){location.href="/graphs/{{game_id}}"}
+                    if (is_new_round){
+                        endCountdown()
+                        location.href="/graphs/{{game_id}}"
+                    }
                 }) 
 
                 newSocket.on('advance_game_emit',function(msg) {
