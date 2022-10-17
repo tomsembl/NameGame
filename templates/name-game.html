@@ -27,16 +27,22 @@
                 currentTurnUserID: null,
                 currentTeamID: null,
                 currentPlayer: null,
+                currentPlayerID: null,
+                currentTeamMembers: null,
+                currentUserID: null,
                 teammates: [],
                 players: [],
+                numPlayers: -1,
                 teams: [],
                 teammembers: [],
+                turnOrder: null,
                 turnStarted: false,
                 doneButtonEnabled: true,
                 whosUpVisible: true,
                 startButtonEnabled: true,
                 prevPhase: -1,
                 phase: -1,
+                toggleQueue: false,
                 audio1: new Audio(`/static/start/0.mp3`),
                 audio2: new Audio(`/static/start/1.mp3`),
             })
@@ -50,10 +56,12 @@
             const socket = React.useRef()
             const interval = React.useRef()
             const myTurnRef = React.useRef()
+            const numPlayersRef = React.useRef()
             const audio1 = React.useRef()
             const audio2 = React.useRef()
             React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
             React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
+            React.useEffect(()=>{numPlayersRef.current = state.numPlayers},[state.numPlayers])
             React.useEffect(()=>{audio1.current = state.audio1},[state.audio1])
             React.useEffect(()=>{audio2.current = state.audio2},[state.audio2])
             React.useEffect(()=>{
@@ -73,11 +81,12 @@
                 }) 
 
                 newSocket.on('emit_players',function(msg) { 
-                    players = msg[0] 
+                    players = msg[0]
                     teammembers = msg[1]
                     setState(prevState=>({
                         ...prevState,
                         players: msg[0],
+                        numPlayers: Object.keys(players).length,
                         teammembers: msg[1],
                     }))
                 }) 
@@ -172,14 +181,53 @@
                     }
                 })
 
+                newSocket.on('emit_turn_order',function(msg) { 
+                    var arr = []
+                    const teamsArray = msg['teams_array']
+                    var currentTeam = msg['current_team']
+                    const numTeams = msg['number_teams']
+                    var currentPlayerIndex, currentTeamObj, currentUserID, playersArray, stateCurrentTeamMembers, stateCurrentUserID
+                    var teamsObjs = teamsArray.map((team_id)=>{return msg["teams_player_order"].find((x)=>x.team_id==team_id)})
+                    const numPlayers = numPlayersRef.current
+                
+                    for (var i=0; i<numPlayersRef.current; i++){
+                        currentTeamObj = teamsObjs[currentTeam]
+                        currentPlayerIndex = [currentTeamObj['current_player']]
+                        playersArray = currentTeamObj['players_array']
+                        currentUserID = playersArray[currentPlayerIndex]
+                        arr.push(currentUserID)
+                        if(i==0){
+                            stateCurrentTeamMembers = playersArray
+                            stateCurrentUserID = currentUserID
+                        }
+                        currentTeamObj['current_player'] = (currentTeamObj['current_player'] + 1) % currentTeamObj['number_players']
+                        currentTeam = (currentTeam + 1) % numTeams
+                    }
+                    setState(prevState=>({
+                        ...prevState,
+                        turnOrder: arr,
+                        currentTeamMembers: stateCurrentTeamMembers,
+                        currentUserID: stateCurrentUserID,
+                    }))
+                })
+
                 newSocket.emit("emit_teams","{{game_id}}",state.userID)
                 newSocket.emit("emit_players","{{game_id}}",state.userID)
                 newSocket.emit("emit_current_turn","{{game_id}}",state.userID)
                 newSocket.emit("emit_current_round","{{game_id}}",state.userID)
+                newSocket.emit("emit_turn_order","{{game_id}}",state.userID)
 
                 socket.current = newSocket
                 
             },[])
+
+            React.useEffect(()=>{
+                socket.current.emit("emit_turn_order","{{game_id}}",state.userID)
+            },[state.currentPlayer])
+
+            function test_emit_turn_order(){
+                socket.current.emit("emit_turn_order","{{game_id}}",state.userID)
+            }
 
             function endCountdown(){
                 clearInterval(interval.current)
@@ -333,7 +381,7 @@
                         <h1  class="heading subheading4">Timer<br/><span id="countdown">{countdown}</span></h1>
                     </div>
 
-                    {!state.myTurn && <div id="whos_up" class="flex-v pad-10pct">
+                    {/*{!state.myTurn && <div id="whos_up" class="flex-v pad-10pct">
                         <p class="white" id="current_player">
                             <strong>{"Current Player: \xa0"}</strong>{state.currentPlayer}
                         </p>
@@ -343,17 +391,46 @@
                         <p class="white" id="teammates">
                             <strong>{state.teammates.length ? "Teammates: \xa0 \xa0 \xa0":""}</strong>{state.teammates.join(", ")}
                         </p>
-                    </div>}
+                    </div>}*/}
+                    {state.turnOrder && !state.myTurn && <table>
+                        <th class="heading subheading4">
+                            <span><label class="switch   mt--1"><input type="checkbox" id='q' name="q" checked={state.toggleQueue} onClick={()=>{setState(prevState=>({
+                                ...prevState,
+                                toggleQueue: !prevState.toggleQueue,
+                            }))}}/><span class="slider round"></span></label></span>
+                            Queue
+                        </th>
+                        {state.toggleQueue && state.turnOrder.map((player_id) => {
+                            return (
+                                <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
+                                    <p class={`${state.currentUserID===player_id?"my":state.currentTeamMembers.find(x=>x===player_id)?"team":"not"}`}>{player_id===state.userID?<strong>You</strong>:state.players[player_id]}</p>
+                                </tr>
+                            )
+                        })}
+                    </table>}
+                    {state.turnOrder && state.myTurn && state.teammates.length!==0 && <table>
+                        <th class="heading subheading4">Teammates</th>
+                        {state.toggleQueue && state.currentTeamMembers.map((teammate) => {
+                            if (teammate!==state.userID){
+                                return (
+                                    <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
+                                        <p class="team">{state.players[teammate]}</p>
+                                    </tr>
+                                )
+                            }
+                        })}
+                    </table>}
 
-                    <div class="flex-h mar-1em">
+                    {state.myTurn && <div class="flex-h mar-1em">
                         <button id="start_button" class="button1 button3" onClick={start} disabled={!state.myTurn|state.turnStarted|!state.startButtonEnabled}>Start</button>
                         <button id="concede_button" class="button1 button3" onClick={()=>{concede(false)}} disabled={!state.myTurn|!state.turnStarted}>End</button>
-                    </div>
+                    </div>}
                     <div class="flex-h mar-1em">
                         <button class="button2" onClick={()=>{location.href='/';}}>Home</button>
                         {/* <button class="button2" onClick={()=>{console.log("state",state)}}>Print state</button>
                         <h1>{state.phase==-1?"null":state.phase}</h1>
                         <h1>{state.prevPhase==-1?"null":state.prevPhase}</h1> */}
+                        <button class="button2" onClick={test_emit_turn_order}>test_emit_turn_order</button>
                     </div>
                 </body>
             )

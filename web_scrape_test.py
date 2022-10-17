@@ -22,13 +22,14 @@ import time,random
 def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 
 #VARIABLES
-screen_offsets = (2555, 0)
-#screen_offsets = (2555, -720)
+screen_offsets = (0,0)
+#screen_offsets = (2555, 0) #right4k
+#screen_offsets = (2555, -720) #right4K
 game_name = getGameName()
 game_id = None
 # websitehome = "http://namegame.ddns.net:42069"
-websitehome = "http://namegame.pw"
-# websitehome = "http://192.168.0.106:8"
+# websitehome = "http://namegame.pw"
+websitehome = "http://10.0.0.9:8"
 nameCount = 3
 WindowCount = 2
 teamCount = WindowCount//2
@@ -71,7 +72,7 @@ for w in range(WindowCount):
 d.find_element(By.XPATH, '/html/body/div[3]/div/h1[2]/div/button').click()
 time.sleep(0.5)
 d.find_element(By.XPATH, '/html/body/div[5]/button[1]').click()
-Alert(d).accept()
+#Alert(d).accept()
 
 # write names
 # WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))

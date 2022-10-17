@@ -251,7 +251,6 @@
             }
         }
 
-
         function assign(){
             user_id = player_selected_option.slice(13)
             team_id = team_selected_option.slice(11)
@@ -281,6 +280,7 @@
                 if (conf) {socket.emit("deletion_kick","{{game_id}}","{{username}}",user_id)}
             }
         }
+
         function advance_game(){
             for (var team_div of document.getElementById("teams").children){
                 var team_id_2 = team_div.id.slice(11)
@@ -294,15 +294,13 @@
                 alert(`not every player is assigned to a team: ${teammembers.null}`)
                 return
             }
-            else{
-                if (confirm("do you want to start")){
-                    fetch("/advance_game",{
-                        method:"POST", 
-                        body: JSON.stringify({"game_id":"{{game_id}}","stage":2}),
-                        headers: new Headers({"content-type": "application/json"}) 
-                    })
-                }
-            }
+            //if (confirm("do you want to start")){
+            fetch("/advance_game",{
+                method:"POST", 
+                body: JSON.stringify({"game_id":"{{game_id}}","stage":2}),
+                headers: new Headers({"content-type": "application/json"}) 
+            })
+            //}
         }
         
     </script>

@@ -111,7 +111,7 @@ def init_turn_order(game_id):
     insert into players_turn_order (team_id, players_array, number_players, current_player) values """ + ",".join([f"({team},'{str(set(teammembers[team]))}',{len(teammembers[team])},0)" for team in teams])
     q_sql(query, {'game_id':game_id, 'teams_array':str(set(teams)), 'number_teams':number_teams })
 
-def get_turn_order(game_id, get_index=False):
+def get_turn_order(game_id, get_index=False, get_all=False):
     teams = header_zip_query(f"select * from teams_turn_order where game_id = %(game_id)s", data={'game_id':game_id})
     teams_array, number_teams, current_team = teams['teams_array'], teams['number_teams'], teams['current_team']
     team = teams_array[current_team]
@@ -119,6 +119,9 @@ def get_turn_order(game_id, get_index=False):
     players_array, number_players, current_player = players['players_array'], players['number_players'], players['current_player']
     player = players_array[current_player]
     if get_index: return team, number_teams, current_team, number_players, current_player
+    if get_all: 
+        teams_player_order = header_zip_query(f"select * from players_turn_order where team_id in (select team_id from teams where game_id = %(game_id)s)", data={'game_id':game_id}, multi=True)
+        return teams_array, number_teams, current_team, teams_player_order
     return team, player
 
 def advance_turn_order(game_id):
@@ -138,18 +141,17 @@ def advance_round_sql(game_id):
 
 def add_turn_sql(game_id,user_id):
     round = get_round(game_id)
-    has_ongoing_turns = q_sql(f"select user_inst_id from turns where game_id = %(game_id)s and round = %(round)s and now() < time_finish and active",{'game_id':game_id,'round':round})
-    if has_ongoing_turns:
-        username = q_sql(f"select username from user_instance where user_inst_id = %(user_inst_id)s",{'user_inst_id':has_ongoing_turns[0][0]})[0][0]
-        alert(game_id,f"ERROR: {username} has an ongoing turn, please concede",user_id)
-    else: 
-        time_limit = q_sql(f"select time_limit from games where game_id = %(game_id)s",{'game_id':game_id})[0][0]
-        user_inst_id = get_user_inst_id(user_id,game_id)
-        q_sql(f"insert into turns (user_inst_id,game_id,round,time_start,time_finish,active) values (%(user_inst_id)s,%(game_id)s,%(round)s,now(),now() + interval '%(time_limit)s second', TRUE)",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round,'time_limit':time_limit})
-        socketio.emit('start_timer', room=f"game{game_id}")
+    #has_ongoing_turns = q_sql(f"select user_inst_id from turns where game_id = %(game_id)s and round = %(round)s and now() < time_finish and active",{'game_id':game_id,'round':round})
+    #if has_ongoing_turns:
+        #username = q_sql(f"select username from user_instance where user_inst_id = %(user_inst_id)s",{'user_inst_id':has_ongoing_turns[0][0]})[0][0]
+        #alert(game_id,f"ERROR: {username} has an ongoing turn, please concede",user_id)
+    #else: 
+    time_limit = q_sql(f"select time_limit from games where game_id = %(game_id)s",{'game_id':game_id})[0][0]
+    user_inst_id = get_user_inst_id(user_id,game_id)
+    q_sql(f"insert into turns (user_inst_id,game_id,round,time_start,time_finish,active) values (%(user_inst_id)s,%(game_id)s,%(round)s,now(),now() + interval '%(time_limit)s second', TRUE)",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round,'time_limit':time_limit})
+    socketio.emit('start_timer', room=f"game{game_id}")
 
 def end_turn_sql(game_id): q_sql(f"update turns set active = FALSE where game_id = %(game_id)s and active",{'game_id':game_id})
-
 
 def score_answer_sql(game_id, user_id, name_id, success):
     user_inst_id = get_user_inst_id(user_id, game_id)
@@ -326,6 +328,7 @@ def advance_round(game_id,user_id=None):
 
 @socketio.on('start_timer')
 def start_timer(game_id,user_id):
+    print("add_turn_sql")
     add_turn_sql(game_id,user_id)
 
 @socketio.on('stop_timer')
@@ -351,6 +354,14 @@ def emit_scores(game_id,user_id,is_team=False):
 @socketio.on('get_random_name')
 def get_random_name():
     return get_random_default_name()
+
+@socketio.on('emit_turn_order')
+def emit_turn_order(game_id,user_id):
+    teams_array, number_teams, current_team, teams_player_order = get_turn_order(game_id,get_all=True)
+    #teams_objs = {y : next(x for x in teams_player_order if x["team_id"] == y) for y in teams_array}
+    #obj = {"current_team":current_team, "number_teams":number_teams,"teams_array":teams_array, "teams_objs":teams_objs}
+    obj = {"current_team":current_team, "number_teams":number_teams,"teams_array":teams_array, "teams_player_order":teams_player_order}
+    socketio.emit('emit_turn_order',obj, room= f"user{user_id}")
 
 
 
@@ -543,7 +554,7 @@ if __name__ == '__main__':
         app,
         #host="192.168.137.1",
         #host="192.168.1.17",
-        host="192.168.0.106",
+        host="10.0.0.9",
         #host="0.0.0.0",
         port=8, 
         log_output=True,
