@@ -20,21 +20,16 @@
                 userID: {{user_id}},
                 teamID: {{team_id}},
                 myTurn: false,
-                myTeamsTurn: false,
                 currentRound: {{game_deets['round']}},
-                timeLimit: time_limit,
                 roundTexts: {1:'Round 1: \xa0Unlimited',2:'Round 2: \xa03 Words Max',3:'Round 3: \xa01 Word Only',4:'Round 4: \xa0Mime'},
-                currentTurnUserID: null,
+                currentPlayerID: null,
                 currentTeamID: null,
                 currentPlayer: null,
-                currentPlayerID: null,
-                currentTeamMembers: null,
-                currentUserID: null,
                 teammates: [],
-                players: [],
-                numPlayers: -1,
-                teams: [],
-                teammembers: [],
+                players: {{players|safe}},
+                numPlayers: {{numPlayers}},
+                teams: {{teams|safe}},
+                teammembers: {{teammembers|safe}},
                 turnOrder: null,
                 turnStarted: false,
                 doneButtonEnabled: true,
@@ -49,8 +44,6 @@
             const [countdown, setCountdown] = React.useState(time_limit)
             const [name, setName] = React.useState(null)
             var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, teammates, is_new_round, start_or_stop, stop_mp3, current_round
-            //var audio1 = new Audio(`/static/start/0.mp3`)
-            //var audio2 = new Audio(`/static/stop/0.mp3`)
             var audio3 = new Audio(`/static/Ding.mp3`)
             const nameRef = React.useRef()
             const socket = React.useRef()
@@ -68,9 +61,7 @@
                 
                 const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})
 
-                // newSocket.onAny((eventName, ...args) => {
-                //     console.log(eventName, args)
-                // })
+                // newSocket.onAny((eventName, ...args) => {console.log(eventName, args)})
 
                 newSocket.on('emit_teams',function(msg) { 
                     teams = msg 
@@ -99,19 +90,15 @@
                         var current_player = prevState.players[current_turn_user_id]
                         var my_turn = current_turn_user_id === prevState.userID
                         var my_teams_turn = current_team_id === prevState.teamID
-                        var temp_teammates = prevState.teammembers[current_team_id]
                         var new_phase = getPhaseNumber(current_player, my_teams_turn, my_turn)
-                        teammates = []
-                        if (temp_teammates) { teammates = JSON.parse(JSON.stringify(temp_teammates)) }
-                        teammates.splice(teammates.indexOf(current_player),1)
+                        teammates = JSON.parse(JSON.stringify(prevState.teammembers[current_team_id])).filter(x=>x!==current_turn_user_id)
                         return {
                             ...prevState,
-                            currentTurnUserID: current_turn_user_id,
+                            currentPlayerID: current_turn_user_id,
                             currentTeamID: current_team_id,
                             currentPlayer: current_player,
                             teammates: teammates,
                             myTurn: my_turn,
-                            myTeamsTurn: my_teams_turn,
                             prevPhase: prevState.phase==new_phase ? prevState.prevPhase : prevState.phase, //this log is to handle the case of mulitple runs of this function, which would accidentally flushing prevPhase
                             phase: new_phase
                         }
@@ -186,7 +173,7 @@
                     const teamsArray = msg['teams_array']
                     var currentTeam = msg['current_team']
                     const numTeams = msg['number_teams']
-                    var currentPlayerIndex, currentTeamObj, currentUserID, playersArray, stateCurrentTeamMembers, stateCurrentUserID
+                    var currentPlayerIndex, currentTeamObj, currentUserID, playersArray
                     var teamsObjs = teamsArray.map((team_id)=>{return msg["teams_player_order"].find((x)=>x.team_id==team_id)})
                     const numPlayers = numPlayersRef.current
                 
@@ -196,25 +183,16 @@
                         playersArray = currentTeamObj['players_array']
                         currentUserID = playersArray[currentPlayerIndex]
                         arr.push(currentUserID)
-                        if(i==0){
-                            stateCurrentTeamMembers = playersArray
-                            stateCurrentUserID = currentUserID
-                        }
                         currentTeamObj['current_player'] = (currentTeamObj['current_player'] + 1) % currentTeamObj['number_players']
                         currentTeam = (currentTeam + 1) % numTeams
                     }
                     setState(prevState=>({
                         ...prevState,
                         turnOrder: arr,
-                        currentTeamMembers: stateCurrentTeamMembers,
-                        currentUserID: stateCurrentUserID,
                     }))
                 })
 
-                newSocket.emit("emit_teams","{{game_id}}",state.userID)
-                newSocket.emit("emit_players","{{game_id}}",state.userID)
                 newSocket.emit("emit_current_turn","{{game_id}}",state.userID)
-                newSocket.emit("emit_current_round","{{game_id}}",state.userID)
                 newSocket.emit("emit_turn_order","{{game_id}}",state.userID)
 
                 socket.current = newSocket
@@ -403,14 +381,14 @@
                         {state.toggleQueue && state.turnOrder.map((player_id) => {
                             return (
                                 <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
-                                    <p class={`${state.currentUserID===player_id?"my":state.currentTeamMembers.find(x=>x===player_id)?"team":"not"}`}>{player_id===state.userID?<strong>You</strong>:state.players[player_id]}</p>
+                                    <p class={`${state.currentPlayerID===player_id?"my":state.teammates.find(x=>x===player_id)?"team":"not"}`}>{player_id===state.userID?<strong>You</strong>:state.players[player_id]}</p>
                                 </tr>
                             )
                         })}
                     </table>}
                     {state.turnOrder && state.myTurn && state.teammates.length!==0 && <table>
                         <th class="heading subheading4">Teammates</th>
-                        {state.toggleQueue && state.currentTeamMembers.map((teammate) => {
+                        {state.toggleQueue && state.teammates.map((teammate) => {
                             if (teammate!==state.userID){
                                 return (
                                     <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
@@ -430,7 +408,7 @@
                         {/* <button class="button2" onClick={()=>{console.log("state",state)}}>Print state</button>
                         <h1>{state.phase==-1?"null":state.phase}</h1>
                         <h1>{state.prevPhase==-1?"null":state.prevPhase}</h1> */}
-                        <button class="button2" onClick={test_emit_turn_order}>test_emit_turn_order</button>
+                        {/*<button class="button2" onClick={test_emit_turn_order}>test_emit_turn_order</button>*/}
                     </div>
                 </body>
             )

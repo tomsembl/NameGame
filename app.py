@@ -518,14 +518,14 @@ def name_game(game_id):
     # TODO: handle when game has started without user
     game_deets = get_game_deets(game_id)
     user_id = request.cookies.get('user_id')
-    username = request.cookies.get('username')
+    team_names = get_team_names(game_id)
+    teams = {x[0]:x[1] for x in team_names}
     user_inst_id = get_user_inst_id(user_id,game_id)
-    teams = get_team_names(game_id)
-    players = get_players_by_game_id(game_id)
     team_id = get_teamid_by_userinst(user_inst_id)
-    _, teammembers = get_teams(game_id)
+    players, teammembers = get_teams(game_id,get_player_id=True)
+    numPlayers = len(players.keys())
     if game_deets['stage'] >= 4: return redirect(url_for(f"graphs", game_id=game_id))
-    return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, username=username, user_inst_id=user_inst_id, teams=teams, team_id=team_id, teammembers=teammembers)
+    return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, teams=teams, team_id=team_id, teammembers=teammembers, numPlayers=numPlayers)
 
 #graphs
 @app.route('/graphs/<game_id>', methods=["GET"])
@@ -554,8 +554,8 @@ if __name__ == '__main__':
         app,
         #host="192.168.137.1",
         #host="192.168.1.17",
-        host="10.0.0.9",
-        #host="0.0.0.0",
+        #host="10.0.0.9",
+        host='0.0.0.0',
         port=8, 
         log_output=True,
         debug=True,
