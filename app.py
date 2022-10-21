@@ -1,19 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
-from flask_socketio import SocketIO, send, join_room, leave_room
-import sqlite3, random, string, os, logging, time, json
-from datetime import datetime
+from flask_socketio import SocketIO, join_room
+import sqlite3, random, string, logging, time, json, os
+from os.path import join, dirname, abspath
 
 app = Flask(__name__)
-
-#connect DB
-try: conn = sqlite3.connect(r"C:\Users\antip\OneDrive\Documents\GitHub\NameGame\namegame.db", check_same_thread=False, isolation_level=None)
-except: print("I am unable to connect to the database")
-#conn.autocommit = True
 
 
 # DATABASE FUNCTIONS
 
+#time_elapsed = 0
 def q_sql(query,data=False,get_header=False):
+    #start = time.time()
     cur = conn.cursor()
     if data: cur.execute(query,data)
     else: cur.execute(query)
@@ -24,6 +21,9 @@ def q_sql(query,data=False,get_header=False):
     except: pass
     finally:
         cur.close()
+        #global time_elapsed
+        #time_elapsed += time.time() - start
+        #print(f"Time elapsed: {time_elapsed}")
         return output
 
 def db_cookie(user_id,username=None,ip=None):
@@ -553,6 +553,18 @@ def readme():
 
 # START APP
 if __name__ == '__main__':
+
+    #connect DB
+    db_path = join(dirname(abspath(__file__)), 'namegame.db')
+    isSetup =  os.path.exists(db_path)
+    conn = sqlite3.connect(db_path, check_same_thread=False, isolation_level=None)
+    if not isSetup:
+        script_path = join(dirname(abspath(__file__)), 'sql/full_db_script_no_data_sqlite.sql')
+        with open(script_path, 'r') as f:
+            script = f.read()
+        for statement in script.split(';'):
+            q_sql(statement)
+
     logging.basicConfig(filename='log.log',level=logging.INFO)
     socketio.run(
         app,
@@ -561,7 +573,7 @@ if __name__ == '__main__':
         host="10.0.0.9",
         #host='0.0.0.0',
         port=8, 
-        #log_output=True,
-        #debug=True,
-        #use_reloader=True
+        # log_output=True,
+        # debug=True,
+        # use_reloader=True
     )

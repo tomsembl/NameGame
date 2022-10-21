@@ -341,7 +341,16 @@
                 }
                 return `animate-${phaseTranslate(pp)}-${phaseTranslate(p)}`
             }
-
+            const toggleQueue = (
+                <span>
+                    <label class="switch mt--1">
+                        <input type="checkbox" id='q' name="q" checked={state.toggleQueue} onClick={()=>{setState(prevState=>({
+                            ...prevState,
+                            toggleQueue: !prevState.toggleQueue,
+                        }))}}/><span class="slider round"></span>
+                    </label>
+                </span>
+            )
 
             return (
                 <body id="body" class={`lobby2 flex-v rainbow-gradient-bg ${getBackground()}`}> 
@@ -354,29 +363,14 @@
                     </div>
                     
                     <div class="flex-v">
-                        {/*<h1 id="the_name" class=" heading subheading3 pad-10pct-v name_big">{theName}</h1>*/}
-                        <h1 id="the_name" class=" heading subheading3 pad-10pct-v name_big">{getTextForTheName()}</h1>
+                        <h1 id="the_name" class={`heading subheading3 pad-10pct-v name-big${state.myTurn?"-big":""}`}>{getTextForTheName()}</h1>
                         {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>}
-                        <h1  class="heading subheading4">Timer<br/><span id="countdown">{countdown}</span></h1>
+                        <h1  class="heading subheading4">⏱<br/><span id="countdown">{countdown}</span></h1>
                     </div>
-
-                    {/*{!state.myTurn && <div id="whos_up" class="flex-v pad-10pct">
-                        <p class="white" id="current_player">
-                            <strong>{"Current Player: \xa0"}</strong>{state.currentPlayer}
-                        </p>
-                        <p class="white" id="current_team">
-                            <strong>{"Team Name: \xa0 \xa0 \xa0"}</strong>{state.teams[state.currentTeamID]}
-                        </p>
-                        <p class="white" id="teammates">
-                            <strong>{state.teammates.length ? "Teammates: \xa0 \xa0 \xa0":""}</strong>{state.teammates.join(", ")}
-                        </p>
-                    </div>}*/}
+                    
                     {state.turnOrder && !state.myTurn && <table>
                         <th class="heading subheading4">
-                            <span><label class="switch   mt--1"><input type="checkbox" id='q' name="q" checked={state.toggleQueue} onClick={()=>{setState(prevState=>({
-                                ...prevState,
-                                toggleQueue: !prevState.toggleQueue,
-                            }))}}/><span class="slider round"></span></label></span>
+                            {toggleQueue}
                             Queue
                         </th>
                         {state.toggleQueue && state.turnOrder.map((player_id) => {
@@ -388,7 +382,10 @@
                         })}
                     </table>}
                     {state.turnOrder && state.myTurn && state.teammates.length!==0 && <table>
-                        <th class="heading subheading4">Teammates</th>
+                        <th class="heading subheading4">
+                            {toggleQueue}
+                            Teammates
+                        </th>
                         {state.toggleQueue && state.teammates.map((teammate) => {
                             if (teammate!==state.userID){
                                 return (
