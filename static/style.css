@@ -3,7 +3,7 @@
     src: url('poppins.woff2') format('woff2');
   }
 html{
-    background-color:rgb(30, 30, 30);
+    background-color:rgb(30, 30, 30)!important;
 }
 .white-html{
     background-color:rgb(255, 255, 255) !important;
@@ -244,7 +244,7 @@ table, th, td, tr {
     white-space: pre-wrap;
 }
 .name-big-big{
-    font-size:10vw !important;
+    font-size:2.2em !important;
     white-space: pre-wrap;
 }
 .white{color:rgb(255, 255, 255)}
