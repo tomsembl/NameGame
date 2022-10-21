@@ -573,9 +573,9 @@ if __name__ == '__main__':
         app,
         #host="192.168.137.1",
         #host="192.168.1.17",
-        host="10.0.0.9",
+        host="10.0.0.102",
         #host='0.0.0.0',
-        port=8, 
+        port=42069, 
         # log_output=True,
         # debug=True,
         # use_reloader=True
