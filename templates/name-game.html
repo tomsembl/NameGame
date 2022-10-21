@@ -271,6 +271,7 @@
                 }))
                 socket.current.emit("start_timer","{{game_id}}",state.userID)
                 startCountdown()
+                audio1.current.removeEventListener('ended', startAfterAudio)
             }
 
             function done() {
