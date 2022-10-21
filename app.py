@@ -559,11 +559,14 @@ if __name__ == '__main__':
     isSetup =  os.path.exists(db_path)
     conn = sqlite3.connect(db_path, check_same_thread=False, isolation_level=None)
     if not isSetup:
+        print("Setting up DB")
         script_path = join(dirname(abspath(__file__)), 'sql/full_db_script_no_data_sqlite.sql')
         with open(script_path, 'r') as f:
             script = f.read()
-        for statement in script.split(';'):
-            q_sql(statement)
+        cur = conn.cursor()
+        cur.executescript(script)
+        cur.close()
+        print("DB setup complete")
 
     logging.basicConfig(filename='log.log',level=logging.INFO)
     socketio.run(
