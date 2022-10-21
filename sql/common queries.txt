@@ -1,3 +1,6 @@
+--full db backup 
+--      pg_dump -U postgres -d namegame -W -f c:\temp\full_db_backup.sql
+
 --STATS
 --get team totals
 	select team_id, count(*) from answers
