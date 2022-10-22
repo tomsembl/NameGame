@@ -25,7 +25,7 @@
                 teammembers: {{teammembers|safe}},
                 selectedPlayerID: null,
                 selectedTeamID: null,
-                username: "{{username}}",
+                username: "{{username|safe}}",
             })
             const socket = React.useRef()
             React.useEffect(()=>{
@@ -123,7 +123,7 @@
 
 
             return(
-                <body class="lobby2 flex-v rainbow-gradient-bg">{/*animate-rainbow"> */}
+                <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow">
                     <h1 class="heading subheading3">LOBBY</h1>
                     <div class="flex-h center vmar">
                         <h1 class="heading subheading4 pad-05em">

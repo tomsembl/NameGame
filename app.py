@@ -179,6 +179,22 @@ def random_shuffle_teams_sql(game_id):
         q_sql(f"update user_instance set team_id = :team_id where user_inst_id = :user_inst_id",{'team_id':teams[current_team_index],'user_inst_id':user_inst_id})
         current_team_index = (current_team_index + 1) % len(teams)
 
+def get_line_graph_data(game_id, is_team=False):
+    rounds = list(map(lambda x: x[0],q_sql(f"select distinct(round) from answers where game_id = :game_id order by round",{'game_id':game_id})))
+    #teams
+    all_rounds_data = []
+    for round in rounds:
+        if is_team: data = q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and round = :round and a.game_id = :game_id group by t.team_name order by count(*) desc", {'round':round,'game_id':game_id})
+        else: data = q_sql(f"select u.username, count(*) from answers a join user_instance u on u.user_inst_id = a.user_inst_id where success = 1 and round = :round and a.game_id = :game_id group by u.username order by count(*) desc", {'round':round,'game_id':game_id})
+        all_rounds_data.append(data)
+    dicti = {x:[] for x in [y[0] for y in all_rounds_data[0]]}
+    dicti2 = {x:[] for x in [y[0] for y in all_rounds_data[0]]}
+    for round in all_rounds_data:
+        for player in round:
+            dicti2[player[0]].append(player[1]+sum(dicti[player[0]]))
+            dicti[player[0]].append(player[1])
+    return({"cummulative":dicti2,"normal":dicti,"rounds":rounds})
+
 def update_username(new_username,user_id,user_inst_id): 
     q_sql(f"update users set username = :new_username where user_id = :user_id ",{'user_id':user_id,'new_username':new_username})
     q_sql(f"update user_instance set username= :new_username where user_inst_id = :user_inst_id",{'user_inst_id':user_inst_id,'new_username':new_username})
@@ -349,6 +365,11 @@ def emit_scores(game_id,user_id,is_team=False):
     res = get_scores(game_id, is_team)
     socketio.emit('emit_scores',[res,is_team], room= f"user{user_id}")
 
+@socketio.on('emit_line_graph_data')
+def emit_line_graph_data(game_id,user_id,is_team=False):
+    res = get_line_graph_data(game_id,is_team=False)
+    socketio.emit('emit_line_graph_data',[res,is_team], room= f"user{user_id}")
+
 @socketio.on('get_random_name')
 def get_random_name():
     return get_random_default_name()
@@ -459,8 +480,6 @@ def lobby(game_id):
         return redirect(url_for('homepage'))
     username = request.cookies.get('username')
     db_user_instance(user_id,username,game_id)
-    #players = get_players_by_game_id(game_id)
-    #teams = get_team_names(game_id)
     players, teammembers = get_teams(game_id)
     team_names = get_team_names(game_id)
     teams = {x[0]:x[1] for x in team_names}
@@ -474,7 +493,6 @@ def username_change():
     data = request.get_json()
     new_username, user_inst_id, game_id = data["new_username"], data["user_inst_id"], data["game_id"]
     user_id = request.cookies.get("user_id")
-    #print("new_username:",new_username,"user_id:",user_id)
     update_username(new_username,user_id,user_inst_id)
     resp = make_response("")
     resp.set_cookie('user_id', str(user_id))
@@ -571,6 +589,7 @@ if __name__ == '__main__':
         #host="192.168.1.138",
         host="10.0.0.102",
         #host='0.0.0.0',
+        #port=8, 
         port=42069, 
         #log_output=True,
         #debug=True,

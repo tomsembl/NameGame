@@ -28,13 +28,14 @@ screen_offsets = (0,0)
 game_name = getGameName()
 game_id = None
 # websitehome = "http://namegame.ddns.net:42069"
-websitehome = "http://namegame.pw"
+# websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.9:8"
 # websitehome = "http://localhost:8"
+websitehome = "http://192.168.1.138:8"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot"]
 nameCount = 3
-WindowCount = 4
-teamCount = WindowCount//2
+WindowCount = 3
+teamCount = 2#WindowCount//2
 timeLimit = 10
 
 
@@ -73,7 +74,7 @@ for w in range(WindowCount):
 #start game
 d.find_element(By.XPATH, '/html/body/div/body/div[3]/div/h1[2]/div/button').click()
 
-time.sleep(0.5)
+time.sleep(0.8)
 d.find_element(By.XPATH, '/html/body/div/body/div[5]/button[1]').click()
 #Alert(d).accept()
 
@@ -86,7 +87,7 @@ for w in range(WindowCount):
         d.find_element(By.ID,f"button{n}").click()
         #time.sleep(0.1)
     d.find_element(By.XPATH, '/html/body/div[2]/button[1]').click()
-time.sleep(0.1)
+time.sleep(0.4)
 d.find_element(By.XPATH, '/html/body/div[2]/button[2]').click()
     
 #name game

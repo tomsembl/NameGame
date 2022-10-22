@@ -364,7 +364,7 @@
                     
                     <div class="flex-v">
                         <h1 id="the_name" class={`heading subheading3 pad-10pct-v name-big${state.myTurn?"-big":""}`}>{getTextForTheName()}</h1>
-                        {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>}
+                        {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.doneButtonEnabled?"":"correct"} ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>}
                         <h1  class="heading subheading4">⏱<span id="countdown">{countdown}</span></h1>
                     </div>
                     
