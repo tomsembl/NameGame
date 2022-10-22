@@ -376,7 +376,7 @@
                         {state.toggleQueue && state.turnOrder.map((player_id) => {
                             return (
                                 <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
-                                    <p class={`${state.currentPlayerID===player_id?"my":state.teammates.find(x=>x===player_id)?"team":"not"}`}>{player_id===state.userID?<strong>🫵You</strong>:state.players[player_id]}</p>
+                                    <p class={`${state.currentPlayerID===player_id?"my":state.teammates.find(x=>x===player_id)?"team":"not"}`}>{player_id===state.userID?<strong>You</strong>:state.players[player_id]}</p>
                                 </tr>
                             )
                         })}

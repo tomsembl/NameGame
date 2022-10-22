@@ -179,6 +179,10 @@ def random_shuffle_teams_sql(game_id):
         q_sql(f"update user_instance set team_id = :team_id where user_inst_id = :user_inst_id",{'team_id':teams[current_team_index],'user_inst_id':user_inst_id})
         current_team_index = (current_team_index + 1) % len(teams)
 
+def update_username(new_username,user_id,user_inst_id): 
+    q_sql(f"update users set username = :new_username where user_id = :user_id ",{'user_id':user_id,'new_username':new_username})
+    q_sql(f"update user_instance set username= :new_username where user_inst_id = :user_inst_id",{'user_inst_id':user_inst_id,'new_username':new_username})
+
 def player_team_change_sql(user_id,team_id,game_id): 
     if get_game_stage(game_id) == 1: q_sql(f"update user_instance set team_id= :team_id where user_id = :user_id and game_id=:game_id", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
 
@@ -212,9 +216,7 @@ def get_joinable_games_for_user(user_id): return header_zip_query(f"select game_
 
 def get_players_by_game_id(game_id): return q_sql(f"select user_id, username from user_instance where game_id = :game_id", {'game_id':game_id})
 
-def update_username(new_username,user_id,user_inst_id): q_sql(f"update users set username = :new_username where user_id = :user_id; update user_instance set username= :new_username where user_inst_id = :user_inst_id",{'user_id':user_id,'user_inst_id':user_inst_id,'new_username':new_username})
-
-def update_team_name(team_id, new_team_name): q_sql(f"update teams set team_name = :new_team_name where team_id = :team_id;", {'team_id':team_id, 'new_team_name':new_team_name})
+def update_team_name(team_id, new_team_name): q_sql(f"update teams set team_name = :new_team_name where team_id = :team_id", {'team_id':team_id, 'new_team_name':new_team_name})
 
 def has_user_submitted_names(user_inst_id): return q_sql(f"select name_id from names where user_inst_id = :user_inst_id", {'user_inst_id':user_inst_id})
 
@@ -359,6 +361,17 @@ def emit_turn_order(game_id,user_id):
     obj = {"current_team":current_team, "number_teams":number_teams,"teams_array":teams_array, "teams_player_order":teams_player_order}
     socketio.emit('emit_turn_order',obj, room= f"user{user_id}")
 
+@socketio.on('team_name_change')
+def team_name_change(new_team_name, team_id, game_id):
+    update_team_name(team_id, new_team_name)
+    emit_teams(game_id)
+
+@socketio.on('player_team_change')
+def player_team_change(user_id, team_id, game_id):
+    player_team_change_sql(user_id,team_id,game_id)
+    emit_players(game_id)
+
+
 
 
 
@@ -446,11 +459,14 @@ def lobby(game_id):
         return redirect(url_for('homepage'))
     username = request.cookies.get('username')
     db_user_instance(user_id,username,game_id)
-    players = get_players_by_game_id(game_id)
-    teams = get_team_names(game_id)
+    #players = get_players_by_game_id(game_id)
+    #teams = get_team_names(game_id)
+    players, teammembers = get_teams(game_id)
+    team_names = get_team_names(game_id)
+    teams = {x[0]:x[1] for x in team_names}
     user_inst_id = get_user_inst_id(user_id,game_id)
     emit_players(game_id)
-    return render_template('lobby.html', game_id=game_id, game_deets=game_deets, username=username, players=players, teams=teams, user_inst_id=user_inst_id)
+    return render_template('lobby.html', user_id=user_id, game_id=game_id, game_deets=game_deets, username=username, players=players, teams=teams, teammembers=teammembers, user_inst_id=user_inst_id)
 
 
 @app.route('/username_change', methods=["POST"])
@@ -465,26 +481,6 @@ def username_change():
     resp.set_cookie('username', new_username)
     emit_players(game_id)
     return resp
-
-
-@app.route('/team_name_change', methods=["POST"])
-def team_name_change():
-    data = request.get_json()
-    new_team_name, team_id, game_id = data["new_team_name"], data["team_id"], data["game_id"]
-    #print("new_team_name:",new_team_name,"team_id:",team_id)
-    update_team_name(team_id, new_team_name)
-    emit_teams(game_id)
-    return make_response("",200)
-
-
-@app.route('/player_team_change', methods=["POST"])
-def player_team_change():
-    data = request.get_json()
-    user_id, team_id, game_id = data["user_id"], data["team_id"], data["game_id"]
-    #print("player_team_change:",user_id,"team_id:",team_id)
-    player_team_change_sql(user_id,team_id,game_id)
-    emit_players(game_id)
-    return make_response("",200)
 
 
 #write names
@@ -572,11 +568,11 @@ if __name__ == '__main__':
     socketio.run(
         app,
         #host="192.168.137.1",
-        #host="192.168.1.17",
-        host="10.0.0.102",
+        host="192.168.1.138",
+        #host="10.0.0.9",
         #host='0.0.0.0',
-        port=42069, 
-        # log_output=True,
-        # debug=True,
-        # use_reloader=True
+        port=8, 
+        log_output=True,
+        debug=True,
+        use_reloader=True
     )
