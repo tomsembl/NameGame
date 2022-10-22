@@ -28,10 +28,10 @@ screen_offsets = (0,0)
 game_name = getGameName()
 game_id = None
 # websitehome = "http://namegame.ddns.net:42069"
-# websitehome = "http://namegame.pw"
+websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.9:8"
+# websitehome = "http://localhost:8"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot"]
-websitehome = "http://localhost:8"
 nameCount = 3
 WindowCount = 4
 teamCount = WindowCount//2
@@ -68,12 +68,13 @@ for w in range(WindowCount):
     d.find_element(By.XPATH,'/html/body/div/div[2]/button[1]').click()#join game button
     d.find_element(By.ID,'username_change').clear()
     d.find_element(By.ID,'username_change').send_keys(f"{names[w]} {w}")
-    d.find_element(By.XPATH, '/html/body/div[1]/h1/div/button').click()
+    #d.find_element(By.XPATH, '/html/body/div[1]/h1/div/button').click()
 
 #start game
-d.find_element(By.XPATH, '/html/body/div[3]/div/h1[2]/div/button').click()
+d.find_element(By.XPATH, '/html/body/div/body/div[3]/div/h1[2]/div/button').click()
+
 time.sleep(0.5)
-d.find_element(By.XPATH, '/html/body/div[5]/button[1]').click()
+d.find_element(By.XPATH, '/html/body/div/body/div[5]/button[1]').click()
 #Alert(d).accept()
 
 # write names
