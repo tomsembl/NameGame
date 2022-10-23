@@ -158,6 +158,7 @@ input[type="text"]{
 }
 input[type="text"]#game_name{
     font-size: 1em;
+    background-color: rgba(0, 0, 0, 0.25); ;
 }
 input[type="text"]:disabled {background-color:rgba(97, 97, 97, 0.523);}
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -169,7 +170,7 @@ input[type="range"]{
 .label1{margin-top: 10px;
 margin-bottom: 0 !important;}
 .required{
-    colour:red !important;
+    color:red !important;
 }
 output{
     margin-left: 1em;

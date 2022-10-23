@@ -18,14 +18,17 @@
             <div class="">
                 <h1 class="heading subheading4" id="subheading_settings">SETTINGS</h1>
                 <br>
-                <label for="game_name" class="label label1 mt-0">Game Name<span class="required">*</span></label>
+                <div class="flex-h-left">
+                    <label for="game_name" class="label label1 mt-0">Game Name</label>
+                    <p class="required">&nbsp;*</p>
+                </div>
                 <input class="input" type="text" id="game_name" name="game_name" placeholder="Insert Name Here" value="" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insert Name Here'" maxlength="40" autocomplete="off">
                     <label for="number_teams" class="label label1">Number of Teams</label>
                 <div class="flex-h-left">
                     <input class="range" type="range" id="number_teams" name="number_teams" value="2" max="5" min="1" oninput="this.nextElementSibling.value = this.value">
                     <output>2</output>
                 </div>
-                <label for="number_names" class="label label1">Each Player Will Submit:</label>
+                <label for="number_names" class="label label1">Each Player Submits</label>
                 <div class="flex-h-left">
                     <input type="range" id="number_names" name="number_names" value="10" max="16" min="1" oninput="this.nextElementSibling.value = `${this.value} Name${this.value>1?'s':''}`">
                     <output>10 Names</output>

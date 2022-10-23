@@ -27,12 +27,12 @@ def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_
 screen_offsets = (2555, -720) #left2K right4K
 game_name = getGameName()
 game_id = None
-websitehome = "http://namegame.pw"
+# websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.9:8"
-# websitehome = "http://10.0.0.8:8"
+websitehome = "http://10.0.0.8:8"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary",]
 nameCount = 3
-WindowCount = 7
+WindowCount = 4
 teamCount = 4#WindowCount//2
 timeLimit = 10
 
