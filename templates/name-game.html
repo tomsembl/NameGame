@@ -294,20 +294,22 @@
             function end_turn(names_ran_out=false) {
                 audio2.current.play()
                 score_answer(nameRef.current.name_id, 0)
-                setState({
-                    ...state,
+                setState(prevState=>({
+                    ...prevState,
                     turnStarted: false,
-                })
+                }))
                 if (!names_ran_out){
                     socket.current.emit('advance_turn',"{{game_id}}",state.userID) //if names run out and round ends, then advance_turn is handled in app.py > emit_next_name() - 
                 }
             }
+
             function concede(names_ran_out=false) {
                 socket.current.emit('stop_timer',"{{game_id}}",state.userID)
                 endCountdown()
                 end_turn(names_ran_out)
                 if (!names_ran_out){console.log("conceded")}
             }
+
             function getPhaseNumber(currentPlayer, myTeamsTurn, myTurn){
                 if (currentPlayer === null){ return -1}
                 if(myTeamsTurn) {
@@ -315,6 +317,7 @@
                     else {return 1}
                 } else{ return 2}
             }
+            
             function getTextForTheName(){
                 if (state.turnStarted & name!=null){
                     return name.name
@@ -326,6 +329,7 @@
                     default: return ""
                 }
             }
+
             function phaseTranslate(phase){
                 switch(phase){
                     case 0: return "your"
@@ -333,6 +337,7 @@
                     default: return "not"
                 }
             }
+
             function getBackground(){
                 var pp = state.prevPhase
                 const p = state.phase
@@ -341,6 +346,7 @@
                 }
                 return `animate-${phaseTranslate(pp)}-${phaseTranslate(p)}`
             }
+
             const toggleQueue = (
                 <span>
                     <label class="switch mt--1">
