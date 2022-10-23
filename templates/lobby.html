@@ -104,15 +104,14 @@
             }
 
             function advance_game(){
-                var end = false
-                Object.keys(state.teams).forEach(teamID=>{
+                var allTeamsHavePlayers = Object.keys(state.teams).every(teamID=>{
                     if (!state.teammembers[teamID]) {
                         alert(`not every team has a player: ${state.teams[teamID]}`)
-                        end=true
-                        break
+                        return false
                     }
+                    return true
                 })
-                if (end){return}
+                if (!allTeamsHavePlayers){return}
                 if (state.teammembers.null){
                     alert(`not every player is assigned to a team: ${teammembers.null.join(", ")}`)
                     return
@@ -127,7 +126,7 @@
 
 
             return(
-                <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow">
+                <body id="body" class="lobby2 flex-v rainbow-gradient-bg animate-rainbow">
                     <h1 class="heading subheading3">LOBBY</h1>
                     <div class="flex-h center vmar">
                         <h1 class="heading subheading4 pad-05em">
