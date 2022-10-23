@@ -22,17 +22,16 @@ import time,random
 def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 
 #VARIABLES
-screen_offsets = (0,0)
-#screen_offsets = (2555, 0) #right4k
+#screen_offsets = (0,0)
+screen_offsets = (2555, 0) #left2K right4k
 #screen_offsets = (2555, -720) #right4K
 game_name = getGameName()
 game_id = None
 # websitehome = "http://namegame.ddns.net:42069"
-# websitehome = "http://namegame.pw"
+websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.9:8"
 # websitehome = "http://localhost:8"
-websitehome = "http://192.168.1.138:8"
-names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot"]
+names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary",]
 nameCount = 3
 WindowCount = 3
 teamCount = 2#WindowCount//2
@@ -54,29 +53,33 @@ for w in range(WindowCount):
     d.get(websitehome)
     d.set_window_position(x=screen_offsets[0]+((w%7)*500),y=screen_offsets[1]+(w//7*1040))
     d.set_window_size(width=516, height=1040)
+
     # create game
     if w == 0:
-        d.find_element(By.XPATH,'/html/body/button[1]').click()
+        d.find_element(By.ID,'create_game').click()
         d.find_element(By.ID,'game_name').send_keys(game_name)
         d.execute_script(f"document.getElementById('number_teams').value = {teamCount}")
         d.execute_script(f"document.getElementById('number_names').value = {nameCount}")
         d.execute_script(f"document.getElementById('time_limit').value = {timeLimit}")
-        d.find_element(By.XPATH,'/html/body/div/button[1]').click()
+        d.find_element(By.ID,'create_game').click()
 
     # join game
     if w != 0: d.get(websitehome+f"/join_game")
     d.find_element(By.XPATH,f'.//*[@id="games"]/div/div[text()="{game_name}"]').click()# matching game option
-    d.find_element(By.XPATH,'/html/body/div/div[2]/button[1]').click()#join game button
+    d.find_element(By.ID,'join_game').click()
     d.find_element(By.ID,'username_change').clear()
     d.find_element(By.ID,'username_change').send_keys(f"{names[w]} {w}")
-    #d.find_element(By.XPATH, '/html/body/div[1]/h1/div/button').click()
 
 #start game
-d.find_element(By.XPATH, '/html/body/div/body/div[3]/div/h1[2]/div/button').click()
-
-time.sleep(0.8)
-d.find_element(By.XPATH, '/html/body/div/body/div[5]/button[1]').click()
-#Alert(d).accept()
+d.find_element(By.ID, 'shuffle').click()
+d.find_element(By.ID, 'start_game').click()
+try:
+    alert = d.switch_to_alert()
+    alert.accept()
+except: pass
+finally:
+    time.sleep(0.8)
+    d.find_element(By.ID, 'start_game').click()
 
 # write names
 # WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
@@ -84,11 +87,11 @@ time.sleep(0.5)
 for w in range(WindowCount):
     d = windows[w]
     for n in range(nameCount):
-        d.find_element(By.ID,f"button{n}").click()
-        #time.sleep(0.1)
-    d.find_element(By.XPATH, '/html/body/div[2]/button[1]').click()
-time.sleep(0.4)
-d.find_element(By.XPATH, '/html/body/div[2]/button[2]').click()
+        d.find_element(By.ID,f"button{n}").click() #click the dice
+        time.sleep(0.01)
+    d.find_element(By.ID, 'submit').click()
+time.sleep(nameCount* 0.05)
+d.find_element(By.ID, 'start_game').click()
     
 #name game
 time.sleep(1)
@@ -106,9 +109,9 @@ while True:
             if d.find_element(By.ID, 'start_button').get_attribute("disabled"):
                 #get a random integer and click a random number of times
                 for _ in range(random.randint(0,7)):
-                    try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div/body/div[2]/button')))
+                    try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'done_button')))
                     except: break
-                    d.find_element(By.XPATH, '/html/body/div/body/div[2]/button').click() #They got it
+                    d.find_element(By.ID,'done_button').click() #They got it
             try:
                 d.find_element(By.ID, 'concede_button').click() #End Button
                 time.sleep(0.1)
@@ -124,15 +127,15 @@ while True:
         for w in range(WindowCount):
             d = windows[w]
             try: 
-                if d.find_element(By.XPATH, "/html/body/div[3]/h1").text == "GAME OVER":
+                if d.find_element(By.ID, "game_over").text == "GAME OVER":
                     exit = True
                     break
             except: pass
             try: 
-                print(d.find_element(By.XPATH, '/html/body/div[3]/button').text)
+                print(d.find_element(By.ID, 'return_to_game').text)
                 for w in range(WindowCount):
                     d = windows[w]
-                    d.find_element(By.XPATH, '/html/body/div[3]/button').click()
+                    d.find_element(By.ID, 'return_to_game').click()
             except: break
         if exit: break
             

@@ -106,19 +106,23 @@
             function advance_game(){
                 var end = false
                 Object.keys(state.teams).forEach(teamID=>{
-                    if (!state.teammembers[teamID]) {alert(`not every team has a player: ${state.teams[teamID]}`);end=true}
+                    if (!state.teammembers[teamID]) {
+                        alert(`not every team has a player: ${state.teams[teamID]}`)
+                        end=true
+                        break
+                    }
                 })
+                if (end){return}
                 if (state.teammembers.null){
-                    alert(`not every player is assigned to a team: ${teammembers.null}`)
+                    alert(`not every player is assigned to a team: ${teammembers.null.join(", ")}`)
                     return
                 }
-                if (!end){// && confirm("do you want to start")
-                    fetch("/advance_game",{
-                        method:"POST", 
-                        body: JSON.stringify({"game_id":state.gameID,"stage":2}),
-                        headers: new Headers({"content-type": "application/json"}) 
-                    })
-                }
+                //confirm("do you want to start")
+                fetch("/advance_game",{
+                    method:"POST", 
+                    body: JSON.stringify({"game_id":state.gameID,"stage":2}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                })
             }
 
 
@@ -227,7 +231,7 @@
                                 </div>
                             <h1 class="heading subheading4 pad-05em">
                                 <div class="flex-h">
-                                    <button class="button2" onClick={shuffle}>Shuffle</button>
+                                    <button class="button2" id="shuffle" onClick={shuffle}>Shuffle</button>
                                 </div>
                             </h1>
                         </div>
@@ -251,7 +255,7 @@
                         </h1>
                     </div>
                     <div class="flex-h vmar">
-                        <button class="button1 button3" onClick={advance_game}>Start Game</button>
+                        <button class="button1 button3" onClick={advance_game} id="start_game">Start Game</button>
                         <button class="button1 button3" onClick={()=>{location.href='/'}}>Home</button>
                     </div>
                 </body>

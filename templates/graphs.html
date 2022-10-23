@@ -14,9 +14,9 @@
 <body>
 	<h1 class="heading subheading">Scores - Round {{round}}</h1>
 	<div class="flex-h vmar2">
-		{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()">Return to Game</button>
+		{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()" id="return_to_game">Return to Game</button>
 			{% else %}
-			<h1 class="heading subheading2 pad-10pct">GAME OVER</h1>
+			<h1 id="game_over" class="heading subheading2 pad-10pct">GAME OVER</h1>
 			{% endif %}
 	</div>
 	<div class="flex-v center vmar2">
