@@ -168,9 +168,8 @@ input[type="range"]{
 }
 .label1{margin-top: 10px;
 margin-bottom: 0 !important;}
-Label.required:after{
+.required{
     colour:red !important;
-    content:"*";
 }
 output{
     margin-left: 1em;
