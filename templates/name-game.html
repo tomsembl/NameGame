@@ -61,7 +61,7 @@
                 
                 const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})
 
-                // newSocket.onAny((eventName, ...args) => {console.log(eventName, args)})
+                newSocket.onAny((eventName, ...args) => {console.log(eventName, args)})
 
                 newSocket.on('emit_teams',function(msg) { 
                     teams = msg 

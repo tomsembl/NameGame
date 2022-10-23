@@ -23,18 +23,17 @@ def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_
 
 #VARIABLES
 #screen_offsets = (0,0)
-screen_offsets = (2555, 0) #left2K right4k
-#screen_offsets = (2555, -720) #right4K
+#screen_offsets = (2555, 0) #2x 4K
+screen_offsets = (2555, -720) #left2K right4K
 game_name = getGameName()
 game_id = None
-# websitehome = "http://namegame.ddns.net:42069"
 websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.9:8"
-# websitehome = "http://localhost:8"
+# websitehome = "http://10.0.0.8:8"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary",]
 nameCount = 3
-WindowCount = 3
-teamCount = 2#WindowCount//2
+WindowCount = 7
+teamCount = 4#WindowCount//2
 timeLimit = 10
 
 
@@ -43,6 +42,7 @@ chromedriver_autoinstaller.install()
 chrome_options = Options()
 # chrome_options.add_experimental_option("detach", True)
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+chrome_options.add_extension("C:/github_code/NameGame/sql/extension_4_25_0_0.crx")
 windows = [webdriver.Chrome(options=chrome_options) for _ in range(WindowCount)]
 
 
@@ -67,19 +67,23 @@ for w in range(WindowCount):
     if w != 0: d.get(websitehome+f"/join_game")
     d.find_element(By.XPATH,f'.//*[@id="games"]/div/div[text()="{game_name}"]').click()# matching game option
     d.find_element(By.ID,'join_game').click()
+    WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'username_change')))
     d.find_element(By.ID,'username_change').clear()
     d.find_element(By.ID,'username_change').send_keys(f"{names[w]} {w}")
 
+    #delete rainbow
+    d.execute_script(f"document.getElementById('body').classList.remove('animate-rainbow')")
+
 #start game
 d.find_element(By.ID, 'shuffle').click()
+time.sleep(0.6)
 d.find_element(By.ID, 'start_game').click()
 try:
     alert = d.switch_to_alert()
     alert.accept()
-except: pass
-finally:
     time.sleep(0.8)
     d.find_element(By.ID, 'start_game').click()
+except: pass
 
 # write names
 # WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
@@ -88,9 +92,9 @@ for w in range(WindowCount):
     d = windows[w]
     for n in range(nameCount):
         d.find_element(By.ID,f"button{n}").click() #click the dice
-        time.sleep(0.01)
+        time.sleep(0.02)
     d.find_element(By.ID, 'submit').click()
-time.sleep(nameCount* 0.05)
+time.sleep(nameCount* 0.1)
 d.find_element(By.ID, 'start_game').click()
     
 #name game
