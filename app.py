@@ -586,7 +586,7 @@ if __name__ == '__main__':
     logging.basicConfig(filename='log.log',level=logging.INFO)
     socketio.run(
         app,
-        host=gethostbyname(socket.gethostname()),
+        host=gethostbyname(gethostname()),
         #host="192.168.137.1",
         #host="192.168.1.138",
         #host="10.0.0.102",
