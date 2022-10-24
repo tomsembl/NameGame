@@ -584,6 +584,7 @@ if __name__ == '__main__':
         print("DB setup complete")
     print("Running Site")
     logging.basicConfig(filename='log.log',level=logging.INFO)
+    app.config['ssl_context'] = 'adhoc'
     socketio.run(
         app,
         host=gethostbyname(gethostname()),
