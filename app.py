@@ -594,7 +594,7 @@ if __name__ == '__main__':
         #host='0.0.0.0',
         #port=8, 
         port=42069, 
-        #ssl_context='adhoc'
+        ssl_context='adhoc'
         #log_output=True,
         #debug=True,
         #use_reloader=True
