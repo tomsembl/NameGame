@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 from flask_socketio import SocketIO, join_room
 import sqlite3, random, string, logging, time, json, os
 from os.path import join, dirname, abspath
+from socket import gethostbyname, gethostname
 
 app = Flask(__name__)
 
@@ -581,13 +582,14 @@ if __name__ == '__main__':
         cur.executescript(script)
         cur.close()
         print("DB setup complete")
-
+    print("Running Site")
     logging.basicConfig(filename='log.log',level=logging.INFO)
     socketio.run(
         app,
+        host=gethostbyname(socket.gethostname()),
         #host="192.168.137.1",
         #host="192.168.1.138",
-        host="10.0.0.102",
+        #host="10.0.0.102",
         #host='0.0.0.0',
         #port=8, 
         port=42069, 
