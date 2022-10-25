@@ -31,7 +31,7 @@ websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.8:42069"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
 nameCount = 3
-WindowCount = 9
+WindowCount = 3
 teamCount = WindowCount//3
 timeLimit = 10
 

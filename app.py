@@ -293,10 +293,10 @@ def delete_game(game_id): delete_game_sql(game_id)
 @socketio.on('deletion_kick')
 def deletion_kick(game_id,by_user,user_id=None):
     if user_id == None: 
-        socketio.emit('deletion_kick',f"Game deleted by ${by_user}", room=f"game{game_id}")
+        socketio.emit('deletion_kick',f"Game deleted by {by_user}", room=f"game{game_id}")
     else: 
         kick_user_sql(game_id,user_id)
-        socketio.emit('deletion_kick',f"You we're kicked by ${by_user}", room=f"user{user_id}")
+        socketio.emit('deletion_kick',f"You we're kicked by {by_user}", room=f"user{user_id}")
         emit_players(game_id)
 
 @socketio.on('refresh_join_game')
