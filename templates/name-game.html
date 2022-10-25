@@ -93,7 +93,6 @@
                         var my_teams_turn = current_team_id === prevState.teamID
                         var new_phase = getPhaseNumber(current_player, my_teams_turn, my_turn)
                         teammates = JSON.parse(JSON.stringify(prevState.teammembers[current_team_id])).filter(x=>x!==current_turn_user_id)
-                        if (my_turn){ your_turn() }
                         return {
                             ...prevState,
                             currentPlayerID: current_turn_user_id,
