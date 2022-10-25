@@ -41,7 +41,7 @@ chromedriver_autoinstaller.install()
 chrome_options = Options()
 # chrome_options.add_experimental_option("detach", True)
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-#chrome_options.add_extension("C:/github_code/NameGame/scripts/extension_4_25_0_0.crx")
+chrome_options.add_extension("C:/github_code/NameGame/scripts/extension_4_25_0_0.crx")
 windows = [webdriver.Chrome(options=chrome_options) for _ in range(WindowCount)]
 
 
