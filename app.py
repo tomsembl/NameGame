@@ -160,10 +160,11 @@ def score_answer_sql(game_id, user_id, name_id, success):
     name = get_name_by_id(name_id)
     team_id = get_teamid_by_userinst(user_inst_id)
     try:
-        turn_id, time_start = q_sql(f"select turn_id, time_start from turns where user_inst_id = :user_inst_id and game_id = :game_id and round = :round order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
+        turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
     except:
-        print(f"{datetime.now()}error, no results to score answer. game_id:{game_id}. user_id:{user_id}. success{success}. {name}")
-        turn_id, time_start = None, None
+        print(f"[{datetime.now()}] Error: no turn to score answer. gameID:{game_id}. user_instID:{user_inst_id}. success{success}. {name}")
+        add_turn_sql(game_id,user_id)
+        turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
     latest_time_finish = q_sql(f"select time_finish from answers where turn_id = :turn_id order by answer_id desc limit 1",{'turn_id':turn_id})
     if latest_time_finish: time_start = latest_time_finish[0][0]
     query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
@@ -209,6 +210,8 @@ def update_username(new_username,user_id,user_inst_id):
 
 def player_team_change_sql(user_id,team_id,game_id): 
     if get_game_stage(game_id) == 1: q_sql(f"update user_instance set team_id= :team_id where user_id = :user_id and game_id=:game_id", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
+
+def get_turn_and_time(game_id, user_inst_id, round): return q_sql(f"select turn_id, time_start from turns where user_inst_id = :user_inst_id and game_id = :game_id and round = :round order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
 
 def get_random_default_name(): return random.choice(q_sql(f"select name from default_names"))[0]
 
