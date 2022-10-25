@@ -272,6 +272,7 @@
                 setState(prevState=>{
                     if (!prevState.myTurn) { 
                         console.error("bad bad bad",)
+                        alert("bad bad bad")
                         try { throw new Error(); }
                         catch (e) { console.log(e.stack); }
                         return prevState
