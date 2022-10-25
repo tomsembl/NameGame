@@ -52,7 +52,7 @@
             const myTurnRef = React.useRef()
             const numPlayersRef = React.useRef()
             const audio1 = React.useRef(new Audio(`/static/start/0.mp3`))
-            const audio2 = React.useRef(new Audio(`/static/start/1.mp3`))
+            const audio2 = React.useRef(new Audio(`/static/start/0.mp3`))
             React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
             React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
             React.useEffect(()=>{numPlayersRef.current = state.numPlayers},[state.numPlayers])
@@ -312,6 +312,7 @@
                 setState(prevState=>({
                     ...prevState,
                     turnStarted: false,
+                    myTurn: false,
                 }))
                 if (!names_ran_out){
                     socket.current.emit('advance_turn',"{{game_id}}",state.userID) //if names run out and round ends, then advance_turn is handled in app.py > emit_next_name() - 
