@@ -31,7 +31,7 @@ websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.8:42069"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
 nameCount = 3
-WindowCount = 3#random.randint(3,12)
+WindowCount = 8#random.randint(3,12)
 teamCount = WindowCount//3
 timeLimit = 10
 
@@ -76,7 +76,7 @@ for w in range(WindowCount):
 
 #start game
 d.find_element(By.ID, 'shuffle').click()
-time.sleep(WindowCount* 0.1)
+time.sleep(WindowCount* 0.2)
 d.find_element(By.ID, 'start_game').click()
 try:
     Alert(d).accept()
@@ -126,6 +126,7 @@ while True:
             try: 
                 WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.ID, 'start_button')))
                 d.find_element(By.ID, 'start_button').click() #Start Button
+                WebDriverWait(d, 5).until(EC.element_to_be_clickable((By.ID, 'done_button')))
             except: continue
             
         except: continue

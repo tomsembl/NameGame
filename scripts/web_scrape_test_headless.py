@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 from datetime import datetime
 import time,random,sys
 
-def main(number_players=random.randint(3,12)):
+def main(number_players=random.randint(3,14)):
     #VARIABLES
     #screen_offsets = (0,0)
     #screen_offsets = (2555, 0) #2x 4K
@@ -127,6 +127,7 @@ def main(number_players=random.randint(3,12)):
                 try: 
                     WebDriverWait(d, 0.5).until(EC.element_to_be_clickable((By.ID, 'start_button')))
                     d.find_element(By.ID, 'start_button').click() #Start Button
+                    WebDriverWait(d, 5).until(EC.element_to_be_clickable((By.ID, 'done_button')))
                 except: continue
                 
             except: continue
@@ -153,8 +154,8 @@ def main(number_players=random.randint(3,12)):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        number_players = int(sys.argv[1])
-        a = main(number_players)
+        num_players = int(sys.argv[1])
+        a = main(num_players)
     else:
         a = main()
     sys.exit(a)
