@@ -22,17 +22,17 @@ import time,random
 
 #VARIABLES
 #screen_offsets = (0,0)
-screen_offsets = (2555, 0) #2x 4K
-#screen_offsets = (2555, -720) #left2K right4K
+#screen_offsets = (2555, 0) #2x 4K
+screen_offsets = (2555, -720) #left2K right4K
 game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 game_id = None
-# websitehome = "http://namegame.pw"
+websitehome = "http://namegame.pw"
 # websitehome = "http://10.0.0.9:42069"
-websitehome = "http://10.0.0.8:42069"
-names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary",]
+# websitehome = "http://10.0.0.8:42069"
+names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
 nameCount = 3
-WindowCount = 1
-teamCount = 1#WindowCount//3
+WindowCount = 9
+teamCount = WindowCount//3
 timeLimit = 10
 
 
@@ -75,20 +75,21 @@ for w in range(WindowCount):
 
 #start game
 d.find_element(By.ID, 'shuffle').click()
-time.sleep(0.6)
+time.sleep(WindowCount* 0.1)
 d.find_element(By.ID, 'start_game').click()
 try:
-    alert = d.switch_to_alert()
-    alert.accept()
+    Alert(d).accept()
     time.sleep(0.8)
     d.find_element(By.ID, 'start_game').click()
 except: pass
 
 # write names
-# WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
+d = windows[0]
+WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
 time.sleep(0.5)
 for w in range(WindowCount):
     d = windows[w]
+    WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'button0')))
     for n in range(nameCount):
         d.find_element(By.ID,f"button{n}").click() #click the dice
         time.sleep(0.02)

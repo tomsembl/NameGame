@@ -223,7 +223,7 @@ def kick_user_sql(game_id,user_id): q_sql(f"delete from user_instance where game
 
 def get_who_hasnt_written_name_sql(game_id): return header_zip_query(f"select user_id, username from user_instance where game_id = :game_id and user_inst_id not in ( select user_inst_id from names where game_id = :game_id )", data={'game_id':game_id}, multi = True)
 
-def get_next_name_sql(game_id, round): return header_zip_query(f"select * from names where game_id = :game_id and name_id not in (select name_id from answers where game_id = :game_id and success=1 and round=:round)", data={'game_id':game_id,'round':round}, multi=True)
+def get_next_name_sql(game_id, round): return header_zip_query(f"select name_id, name from names where game_id = :game_id and name_id not in (select name_id from answers where game_id = :game_id and success=1 and round=:round)", data={'game_id':game_id,'round':round}, multi=True)
 
 def get_name_by_id(name_id): return q_sql(f"select name from names where name_id = :name_id",{'name_id':name_id})[0][0]
 
