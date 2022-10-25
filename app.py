@@ -320,7 +320,7 @@ def emit_next_name(game_id,user_id):
     if names:
         i = random.randint(0,len(names)-1)
         socketio.emit('emit_next_name',names[i], room=f"user{user_id}")
-        print(names[i]['name'])
+        #print(names[i]['name'])
     else:
         advance_round(game_id)
         advance_turn(game_id)
