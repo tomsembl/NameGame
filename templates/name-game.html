@@ -233,11 +233,11 @@
                     startButtonEnabled: true,
                 }))
             }
-            // React.useEffect(()=>{
-            //     if (state.myTurn){
-            //         your_turn()
-            //     }
-            // },[state.myTurn])
+            React.useEffect(()=>{
+                if (state.myTurn){
+                    your_turn()
+                }
+            },[state.myTurn])
 
             function decrementCountdown(is_player=true){
                 setCountdown((prev) => {
