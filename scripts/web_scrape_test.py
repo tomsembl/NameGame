@@ -37,6 +37,7 @@ def main(number_players=3,headless=False):
 
 
     #chrome setup
+    print(f"Setting up {WindowCount} chrome windows")
     chromedriver_autoinstaller.install()
     chrome_options = Options()
     if headless: chrome_options.add_argument("--headless")
@@ -50,11 +51,13 @@ def main(number_players=3,headless=False):
     for w in range(WindowCount):
         d = windows[w]
         # home page
+        print(f"Window {w} - homepage")
         d.get(websitehome)
         d.set_window_position(x=screen_offsets[0]+((w%7)*500),y=screen_offsets[1]+(w//7*1040))
         d.set_window_size(width=516, height=1040)
 
         # create game
+        print(f"Window {w} - create_game")
         if w == 0:
             d.find_element(By.ID,'create_game').click()
             d.find_element(By.ID,'game_name').send_keys(game_name)
@@ -64,10 +67,12 @@ def main(number_players=3,headless=False):
             d.find_element(By.ID,'create_game').click()
 
         # join game
+        print(f"Window {w} - join_game")
         if w != 0: d.get(websitehome+f"/join_game")
         d.find_element(By.XPATH,f'.//*[@id="games"]/div/div[text()="{game_name}"]').click()# matching game option
         time.sleep(0.1)
         d.find_element(By.ID,'join_game').click()
+        print(f"Window {w} - lobby")
         WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'username_change')))
         d.find_element(By.ID,'username_change').clear()
         d.find_element(By.ID,'username_change').send_keys(f"{names[w]} {w}")
@@ -77,8 +82,10 @@ def main(number_players=3,headless=False):
 
     #start game
     d.find_element(By.ID, 'shuffle').click()
+    print(f"Window x - shuffle")
     WebDriverWait(d, WindowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
     d.find_element(By.ID, 'start_game').click()
+    print(f"Window x - start_game")
     try:
         Alert(d).accept()
         time.sleep(0.8)
@@ -86,6 +93,7 @@ def main(number_players=3,headless=False):
     except: pass
 
     # write names
+    print(f"Window x - write_names")
     d = windows[0]
     WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
     time.sleep(0.5)
@@ -100,6 +108,7 @@ def main(number_players=3,headless=False):
     d.find_element(By.ID, 'start_game').click()
         
     #name game
+    print(f"Window x - name_game")
     time.sleep(1)
     while True:
         if "name_game" in d.current_url:
