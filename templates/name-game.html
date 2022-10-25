@@ -259,17 +259,16 @@
                     ...prevState,
                     startButtonEnabled: false,
                 }))
-                audio1.current.addEventListener('ended', startAfterAudio, {once: true})
+                audio1.current.addEventListener('ended', startAfterAudio, true)
                 audio1.current.play()
             }
 
-            function startAfterAudio(event){
-                audio1.current.removeEventListener('ended', startAfterAudio, {once: true})
+            const startAfterAudio = React.useCallback(()=>{
+                audio1.current.removeEventListener('ended', startAfterAudio, true)
                 setState(prevState=>{
                     if (!prevState.myTurn) {
                         console.error("this should not be happening")
                         setTimeout(function() { alert("name appeared when it's not your turn") }, 1)
-                        console.log(event)
                         //console.log("audio1.current's event listener:", getEventListeners(audio1.current))
                         return prevState
                     }
@@ -282,7 +281,7 @@
                         startButtonEnabled: true,
                     }
                 })
-            }
+            })
 
             function done() {
                 audio3.play()
