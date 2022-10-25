@@ -158,7 +158,11 @@ def score_answer_sql(game_id, user_id, name_id, success):
     round = get_round(game_id)
     name = get_name_by_id(name_id)
     team_id = get_teamid_by_userinst(user_inst_id)
-    turn_id, time_start = q_sql(f"select turn_id, time_start from turns where user_inst_id = :user_inst_id and game_id = :game_id and round = :round order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
+    try:
+        turn_id, time_start = q_sql(f"select turn_id, time_start from turns where user_inst_id = :user_inst_id and game_id = :game_id and round = :round order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
+    except:
+        print("error, no results to score answer.", "gameid",game_id, "userid",user_id, "success",success, name)
+        return
     latest_time_finish = q_sql(f"select time_finish from answers where turn_id = :turn_id order by answer_id desc limit 1",{'turn_id':turn_id})
     if latest_time_finish: time_start = latest_time_finish[0][0]
     query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
