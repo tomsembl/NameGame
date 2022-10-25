@@ -272,8 +272,14 @@
                 setState(prevState=>{
                     if (!prevState.myTurn) { 
                         console.error("bad bad bad",)
-                        console.log("caller to string",arguments.callee.caller.toString())
-                        console.log("last 3 stack trace",arguments.callee.caller,arguments.callee.caller.caller,arguments.callee.caller.caller.caller)
+                        var callerName;
+                        try { throw new Error(); }
+                        catch (e) { 
+                            var re = /(\w+)@|at (\w+) \(/g, st = e.stack, m;
+                            re.exec(st), m = re.exec(st);
+                            callerName = m[1] || m[2];
+                        }
+                        console.log(callerName);
                     }
                     socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                     
