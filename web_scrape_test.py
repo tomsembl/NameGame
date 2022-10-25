@@ -65,6 +65,7 @@ for w in range(WindowCount):
     # join game
     if w != 0: d.get(websitehome+f"/join_game")
     d.find_element(By.XPATH,f'.//*[@id="games"]/div/div[text()="{game_name}"]').click()# matching game option
+    time.sleep(0.1)
     d.find_element(By.ID,'join_game').click()
     WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'username_change')))
     d.find_element(By.ID,'username_change').clear()
