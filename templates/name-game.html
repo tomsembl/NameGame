@@ -263,19 +263,19 @@
                     ...prevState,
                     startButtonEnabled: false,
                 }))
-                audio1.current.addEventListener('ended', startAfterAudio)
+                audio1.current.addEventListener('ended', startAfterAudio, {once: true})
                 audio1.current.play()
             }
 
             function startAfterAudio(){
+                audio1.current.removeEventListener('ended', startAfterAudio)
                 setState(prevState=>{
-                    if (prevState.turnStarted) { return prevState }
-                    audio1.current.removeEventListener('ended', startAfterAudio)
+                    if (!prevState.myTurn) { return prevState }
                     socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                     
                     //
                     var date = new Date()
-                    console.log("startAfterAudio() emit_next_name",date.getSeconds()+date.getMilliseconds()*0.001, " prevState.turnStarted:",prevState.turnStarted)
+                    console.log("startAfterAudio() emit_next_name",date.getSeconds()+date.getMilliseconds()*0.001, "prevState.myTurn:",prevState.myTurn)
                     //
                 
                     socket.current.emit("start_timer","{{game_id}}",state.userID)
