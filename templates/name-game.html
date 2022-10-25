@@ -150,8 +150,9 @@
 
                 newSocket.on('get_mp3_number',function(msg) {
                     const [startOrStop, mp3Num] = [msg['start_or_stop'], msg['mp3_number']]
+                    const i = ["stop","start"].indexOf(startOrStop)
                     const newAudio = new Audio(`/static/${startOrStop}/${mp3Num}.mp3`) 
-                    ["stop","start"].indexOf(startOrStop) ? audio1.current = newAudio : audio2.current = newAudio
+                    i ? audio1.current = newAudio : audio2.current = newAudio
                 }) 
 
                 newSocket.on('alert',function(msg) { 
