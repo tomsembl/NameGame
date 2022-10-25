@@ -51,13 +51,13 @@
             const interval = React.useRef()
             const myTurnRef = React.useRef()
             const numPlayersRef = React.useRef()
-            const audio1 = React.useRef()
-            const audio2 = React.useRef()
+            const audio1 = React.useRef(new Audio(`/static/start/0.mp3`))
+            const audio2 = React.useRef(new Audio(`/static/start/1.mp3`))
             React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
             React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
             React.useEffect(()=>{numPlayersRef.current = state.numPlayers},[state.numPlayers])
-            React.useEffect(()=>{audio1.current = state.audio1},[state.audio1])
-            React.useEffect(()=>{audio2.current = state.audio2},[state.audio2])
+            //React.useEffect(()=>{audio1.current = state.audio1},[state.audio1])
+            //React.useEffect(()=>{audio2.current = state.audio2},[state.audio2])
             React.useEffect(()=>{
                 
                 const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})
@@ -153,11 +153,8 @@
                     const mp3Num = msg['mp3_number']
                     const i = ["stop","start"].indexOf(startOrStop)
                     const newAudio = new Audio(`/static/${startOrStop}/${mp3Num}.mp3`) 
-                    setState(prevState=>({
-                        ...prevState,
-                        audio1: i ? newAudio : prevState.audio1,
-                        audio2: i ? prevState.audio2 : newAudio,
-                    }))
+                    audio1.current = i ? newAudio : prevState.audio1
+                    audio2.current = i ? prevState.audio2 : newAudio
                 }) 
 
                 newSocket.on('alert',function(msg) { 
