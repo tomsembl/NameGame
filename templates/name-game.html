@@ -263,12 +263,12 @@
                     ...prevState,
                     startButtonEnabled: false,
                 }))
-                audio1.current.addEventListener('ended', startAfterAudio, {once: true})
+                audio1.current.addEventListener('ended', startAfterAudio)
                 audio1.current.play()
             }
 
             function startAfterAudio(){
-                audio1.current.removeEventListener('ended', startAfterAudio, {once: true})
+                audio1.current.removeEventListener('ended', startAfterAudio)
                 setState(prevState=>{
                     if (!prevState.myTurn) { 
                         console.error("bad bad bad",)
