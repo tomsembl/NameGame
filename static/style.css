@@ -204,10 +204,10 @@ td strong{    padding: 0.2em 0.5em 0.2em 0.5em;}
 .lobby{
     background-color: rgb(73, 255, 237);
     background: linear-gradient(55deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 85%);
-    background-repeat: repeat;
-    background-attachment:scroll;
+    /*background-repeat: repeat;
+    background-attachment:fixed;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: hidden;*/
 }
 @media (min-width: 768px) {
     .lobby, .lobby2{
@@ -296,6 +296,8 @@ table, th, td, tr {
     box-shadow: inset 0 0 2em 1em rgba(0, 0, 0, 0.1);
     background: linear-gradient(55deg,rgb(192, 45, 114), rgb(251, 62, 62), rgb(255, 180, 0),rgb(246, 255, 0), rgb(0, 255, 191),rgb(186, 129, 255),rgb(254, 153, 200));
     background-size: 260% 260%;
+    will-change:top;    
+    /*background-attachment:fixed;*/
 }
 @keyframes animate-your-team{
     0%{background-position: 0% 100%;
@@ -333,6 +335,9 @@ table, th, td, tr {
     0%{background-position: 100% 0%;}
     50%{background-position: 0% 100%;}
     100%{background-position: 100% 0%;}
+    /*to {
+        transform:translateX(-50%);
+      }*/
 }
 
 .animate-your-team{
