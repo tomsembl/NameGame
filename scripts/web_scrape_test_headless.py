@@ -77,7 +77,8 @@ def main(number_players=random.randint(3,14)):
 
     #start game
     d.find_element(By.ID, 'shuffle').click()
-    time.sleep(WindowCount* 0.1)
+    #time.sleep(WindowCount* 0.1)
+    WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'start_game')))
     d.find_element(By.ID, 'start_game').click()
     try:
         Alert(d).accept()

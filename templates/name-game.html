@@ -39,13 +39,10 @@
                 prevPhase: -1,
                 phase: -1,
                 toggleQueue: true,
-                audio1: new Audio(`/static/start/0.mp3`),
-                audio2: new Audio(`/static/start/1.mp3`),
             })
             const [countdown, setCountdown] = React.useState(time_limit)
             const [name, setName] = React.useState(null)
             var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, teammates, is_new_round, start_or_stop, stop_mp3, current_round
-            var audio3 = new Audio(`/static/Ding.mp3`)
             const nameRef = React.useRef()
             const socket = React.useRef()
             const interval = React.useRef()
@@ -53,11 +50,10 @@
             const numPlayersRef = React.useRef()
             const audio1 = React.useRef(new Audio(`/static/start/0.mp3`))
             const audio2 = React.useRef(new Audio(`/static/start/0.mp3`))
+            const audio3 = new Audio(`/static/Ding.mp3`)
             React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
             React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
             React.useEffect(()=>{numPlayersRef.current = state.numPlayers},[state.numPlayers])
-            //React.useEffect(()=>{audio1.current = state.audio1},[state.audio1])
-            //React.useEffect(()=>{audio2.current = state.audio2},[state.audio2])
             React.useEffect(()=>{
                 
                 const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})

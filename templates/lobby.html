@@ -104,8 +104,10 @@
                 if (prompt) {socket.current.emit("deletion_kick",state.gameID,"{{username}}",state.selectedPlayerID)}
             }
 
+            const can_start = !state.teammembers.null && Object.keys(state.teams).every(teamID=>!!state.teammembers[teamID])
+
             function advance_game(){
-                var allTeamsHavePlayers = Object.keys(state.teams).every(teamID=>{
+                const allTeamsHavePlayers = Object.keys(state.teams).every(teamID=>{
                     if (!state.teammembers[teamID]) {
                         alert(`not every team has a player: ${state.teams[teamID]}`)
                         return false
@@ -255,7 +257,7 @@
                         </h1>
                     </div>
                     <div class="flex-h vmar">
-                        <button class="button1 button3" onClick={advance_game} id="start_game">Start Game</button>
+                        <button class="button1 button3" onClick={advance_game} id="start_game" disabled={!can_start}>Start Game</button>
                         <button class="button1 button3" onClick={()=>{location.href='/'}}>Home</button>
                     </div>
                 </body>
