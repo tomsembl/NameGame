@@ -149,12 +149,9 @@
                 newSocket.on('stop_timer',function(msg) { endCountdown() }) 
 
                 newSocket.on('get_mp3_number',function(msg) {
-                    const startOrStop = msg['start_or_stop']
-                    const mp3Num = msg['mp3_number']
-                    const i = ["stop","start"].indexOf(startOrStop)
+                    const [startOrStop, mp3Num] = [msg['start_or_stop'], msg['mp3_number']]
                     const newAudio = new Audio(`/static/${startOrStop}/${mp3Num}.mp3`) 
-                    audio1.current = i ? newAudio : prevState.audio1
-                    audio2.current = i ? prevState.audio2 : newAudio
+                    ["stop","start"].indexOf(startOrStop) ? audio1.current = newAudio : audio2.current = newAudio
                 }) 
 
                 newSocket.on('alert',function(msg) { 
