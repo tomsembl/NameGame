@@ -265,6 +265,7 @@
 
             function startAfterAudio(){
                 socket.current.emit("emit_next_name","{{game_id}}",state.userID)
+                console.log("startAfterAudio() emit_next_name")
                 setState(prevState=>({
                     ...prevState,
                     turnStarted: true,
@@ -280,6 +281,7 @@
                 document.getElementById("done_button").blur()
                 score_answer(nameRef.current.name_id, 1)
                 socket.current.emit("emit_next_name","{{game_id}}",state.userID)
+                console.log("done() emit_next_name")
                 setState(prevState=>({
                     ...prevState,
                     doneButtonEnabled: false,
