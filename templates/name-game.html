@@ -265,12 +265,13 @@
                     ...prevState,
                     startButtonEnabled: false,
                 }))
-                audio1.current.addEventListener('ended', startAfterAudio, true)
+                audio1.current.addEventListener('ended', startAfterAudio)
                 audio1.current.play()
             }
 
             const startAfterAudio = React.useCallback(()=>{
-                audio1.current.removeEventListener('ended', startAfterAudio, true)
+                audio1.current.removeEventListener('ended', startAfterAudio)
+                //audio1.current = null
                 socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                 socket.current.emit("start_timer","{{game_id}}",state.userID)
                 startCountdown()
