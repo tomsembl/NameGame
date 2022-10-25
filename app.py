@@ -1,3 +1,5 @@
+from ssl import SSLContext
+import ssl
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 from flask_socketio import SocketIO, join_room
 import sqlite3, random, string, logging, time, json, os
@@ -584,7 +586,7 @@ if __name__ == '__main__':
         print("DB setup complete")
     print("Running Site")
     logging.basicConfig(filename='log.log',level=logging.INFO)
-    app.config['ssl_context'] = 'adhoc'
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 86400
     socketio.run(
         app,
         host=gethostbyname(gethostname()),
@@ -594,7 +596,7 @@ if __name__ == '__main__':
         #host='0.0.0.0',
         #port=8, 
         port=42069, 
-        ssl_context='adhoc'
+        #ssl_context='adhoc'
         #log_output=True,
         #debug=True,
         #use_reloader=True

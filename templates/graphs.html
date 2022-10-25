@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" class="white-html">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-	<title>The Name Game</title>
-	<link rel="stylesheet" type="text/css" href="/static/style.css">
-	<script src="/static/jquery.min.js"></script>
-	<script type="text/javascript" src="/static/socket.io.js"></script>
-	<script type="text/javascript" src="/static/chart.js"></script>
-</head>
-
-<body>
-	<h1 class="heading subheading">Scores - Round {{round}}</h1>
-	<div class="flex-h vmar2">
-		{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()" id="return_to_game">Return to Game</button>
-			{% else %}
-			<h1 id="game_over" class="heading subheading2 pad-10pct">GAME OVER</h1>
-			{% endif %}
-	</div>
-	<div class="flex-v center vmar2">
-		<h1 class="heading subheading2 pad-05em">Teams</h1>
-		<canvas id="team_chart"></canvas>
-	</div>
-	<div class="flex-v center vmar2">
-		<h1 class="heading subheading2 pad-05em">Players</h1>
-		<canvas id="player_chart"></canvas>
-	</div>
-	<div class="flex-h vmar2">
-		{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()">Return to Game</button>
-			{% else %}
-			<h1 class="heading subheading2 pad-10pct">GAME OVER</h1>
-			{% endif %}
-	</div>
-	<div class="flex-h mar-1em">
-		<button class="button2" onclick="location.href='/';">Home</button>
-	</div>
-</body>
-<script>
-	var socket
-	$(document).ready(function () {
-		socket = io.connect(window.origin, { query: "game_id={{game_id}}" })
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+		<title>The Name Game</title>
+		<link rel="stylesheet" type="text/css" href="/static/style.css">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+		<script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static',filename='chart.js') }}"></script>
+	</head>
+	<body class="lobby2">
+		<h1 class="heading subheading3">Scores - Round {{round}}</h1>
+		<div class="flex-h vmar2">
+			{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()" id="return_to_game">Return to Game</button>
+				{% else %}
+				<h1 id="game_over" class="heading subheading4 pad-10pct">GAME OVER</h1>
+				{% endif %}
+		</div>
+		<div class="flex-v center vmar2">
+			<h1 class="heading subheading4 pad-05em">Teams</h1>
+			<canvas id="team_chart"></canvas>
+		</div>
+		<div class="flex-v center vmar2">
+			<h1 class="heading subheading4 pad-05em">Players</h1>
+			<canvas id="player_chart"></canvas>
+		</div>
+		<div class="flex-h vmar2">
+			{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()">Return to Game</button>
+				{% else %}
+				<h1 class="heading subheading4 pad-10pct">GAME OVER</h1>
+				{% endif %}
+		</div>
+		<div class="flex-h mar-1em">
+			<button class="button2" onclick="location.href='/';">Home</button>
+		</div>
+	</body>
+	<script>
+		const socket = io.connect(window.origin, { query: "game_id={{game_id}}" })
 
 		socket.on('emit_scores', function (msg) {
 			var is_team = msg[1]
@@ -58,29 +54,26 @@
 		//socket.emit("emit_line_graph_data", "{{game_id}}", "{{user_id}}", true)
 		//socket.emit("emit_line_graph_data", "{{game_id}}", "{{user_id}}", false)
 
-	})
+		function new_chart(chart_name, xValues, yValues) {
+			colours = ['rgba(240,50,50,0.75)', 'rgba(255,180,50,0.75)', 'rgba(255,220,90,0.75)', 'rgba(100,210,80,0.75)', 'rgba(90,165,255,0.75)', 'rgba(170,90,240,0.75)']
+			colours = colours.concat(colours).concat(colours)
+			colours = (chart_name === "team_chart") ? colours : colours.reverse()
+			new Chart(chart_name, {
+				type: "horizontalBar",
+				data: {
+					labels: xValues,
+					datasets: [{
+						fill: false,
+						lineTension: 0,
+						backgroundColor: colours,
+						borderColor: "rgba(0,0,255,0.1)",
+						data: yValues
+					}]
+				},
+				options: { legend: { display: false }, scales: { xAxes: [{ ticks: { beginAtZero: true } }], yAxes: [{ ticks: { fontSize: 20 } }] } } //min: 6, max: 16, 
+			});
+		}
 
-	function new_chart(chart_name, xValues, yValues) {
-		colours = ['rgba(240,50,50,0.75)', 'rgba(255,180,50,0.75)', 'rgba(255,220,90,0.75)', 'rgba(100,210,80,0.75)', 'rgba(90,165,255,0.75)', 'rgba(170,90,240,0.75)']
-		colours = colours.concat(colours).concat(colours)
-		colours = (chart_name === "team_chart") ? colours : colours.reverse()
-		new Chart(chart_name, {
-			type: "horizontalBar",
-			data: {
-				labels: xValues,
-				datasets: [{
-					fill: false,
-					lineTension: 0,
-					backgroundColor: colours,
-					borderColor: "rgba(0,0,255,0.1)",
-					data: yValues
-				}]
-			},
-			options: { legend: { display: false }, scales: { xAxes: [{ ticks: { beginAtZero: true } }], yAxes: [{ ticks: { fontSize: 20 } }] } } //min: 6, max: 16, 
-		});
-	}
-
-	function done() { location.href = "/name_game/{{game_id}}" }
-</script>
-
+		function done() { location.href = "/name_game/{{game_id}}" }
+	</script>
 </html>

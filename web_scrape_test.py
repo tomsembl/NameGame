@@ -19,21 +19,20 @@ from selenium.webdriver.chrome.options import Options
 from datetime import datetime
 import time,random
 
-def getGameName(): return f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 
 #VARIABLES
 #screen_offsets = (0,0)
-#screen_offsets = (2555, 0) #2x 4K
-screen_offsets = (2555, -720) #left2K right4K
-game_name = getGameName()
+screen_offsets = (2555, 0) #2x 4K
+#screen_offsets = (2555, -720) #left2K right4K
+game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
 game_id = None
 # websitehome = "http://namegame.pw"
-# websitehome = "http://10.0.0.9:8"
-websitehome = "http://10.0.0.8:8"
+# websitehome = "http://10.0.0.9:42069"
+websitehome = "http://10.0.0.8:42069"
 names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary",]
 nameCount = 3
-WindowCount = 4
-teamCount = 4#WindowCount//2
+WindowCount = 1
+teamCount = 1#WindowCount//3
 timeLimit = 10
 
 
@@ -42,7 +41,7 @@ chromedriver_autoinstaller.install()
 chrome_options = Options()
 # chrome_options.add_experimental_option("detach", True)
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-chrome_options.add_extension("C:/github_code/NameGame/sql/extension_4_25_0_0.crx")
+#chrome_options.add_extension("C:/github_code/NameGame/scripts/extension_4_25_0_0.crx")
 windows = [webdriver.Chrome(options=chrome_options) for _ in range(WindowCount)]
 
 

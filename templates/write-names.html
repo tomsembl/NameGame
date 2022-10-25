@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
         <title>The Name Game</title>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
-        <script src="{{ url_for('static',filename='jquery.min.js') }}"></script>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
     </head>
     <body class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
@@ -42,23 +42,21 @@
         </div>
     </body>
     <script>
-        var socket
+        const socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
         var waiting_on_list
-        $(document).ready(function(){
-            socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
 
-            socket.on('advance_game_emit',function(msg) {
-                location.href='/name_game/{{game_id}}';
-            }) 
+        socket.on('advance_game_emit',function(msg) {
+            location.href='/name_game/{{game_id}}';
+        }) 
 
-            socket.on('who_hasnt_written_name',function(who_hasnt) {
-                waiting_on_list = []
-                for(var player of who_hasnt) { waiting_on_list.push(player.username) }
-                document.getElementById('waiting-on').innerHTML = (waiting_on_list.length === 0) ? "Ready" : `Waiting on: &nbsp;${waiting_on_list.join(", &nbsp;")}`; 
-            }) 
+        socket.on('who_hasnt_written_name',function(who_hasnt) {
+            waiting_on_list = []
+            for(var player of who_hasnt) { waiting_on_list.push(player.username) }
+            document.getElementById('waiting-on').innerHTML = (waiting_on_list.length === 0) ? "Ready" : `Waiting on: &nbsp;${waiting_on_list.join(", &nbsp;")}`; 
+        }) 
 
-            socket.emit('who_hasnt_written_name',"{{game_id}}","{{user_id}}")
-        })
+        socket.emit('who_hasnt_written_name',"{{game_id}}","{{user_id}}")
+        
 
 
         function submit_names(){
