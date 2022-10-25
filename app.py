@@ -586,7 +586,10 @@ if __name__ == '__main__':
         print("DB setup complete")
     print("Running Site")
     logging.basicConfig(filename='log.log',level=logging.INFO)
+<<<<<<< HEAD
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 86400
+=======
+>>>>>>> 633ad4676696e22656917521f751ecfc842ec84e
     socketio.run(
         app,
         host=gethostbyname(gethostname()),
