@@ -268,6 +268,7 @@
                 setState(prevState=>{
                     if (!prevState.myTurn) {
                         console.error("this should not be happening")
+                        setTimeout(function() { alert("name appeared when it'd not your turn") }, 1)
                         console.log("audio1.current's event listener:", getEventListeners(audio1.current))
                         return prevState
                     }
