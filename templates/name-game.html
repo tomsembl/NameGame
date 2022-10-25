@@ -265,6 +265,7 @@
 
             const startAfterAudio = React.useCallback(()=>{
                 audio1.current.removeEventListener('ended', startAfterAudio, true)
+                audio1.current = null
                 setState(prevState=>{
                     if (!prevState.myTurn) {
                         console.error("this should not be happening")
