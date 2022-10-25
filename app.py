@@ -5,6 +5,7 @@ from flask_socketio import SocketIO, join_room
 import sqlite3, random, string, logging, time, json, os
 from os.path import join, dirname, abspath
 from socket import gethostbyname, gethostname
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -161,8 +162,8 @@ def score_answer_sql(game_id, user_id, name_id, success):
     try:
         turn_id, time_start = q_sql(f"select turn_id, time_start from turns where user_inst_id = :user_inst_id and game_id = :game_id and round = :round order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
     except:
-        print("error, no results to score answer.", "gameid",game_id, "userid",user_id, "success",success, name)
-        return
+        print(f"{datetime.now()}error, no results to score answer. game_id:{game_id}. user_id:{user_id}. success{success}. {name}")
+        turn_id, time_start = None, None
     latest_time_finish = q_sql(f"select time_finish from answers where turn_id = :turn_id order by answer_id desc limit 1",{'turn_id':turn_id})
     if latest_time_finish: time_start = latest_time_finish[0][0]
     query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
