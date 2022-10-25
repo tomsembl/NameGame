@@ -109,11 +109,13 @@ while True:
                 if "-your" == d.find_element(By.ID,"body").get_attribute("class")[-5:]:
                 # string = d.find_element(By.XPATH, '/html/body/div/body/div[2]/h1[1]').text
                 # if string=="Your Turn": 
-                    print(f"{w}'s turn")
+                    print(f"{w}'s turn",end=" ")
                     break
             if d.find_element(By.ID, 'start_button').get_attribute("disabled"):
                 #get a random integer and click a random number of times
-                for _ in range(random.randint(0,7)):
+                randint = random.randint(0,7)
+                print(randint)
+                for _ in range(randint):
                     try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'done_button')))
                     except: break
                     d.find_element(By.ID,'done_button').click() #They got it

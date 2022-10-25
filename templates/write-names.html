@@ -56,6 +56,11 @@
             document.getElementById('waiting-on').innerHTML = (waiting_on_list.length === 0) ? "Ready" : `Waiting on: &nbsp;${waiting_on_list.join(", &nbsp;")}`; 
         }) 
 
+        socket.on('deletion_kick',function(msg) {
+            alert(msg)
+            location.href='/';
+        }) 
+
         socket.emit('who_hasnt_written_name',"{{game_id}}","{{user_id}}")
         
 

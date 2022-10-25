@@ -169,6 +169,11 @@
                     }
                 })
 
+                newSocket.on('deletion_kick',function(msg) {
+                    alert(msg)
+                    location.href='/';
+                }) 
+
                 newSocket.on('emit_turn_order',function(msg) { 
                     var arr = []
                     const teamsArray = msg['teams_array']
