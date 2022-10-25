@@ -268,7 +268,7 @@
             }
 
             function startAfterAudio(){
-                audio1.current.removeEventListener('ended', startAfterAudio)
+                audio1.current.removeEventListener('ended', startAfterAudio, {once: true})
                 setState(prevState=>{
                     if (!prevState.myTurn) { 
                         console.error("bad bad bad",)
