@@ -93,6 +93,7 @@
                         var my_teams_turn = current_team_id === prevState.teamID
                         var new_phase = getPhaseNumber(current_player, my_teams_turn, my_turn)
                         teammates = JSON.parse(JSON.stringify(prevState.teammembers[current_team_id])).filter(x=>x!==current_turn_user_id)
+                        if (my_turn){ your_turn() }
                         return {
                             ...prevState,
                             currentPlayerID: current_turn_user_id,
@@ -225,18 +226,18 @@
             function your_turn() {
                 socket.current.emit("get_mp3_number",state.userID,"start")
                 socket.current.emit("get_mp3_number",state.userID,"stop")
+                endCountdown()
                 setState(prevState=>({
                     ...prevState,
                     whosUpVisible: false,
                     startButtonEnabled: true,
                 }))
             }
-            React.useEffect(()=>{
-                if (state.myTurn){
-                    your_turn()
-                    endCountdown()
-                }
-            },[state.myTurn])
+            // React.useEffect(()=>{
+            //     if (state.myTurn){
+            //         your_turn()
+            //     }
+            // },[state.myTurn])
 
             function decrementCountdown(is_player=true){
                 setCountdown((prev) => {
