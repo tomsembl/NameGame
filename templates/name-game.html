@@ -274,6 +274,7 @@
                         console.error("bad bad bad",)
                         console.log("caller to string",arguments.callee.caller.toString())
                         console.log("last 3 stack trace",arguments.callee.caller,arguments.callee.caller.caller,arguments.callee.caller.caller.caller)
+                    }
                     socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                     
                     //
