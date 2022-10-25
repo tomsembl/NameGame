@@ -599,6 +599,6 @@ if __name__ == '__main__':
         port=42069, 
         #ssl_context='adhoc'
         #log_output=True,
-        debug=True,
-        use_reloader=True
+        #debug=True,
+        #use_reloader=True
     )
