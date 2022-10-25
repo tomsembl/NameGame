@@ -17,9 +17,9 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from datetime import datetime
-import time,random,sys
+import time,random,sys#,argparse
 
-def main(number_players=random.randint(3,14),headless=False):
+def main(number_players=3,headless=False):
     #VARIABLES
     #screen_offsets = (0,0)
     #screen_offsets = (2555, 0) #2x 4K
@@ -149,11 +149,18 @@ def main(number_players=random.randint(3,14),headless=False):
     # time.sleep(1000)
 
 if __name__ == "__main__":
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument('-players','--players',type=int,help='number of players',default=10)
+#     parser.add_argument('-names','--names',type=int,help='number of names',default=10)
+#     parser.add_argument('-headless', action='store_true')
+#     args = parser.parse_args()
+#     print(args)
     headless = False
     if len(sys.argv) > 2:
         headless = sys.argv[2] == "--headless"
     if len(sys.argv) > 1:
         num_players = int(sys.argv[1])
+        if num_players == 0: num_players = random.randint(3,14)
         a = main(num_players,headless)
     else:
         a = main()
