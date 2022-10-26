@@ -9,7 +9,6 @@ conn.autocommit = True
 # DATABASE FUNCTIONS
 
 def q_sql(query,data=None,get_header=False):
-    # TODO: fix SQL injection literally everywhere
     cur = conn.cursor()
     cur.execute(query,data)
     output = ""
