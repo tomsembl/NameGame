@@ -593,18 +593,15 @@ if __name__ == '__main__':
         cur.executescript(script)
         cur.close()
         print("DB setup complete")
-    print("Running Site")
     logging.basicConfig(filename='log.log',level=logging.INFO)
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 86400
+    host=gethostbyname(gethostname())
+    port=42069
+    print(f"Running Site at http://{host}:{port}")
     socketio.run(
         app,
-        host=gethostbyname(gethostname()),
-        #host="192.168.137.1",
-        #host="192.168.1.138",
-        #host="10.0.0.102",
-        #host='0.0.0.0',
-        #port=8, 
-        port=42069, 
+        host=host,
+        port=port,
         #ssl_context='adhoc'
         #log_output=True,
         #debug=True,
