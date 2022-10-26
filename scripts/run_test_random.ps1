@@ -2,8 +2,8 @@
 while($true){
     #Run test
     write-host "`n`nnum_players: random"
-    python.exe web_scrape_test.py 0 --headless
-
+    $a = python.exe web_scrape_test.py 0 --headless 
+    $a >> C:\github_code\NameGame\scripts\test_results.txt
     #cleanup orphaned chromes
     #get-process | where-object -Property processname -Like 'chrome*' | Stop-Process -Force -ErrorAction SilentlyContinue
 
