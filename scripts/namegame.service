@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=~/src/namegame
-ExecStart=~/src/namegame/scripts/c.sh
+WorkingDirectory=/home/pi/src/namegame
+ExecStart=/home/pi/src/namegame/scripts/c.sh
 ExecStop=tmux kill-session -t namegame
 Restart=always
 RestartSec=1
