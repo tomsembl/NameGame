@@ -13,7 +13,7 @@ cd ../..
 sudo apt install python3.11
 sudo python3.11 -m pip install Flask --upgrade pip
 sudo python3.11 -m pip install flask-socketio
-sudo python3.11 -m pip install gevent-websocket
+sudo python3.11 -m pip install -vvv gevent-websocket
 sudo python3.11 -m pip install eventlet
 sudo ./b.sh
 
