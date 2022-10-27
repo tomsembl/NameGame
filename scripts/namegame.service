@@ -1,0 +1,16 @@
+[Unit]
+Description=Namegame
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=~/src/namegame
+ExecStart=~/src/namegame/scripts/c.sh
+ExecStop=tmux kill-session -t namegame
+Restart=always
+RestartSec=1
+StartLimitIntervalSec=0
+
+[Install]
+WantedBy=multi-user.target

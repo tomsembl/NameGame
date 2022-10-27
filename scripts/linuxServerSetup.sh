@@ -29,3 +29,20 @@ sudo apt install cec-utils
     echo "is" | cec-client RPI -s -d 1
 #Make the RPI active source:
     echo "as" | cec-client RPI -s -d 1
+
+#turn off leds
+echo 0 | sudo tee /sys/class/leds/led0/brightness
+echo 0 | sudo tee /sys/class/leds/led1/brightness
+
+#turn off ethernet LEDs
+#sudo ethtool -s eth0 led off
+
+#general config
+sudo raspi-config
+
+
+
+
+
+
+
