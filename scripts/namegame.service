@@ -3,6 +3,7 @@ Description=Namegame
 After=network.target
 
 [Service]
+ProtectHome=false
 Type=simple
 User=ubuntu
 #WorkingDirectory=/home/ubuntu/src/namegame
