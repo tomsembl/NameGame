@@ -1,5 +1,3 @@
-from ssl import SSLContext
-import ssl
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 from flask_socketio import SocketIO, join_room
 import sqlite3, random, string, logging, time, json, os
