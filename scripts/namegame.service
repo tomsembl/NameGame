@@ -3,12 +3,12 @@ Description=Namegame
 After=network.target
 
 [Service]
-ProtectHome=false
+#ProtectHome=false
 Type=simple
 User=ubuntu
 #WorkingDirectory=/home/ubuntu/src/namegame
-ExecStart=/usr/local/bin/c.sh
-ExecStop=/bin/tmux kill-session -t namegame
+ExecStart=/usr/local/bin/b.sh
+#ExecStop=/bin/tmux kill-session -t namegame
 Restart=always
 RestartSec=1
 
