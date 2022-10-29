@@ -266,6 +266,12 @@ table, th, td, tr {
     background-color:rgba(0, 0, 0, 0.55);
     margin-left: 0.6em;
 }
+.tick-button{
+    height: 42px;
+    width: 42px;
+    background-color:rgba(0, 0, 0, 0.35);
+    margin-left: 0.6em;
+}
 .write-names-p{font-size: auto ;}
 .self-centered{align-self: center;}
 .text-centered{text-align: center;}
