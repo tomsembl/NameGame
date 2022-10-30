@@ -37,7 +37,7 @@ def main(number_players=3,headless=False):
 
 
     #chrome setup
-    print(f"Setting up {WindowCount} chrome windows")
+    print(f"{game_name} Setting up {WindowCount} chrome windows")
     chromedriver_autoinstaller.install()
     chrome_options = Options()
     if headless: chrome_options.add_argument("--headless")
@@ -76,6 +76,7 @@ def main(number_players=3,headless=False):
         WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'username_change')))
         d.find_element(By.ID,'username_change').clear()
         d.find_element(By.ID,'username_change').send_keys(f"{names[w]} {w}")
+        d.find_element(By.ID,'username_change_button').click()
 
         #delete rainbow
         d.execute_script(f"document.getElementById('body').classList.remove('animate-rainbow')")

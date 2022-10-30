@@ -159,7 +159,7 @@
                             Edit Player Name
                             <div class="flex-h-start mt1">
                                 <input class="lobby-text-input" type="text" id="username_change" value={state.username} maxlength="16" onChange={onPlayerChange}/>
-                                <button class="button2 tick-button" id="button{{name_number}}" onClick={onPlayerChange}>
+                                <button class="button2 tick-button" id="username_change_button" onClick={onPlayerChange}>
                                     ✓
                                 </button>
                             </div>
@@ -263,7 +263,7 @@
                             Edit Team Name
                             <div class="flex-h-start m1t">
                                 <input class="lobby-text-input" type="text" id="team_name_change" value={state.selectedTeamID? state.teams[state.selectedTeamID] : ""} maxlength="20" onChange={onTeamNameChange}/>
-                                <button class="button2 tick-button" id="button{{name_number}}" onClick={onTeamNameChange}>
+                                <button class="button2 tick-button" id="team_name_change_button" onClick={onTeamNameChange}>
                                     ✓
                                 </button>
                             </div>
