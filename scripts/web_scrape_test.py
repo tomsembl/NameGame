@@ -21,9 +21,9 @@ import time,random,sys#,argparse
 
 def main(number_players=3,headless=False):
     #VARIABLES
-    #screen_offsets = (0,0)
+    screen_offsets = (0,0)
     #screen_offsets = (2555, 0) #2x 4K
-    screen_offsets = (2555, -720) #left2K right4K
+    #screen_offsets = (2555, -720) #left2K right4K
     game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
     game_id = None
     websitehome = "http://namegame.pw"
@@ -37,7 +37,8 @@ def main(number_players=3,headless=False):
 
 
     #chrome setup
-    print(f"{game_name} Setting up {WindowCount} chrome windows")
+    print(game_name)
+    print(f"Setting up {WindowCount} chrome windows")
     chromedriver_autoinstaller.install()
     chrome_options = Options()
     if headless: chrome_options.add_argument("--headless")
@@ -100,13 +101,28 @@ def main(number_players=3,headless=False):
     time.sleep(0.5)
     for w in range(WindowCount):
         d = windows[w]
+        if "lobby" in d.current_url: 
+            d.get(d.current_url.replace("lobby","write_names"))
+            print(f"Window {w} - was stuck on lobby, now on write_names #########################################")
         WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'button0')))
         for n in range(nameCount):
             d.find_element(By.ID,f"button{n}").click() #click the dice
-            time.sleep(0.02)
+            WebDriverWait(d, 1).until(lambda dr: dr.find_element(By.ID,f"name_input{n}").get_attribute("value") != "") #wait until element with ID f"name_input{n}" has value not equal to ""
         d.find_element(By.ID, 'submit').click()
-    time.sleep(nameCount* 0.1)
+    WebDriverWait(d, nameCount*0.5).until(lambda dr: dr.find_element(By.ID,"waiting-on").text == 'Ready')
     d.find_element(By.ID, 'start_game').click()
+
+    #cycle through windows if alert present
+    # if EC.alert_is_present(d):
+    #     for w in range(WindowCount):
+    #         d = windows[w]
+    #         if EC.alert_is_present()(d): Alert(d).accept()
+    #         if "lobby" in d.current_url:
+    #             d.find_element(By.ID, 'start_game').click()
+    #         else: 
+    #             d.find_element(By.ID, 'submit').click()
+    #     d.find_element(By.ID, 'start_game').click()
+
         
     #name game
     print(f"Window x - name_game")

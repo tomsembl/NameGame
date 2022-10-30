@@ -599,7 +599,7 @@ if __name__ == '__main__':
         cur.close()
         print("DB setup complete")
     logging.basicConfig(filename='log.log',level=logging.INFO)
-    #app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 86400 # turn on for prod!
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 86400 # turn on for prod!
     host=gethostbyname(gethostname())
     port=42069
     print(f"Running Site at http://{host}:{port}")
