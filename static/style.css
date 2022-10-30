@@ -228,6 +228,7 @@ table, th, td, tr {
 .border{ border:  solid rgba(0, 0, 0, 0.20) 1px}
 .vmar{margin:0.8em 0em 0.8em 0em}
 .vmar-tiny{margin:0.2em 0em 0.2em 0em}
+.mt1{margin-top: 0.2em}
 .mt--1{margin-top: 0.2em !important;
     margin-left: -3em !important;}
 .vmar2{margin:2em 0em 2em 0em}
@@ -265,6 +266,13 @@ table, th, td, tr {
     width: 3em;
     background-color:rgba(0, 0, 0, 0.55);
     margin-left: 0.6em;
+}
+.tick-button{
+    font-size: 1.1em;
+    height: 42px;
+    width: 42px;
+    background-color:rgba(0, 0, 0, 0.35);
+    margin-left: 0.4em;
 }
 .write-names-p{font-size: auto ;}
 .self-centered{align-self: center;}

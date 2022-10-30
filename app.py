@@ -6,6 +6,13 @@ from socket import gethostbyname, gethostname
 from datetime import datetime
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '"PIAENFiONAEF023750135017c193n895173c'
+#ontent-security-header to be sent with every response
+@app.after_request
+def add_csp_header(response):
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self';"
+    return response
+
 
 
 # DATABASE FUNCTIONS
@@ -421,8 +428,8 @@ def homepage():
     user_id = request.cookies.get('user_id')
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
     user_id, username = db_cookie(user_id=user_id,username=None,ip=ip)[0]
-    resp.set_cookie('user_id', str(user_id))
-    resp.set_cookie('username', username)
+    resp.set_cookie('user_id', str(user_id), httponly=True)
+    resp.set_cookie('username', username, httponly=True)
     return resp
 
 
@@ -505,8 +512,8 @@ def username_change():
     user_id = request.cookies.get("user_id")
     update_username(new_username,user_id,user_inst_id)
     resp = make_response("")
-    resp.set_cookie('user_id', str(user_id))
-    resp.set_cookie('username', new_username)
+    resp.set_cookie('user_id', str(user_id), httponly=True)
+    resp.set_cookie('username', new_username, httponly=True)
     emit_players(game_id)
     return resp
 
@@ -600,8 +607,8 @@ if __name__ == '__main__':
         app,
         host=host,
         port=port,
-        #ssl_context='adhoc'
-        #log_output=True,
-        #debug=True,
-        #use_reloader=True
+        # ssl_context='adhoc'
+        # log_output=True,
+        # debug=True,
+        # use_reloader=True
     )

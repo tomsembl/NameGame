@@ -127,6 +127,29 @@
                 })
             }
 
+            function onPlayerChange(e) {
+                setState(prevState=>{
+                    if (e.target.localName == 'button') {username_change(prevState.username);return prevState}
+                    username_change(e.target.value)
+                    return {
+                        ...prevState,
+                        username: e.target.value,
+                    }
+                })
+            }
+
+            function onTeamNameChange(e) {
+                setState(prevState=>{
+                    if (!prevState.selectedTeamID) {return prevState}
+                    var prevTeams = prevState.teams
+                    if (e.target.localName=="button") {team_name_change(prevState.selectedTeamID, prevTeams[prevState.selectedTeamID]); return prevState}
+                    prevTeams[prevState.selectedTeamID] = e.target.value
+                    e.target.value && team_name_change(prevState.selectedTeamID, e.target.value)
+                    return ({
+                    ...prevState,
+                    teams: prevTeams,
+                })})
+            }
 
             return(
                 <body id="body" class="lobby2 flex-v rainbow-gradient-bg animate-rainbow">
@@ -134,14 +157,11 @@
                     <div class="flex-h center vmar">
                         <h1 class="heading subheading4 pad-05em">
                             Edit Player Name
-                            <div class="flex-h-start">
-                                <input class="lobby-text-input" type="text" id="username_change" value={state.username} maxlength="16" onChange={(e)=>{
-                                    setState(prevState=>({
-                                        ...prevState,
-                                        username: e.target.value,
-                                    }))
-                                    username_change(e.target.value)
-                                }}/>
+                            <div class="flex-h-start mt1">
+                                <input class="lobby-text-input" type="text" id="username_change" value={state.username} maxlength="16" onChange={onPlayerChange}/>
+                                <button class="button2 tick-button" id="button{{name_number}}" onClick={onPlayerChange}>
+                                    ✓
+                                </button>
                             </div>
                         </h1>
                     </div>
@@ -241,18 +261,11 @@
                     <div class="flex-h center vmar">
                         <h1 class="heading subheading4 pad-05em">
                             Edit Team Name
-                            <div class="flex-h-start">
-                                <input class="lobby-text-input" type="text" id="team_name_change" value={state.selectedTeamID? state.teams[state.selectedTeamID] : ""} maxlength="20" onChange={(e)=>{
-                                    setState(prevState=>{
-                                        if (!prevState.selectedTeamID) {return prevState}
-                                        var prevTeams = prevState.teams
-                                        prevTeams[prevState.selectedTeamID] = e.target.value
-                                        e.target.value && team_name_change(prevState.selectedTeamID, e.target.value)
-                                        return ({
-                                        ...prevState,
-                                        teams: prevTeams,
-                                    })})
-                                }}/>
+                            <div class="flex-h-start m1t">
+                                <input class="lobby-text-input" type="text" id="team_name_change" value={state.selectedTeamID? state.teams[state.selectedTeamID] : ""} maxlength="20" onChange={onTeamNameChange}/>
+                                <button class="button2 tick-button" id="button{{name_number}}" onClick={onTeamNameChange}>
+                                    ✓
+                                </button>
                             </div>
                         </h1>
                     </div>

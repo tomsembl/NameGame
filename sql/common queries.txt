@@ -34,3 +34,26 @@
     a.game_id = 86 and
     time_finish is not null
     ORDER BY TIME_FINISH-time_start desc
+
+--Find the REAL games among the trash
+	select answers.game_id,game_name,date_created,count(*) from answers 
+	join games on games.game_id = answers.game_id
+	group by answers.game_id,game_name,date_created
+	order by count(*) desc
+
+--Get average number of correct guesses per hour, across all "REAL" games
+	select *
+	, names*4*60/turns as num_correct_per_hour
+	from 
+	(
+		select games.game_id
+		,count(distinct(user_instance.user_inst_id)) as users
+		,count(distinct(turns.turn_id)) as turns
+		,count(distinct(names.name_id)) as names
+		from games 
+		join turns on turns.game_id = games.game_id
+		join user_instance on user_instance.game_id = games.game_id
+		join names on names.game_id = games.game_id
+		where games.game_id in (81,94,30,86,91)
+		group by games.game_id
+	) as a

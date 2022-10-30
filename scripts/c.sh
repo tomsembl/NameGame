@@ -6,4 +6,3 @@
 #sudo cp /home/ubuntu/src/namegame/scripts/b.py /home/ubuntu/src/b.py
 #sudo cp /home/ubuntu/src/namegame/scripts/a.py /home/ubuntu/src/a.py
 /home/ubuntu/src/b.sh
-mkdir /home/ubuntu/src/itEnded
