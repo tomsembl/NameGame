@@ -26,7 +26,7 @@
                 currentPlayerID: null,
                 currentTeamID: null,
                 currentPlayer: null,
-                teammates: [],
+                //teammates: [],
                 players: {{players|safe}},
                 numPlayers: {{numPlayers}},
                 teams: {{teams|safe}},
@@ -38,11 +38,11 @@
                 startButtonEnabled: true,
                 prevPhase: -1,
                 phase: -1,
-                toggleQueue: true,
+                toggleQueue: false,
             })
             const [countdown, setCountdown] = React.useState(time_limit)
             const [name, setName] = React.useState(null)
-            var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, teammates, is_new_round, start_or_stop, stop_mp3, current_round
+            var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, is_new_round, start_or_stop, stop_mp3, current_round
             const nameRef = React.useRef()
             const socket = React.useRef()
             const interval = React.useRef()
@@ -88,14 +88,14 @@
                         var my_turn = current_turn_user_id === prevState.userID
                         var my_teams_turn = current_team_id === prevState.teamID
                         var new_phase = getPhaseNumber(current_player, my_teams_turn, my_turn)
-                        teammates = JSON.parse(JSON.stringify(prevState.teammembers[current_team_id])).filter(x=>x!==current_turn_user_id)
+                        //teammates = JSON.parse(JSON.stringify(prevState.teammembers[current_team_id])).filter(x=>x!==current_turn_user_id)
                         //if (my_turn && prevState.myTurn){ your_turn() } // fixes bug where single player gets stuck in limbo because audio is null and doesnt get refreshed
                         return {
                             ...prevState,
                             currentPlayerID: current_turn_user_id,
                             currentTeamID: current_team_id,
                             currentPlayer: current_player,
-                            teammates: teammates,
+                            //teammates: teammates,
                             myTurn: my_turn,
                             prevPhase: prevState.phase==new_phase ? prevState.prevPhase : prevState.phase, //this log is to handle the case of mulitple runs of this function, which would accidentally flushing prevPhase
                             phase: new_phase
@@ -359,15 +359,19 @@
 
             const toggleQueue = (
                 <span>
-                    <label class="switch mt--1">
-                        <input type="checkbox" id='q' name="q" checked={state.toggleQueue} onClick={()=>{setState(prevState=>({
-                            ...prevState,
-                            toggleQueue: !prevState.toggleQueue,
-                        }))}}/><span class="slider round"></span>
-                    </label>
+                    <div class="flex-v center vh100">
+                        <label class="switch2 switch-heading">
+                            <input type="checkbox" id='q' name="q" checked={state.toggleQueue} onClick={()=>{setState(prevState=>({
+                                ...prevState,
+                                toggleQueue: !prevState.toggleQueue,
+                            }))}}/><span class="slider2 round"></span>
+                        </label>
+                    </div>
                 </span>
             )
-
+            
+            //const teammates = state.teammembers[state.current_team_id]
+            //const myTeam = state.teammembers[state.my_team_id]
             return (
                 <body id="body" class={`lobby2 flex-v rainbow-gradient-bg ${getBackground()}`}> 
                     {!state.myTurn && <h1 id="heading" class="heading subheading3">THE NAME GAME</h1>}
@@ -380,49 +384,49 @@
                     
                     <div class="flex-v">
                         <h1 id="the_name" class={`heading subheading3 pad-10pct-v name-big${state.myTurn?"-big":""}`}>{getTextForTheName()}</h1>
-                        {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.doneButtonEnabled?"":"correct"} ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>}
-                        <h1  class="heading subheading4">⏱<span id="countdown">{countdown}</span></h1>
+                        {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.doneButtonEnabled?"":"correct"} ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>} 
                     </div>
-                    
-                    {state.turnOrder && !state.myTurn && <table>
-                        <th class="heading subheading4">
-                            {toggleQueue}
-                            Queue
-                        </th>
-                        {state.toggleQueue && state.turnOrder.map((player_id) => {
-                            return (
-                                <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
-                                    <p class={`${state.currentPlayerID===player_id?"my":state.teammates.find(x=>x===player_id)?"team":"not"}`}>{player_id===state.userID?<strong>You</strong>:state.players[player_id]}</p>
-                                </tr>
-                            )
-                        })}
-                    </table>}
-                    {state.turnOrder && state.myTurn && state.teammates.length!==0 && <table>
-                        <th class="heading subheading4">
-                            {toggleQueue}
-                            Teammates
-                        </th>
-                        {state.toggleQueue && state.teammates.map((teammate) => {
-                            if (teammate!==state.userID){
-                                return (
-                                    <tr class="white text-centered option small-option slight-v-gradient" id="current_player">
-                                        <p class="team">{state.players[teammate]}</p>
-                                    </tr>
-                                )
-                            }
-                        })}
-                    </table>}
 
+                    <h1  class="heading subheading4 flex-h">
+                        <div class="flex-h center vw50">
+                            ⏱
+                            <span id="countdown">{countdown}</span>
+                        </div>
+                        <div class="flex-h center vw50">
+                            More Info
+                            {toggleQueue}
+                        </div>
+                    </h1>
+                    {state.toggleQueue && state.turnOrder && <div class="flex-h">
+                        <div class="flex-v-start vw50">
+                            <h1 class="heading subheading4">Players</h1>
+                            {state.turnOrder.map((player_id,i) => {
+                                return (
+                                    <div class={`white text-centered option small-option slight-v-gradient p-0 ${i===0?"my":state.teammembers[state.currentTeamID].find(x=>x===player_id)?"team":"not"}`} id="current_player">
+                                        {player_id===state.userID?<strong>You</strong>:state.players[player_id]}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div class="flex-v-start vw50">
+                            <h1 class="heading subheading4">My Team</h1>
+                            {state.teammembers[state.teamID].map((teammate) => {
+                                if (teammate!==state.userID){
+                                    return (
+                                        <div class="white text-centered option small-option slight-v-gradient team p-0" id="current_player">
+                                            {state.players[teammate]}
+                                        </div>
+                                    )
+                                }
+                            })}
+                        </div>
+                    </div>}
                     {state.myTurn && <div class="flex-h mar-1em">
                         <button id="start_button" class="button1 button3" onClick={start} disabled={!state.myTurn|state.turnStarted|!state.startButtonEnabled}>Start</button>
                         <button id="concede_button" class="button1 button3" onClick={()=>{concede(false)}} disabled={!state.myTurn|!state.turnStarted}>End</button>
                     </div>}
                     <div class="flex-h mar-1em">
                         <button class="button2" onClick={()=>{location.href='/';}}>Home</button>
-                        {/* <button class="button2" onClick={()=>{console.log("state",state)}}>Print state</button>
-                        <h1>{state.phase==-1?"null":state.phase}</h1>
-                        <h1>{state.prevPhase==-1?"null":state.prevPhase}</h1> */}
-                        {/*<button class="button2" onClick={test_emit_turn_order}>test_emit_turn_order</button>*/}
                     </div>
                 </body>
             )
