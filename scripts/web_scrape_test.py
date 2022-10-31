@@ -95,11 +95,11 @@ def main(number_players=3,headless=False):
     except: pass
 
     # write names
-    print(f"Window x - write_names")
     d = windows[0]
     WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
     time.sleep(0.5)
     for w in range(WindowCount):
+        print(f"Window {w} - write_names")
         d = windows[w]
         if "lobby" in d.current_url: 
             d.get(d.current_url.replace("lobby","write_names"))
