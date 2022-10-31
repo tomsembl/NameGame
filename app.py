@@ -42,8 +42,8 @@ def db_cookie(user_id,username=None,ip=None):
         result = q_sql(query,{'user_id':user_id})
     if not result or not user_id:
         if not username: username = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(5))        
-        q_sql("insert into users (username, ip_address) values (:username, :ip)",{'username':username, 'ip':ip})
-        result = q_sql("select user_id, username from users order by user_id desc limit 1")
+        q_sql("begin transaction"); q_sql("insert into users (username, ip_address) values (:username, :ip)",{'username':username, 'ip':ip})
+        result = q_sql("select user_id, username from users where user_id = last_insert_rowid() limit 1"); q_sql("commit")
     return result
 
 def header_zip_query(query, data=None, multi=False):
@@ -52,13 +52,10 @@ def header_zip_query(query, data=None, multi=False):
     return dict(zip(header, data[0]))
 
 def db_user_instance(user_id,username,game_id):
-    result = ""
-    query = "select user_inst_id from user_instance where user_id = :user_id and game_id = :game_id limit 1"
-    result = q_sql(query,{'user_id':user_id, 'game_id':game_id})
+    result = q_sql("select user_inst_id from user_instance where user_id = :user_id and game_id = :game_id limit 1",{'user_id':user_id, 'game_id':game_id})
     if not result:
-        q_sql("insert into user_instance (user_id, username, game_id) values (:user_id, :username, :game_id)",{'user_id':user_id, 'username':username, 'game_id':game_id})
-        result = "select user_inst_id from user_instance order by user_inst_id desc limit 1"
-    #print("user_inst", result)
+        q_sql("begin transaction"); q_sql("insert into user_instance (user_id, username, game_id) values (:user_id, :username, :game_id)",{'user_id':user_id, 'username':username, 'game_id':game_id})
+        result = q_sql("select last_insert_rowid()"); q_sql("commit")
     return result
 
 def get_user_inst_id(user_id,game_id): 
@@ -77,8 +74,9 @@ def create_game_sql(form):
     #print(form)
     query = f"""insert into games (active, stage, date_created, round, number_teams, number_names, time_limit, round1, round2, round3, round4, game_name) 
     values (TRUE, 1, datetime('now','localtime'), :round, :number_teams, :number_names, :time_limit, :round1, :round2, :round3, :round4, :game_name )"""
-    q_sql(query, form)
-    return q_sql("select game_id from games order by game_id desc limit 1")[0][0]
+    q_sql("begin transaction"); q_sql(query, form)
+    game_id = q_sql("select last_insert_rowid()")[0][0]; q_sql("commit")
+    return game_id
 
 def insert_names_sql(user_inst_id,game_id,names):
     for name in names:
@@ -142,7 +140,7 @@ def advance_round_sql(game_id):
     if next_index >= len(all_rounds):
         q_sql(f"update games set stage=4 where game_id=:game_id",{'game_id':game_id})
     else:
-        q_sql(f"update games set round = :round",{'round':all_rounds[next_index]})
+        q_sql(f"update games set round=:round and game_id=:game_id",{'round':all_rounds[next_index],'game_id':game_id})
         emit_current_round(game_id)
 
 def add_turn_sql(game_id,user_id):
