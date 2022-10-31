@@ -140,7 +140,7 @@ def advance_round_sql(game_id):
     if next_index >= len(all_rounds):
         q_sql(f"update games set stage=4 where game_id=:game_id",{'game_id':game_id})
     else:
-        q_sql(f"update games set round=:round and game_id=:game_id",{'round':all_rounds[next_index],'game_id':game_id})
+        q_sql(f"update games set round=:round where game_id=:game_id",{'round':all_rounds[next_index],'game_id':game_id})
         emit_current_round(game_id)
 
 def add_turn_sql(game_id,user_id):
@@ -431,7 +431,7 @@ def homepage():
     return resp
 
 
-#create / modify / delete game
+# create / modify / delete game
 @app.route('/create_game', methods=["GET"])
 def create_game():
     return render_template('create-game.html')
