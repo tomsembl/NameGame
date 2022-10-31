@@ -44,13 +44,23 @@ sudo apt install cec-utils
     echo "is" | cec-client RPI -s -d 1
 #Make the RPI active source:
     echo "as" | cec-client RPI -s -d 1
+#volume up
+    echo "volup" | cec-client RPI -s -d 1
 
 #turn off leds
 echo 0 | sudo tee /sys/class/leds/led0/brightness
 echo 0 | sudo tee /sys/class/leds/led1/brightness
 
 #turn off ethernet LEDs
-#sudo ethtool -s eth0 led off
+sudo apt-get install libusb-1.0-0-dev
+git clone https://github.com/dumpsite/lan951x-led-ctl.git
+cd lan951x-led-ctl/
+make
+
+# disable lan leds
+sudo ./lan951x-led-ctl --fdx=0 --lnk=0 --spd=0
+# enable lan leds
+sudo ./lan951x-led-ctl --fdx=1 --lnk=1 --spd=1
 
 #general config
 sudo raspi-config
