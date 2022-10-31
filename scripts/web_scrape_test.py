@@ -31,25 +31,25 @@ def main(number_players=3,headless=False):
     # websitehome = "http://10.0.0.8:42069"
     names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
     nameCount = 3
-    WindowCount = number_players
-    teamCount = WindowCount//3
+    windowCount = number_players
+    teamCount = windowCount//3
     timeLimit = 10
 
 
     #chrome setup
     print(game_name)
-    print(f"Setting up {WindowCount} chrome windows")
+    print(f"Setting up {windowCount} chrome windows")
     chromedriver_autoinstaller.install()
     chrome_options = Options()
     if headless: chrome_options.add_argument("--headless")
     # chrome_options.add_experimental_option("detach", True)
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     #chrome_options.add_extension("C:/github_code/NameGame/scripts/extension_4_25_0_0.crx")
-    windows = [webdriver.Chrome(options=chrome_options) for _ in range(WindowCount)]
+    windows = [webdriver.Chrome(options=chrome_options) for _ in range(windowCount)]
 
 
 
-    for w in range(WindowCount):
+    for w in range(windowCount):
         d = windows[w]
         # home page
         print(f"Window {w} - homepage")
@@ -85,7 +85,10 @@ def main(number_players=3,headless=False):
     #start game
     d.find_element(By.ID, 'shuffle').click()
     print(f"Window x - shuffle")
-    WebDriverWait(d, WindowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
+    try: WebDriverWait(d, windowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
+    except: 
+        d.get(+f"{websitehome}/join_game")
+        WebDriverWait(d, windowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
     d.find_element(By.ID, 'start_game').click()
     print(f"Window x - start_game")
     try:
@@ -98,7 +101,7 @@ def main(number_players=3,headless=False):
     d = windows[0]
     WebDriverWait(d, 40).until(EC.element_to_be_clickable((By.ID,'button0')))
     time.sleep(0.5)
-    for w in range(WindowCount):
+    for w in range(windowCount):
         print(f"Window {w} - write_names")
         d = windows[w]
         if "lobby" in d.current_url: 
@@ -109,12 +112,12 @@ def main(number_players=3,headless=False):
             d.find_element(By.ID,f"button{n}").click() #click the dice
             WebDriverWait(d, 1).until(lambda dr: dr.find_element(By.ID,f"name_input{n}").get_attribute("value") != "") #wait until element with ID f"name_input{n}" has value not equal to ""
         d.find_element(By.ID, 'submit').click()
-    WebDriverWait(d, nameCount*0.5).until(lambda dr: dr.find_element(By.ID,"waiting-on").text == 'Ready')
+    WebDriverWait(d, windowCount*nameCount*1).until(lambda dr: dr.find_element(By.ID,"waiting-on").text == 'Ready')
     d.find_element(By.ID, 'start_game').click()
 
     #cycle through windows if alert present
     # if EC.alert_is_present(d):
-    #     for w in range(WindowCount):
+    #     for w in range(windowCount):
     #         d = windows[w]
     #         if EC.alert_is_present()(d): Alert(d).accept()
     #         if "lobby" in d.current_url:
@@ -131,7 +134,7 @@ def main(number_players=3,headless=False):
         if "name_game" in d.current_url:
             try:
                 string = ""
-                for w in range(WindowCount):
+                for w in range(windowCount):
                     d = windows[w]
                     if "-your" == d.find_element(By.ID,"body").get_attribute("class")[-5:]: break
                 if d.find_element(By.ID, 'start_button').get_attribute("disabled"):
@@ -155,7 +158,7 @@ def main(number_players=3,headless=False):
             except: continue
         else: 
             exit = False
-            for w in range(WindowCount):
+            for w in range(windowCount):
                 d = windows[w]
                 try: 
                     if d.find_element(By.ID, "game_over").text == "GAME OVER":
@@ -164,7 +167,7 @@ def main(number_players=3,headless=False):
                 except: pass
                 try: 
                     print(d.find_element(By.ID, 'return_to_game').text)
-                    for w in range(WindowCount):
+                    for w in range(windowCount):
                         d = windows[w]
                         d.find_element(By.ID, 'return_to_game').click()
                 except: break
