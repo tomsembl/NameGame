@@ -64,8 +64,8 @@ sudo ./lan951x-led-ctl --fdx=1 --lnk=1 --spd=1
 
 #general config
 sudo raspi-config
-
-
+#measure temp
+vcgencmd measure_temp
 
 
 
