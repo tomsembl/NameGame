@@ -58,7 +58,7 @@ cd lan951x-led-ctl/
 make
 
 # disable lan leds
-sudo ./lan951x-led-ctl --fdx=0 --lnk=0 --spd=0
+sudo /home/ubuntu/src/lan951x-led-ctl/lan951x-led-ctl --fdx=0 --lnk=0 --spd=0
 # enable lan leds
 sudo ./lan951x-led-ctl --fdx=1 --lnk=1 --spd=1
 
