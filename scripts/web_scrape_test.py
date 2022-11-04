@@ -145,8 +145,8 @@ def main(number_players=3,headless=False):
                         try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'done_button')))
                         except: 
                             print(f"    ended early {i}")
-                            try: WebDriverWait(d, 4).until(lambda dr: "graphs" in dr.current_url)
-                            except: pass
+                            # try: WebDriverWait(d, 4).until(lambda dr: "graphs" in dr.current_url)
+                            # except: pass
                         d.find_element(By.ID,'done_button').click() #They got it
                 try:
                     d.find_element(By.ID, 'concede_button').click() #End Button
