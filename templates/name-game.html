@@ -49,7 +49,7 @@
             const myTurnRef = React.useRef()
             const numPlayersRef = React.useRef()
             const audio1 = React.useRef(new Audio(`/static/start/0.mp3`))
-            const audio2 = React.useRef(new Audio(`/static/start/0.mp3`))
+            const audio2 = React.useRef(new Audio(`/static/end/0.mp3`))
             const audio3 = new Audio(`/static/Ding.mp3`)
             React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
             React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
@@ -224,6 +224,7 @@
                     startButtonEnabled: true,
                 }))
             }
+
             React.useEffect(()=>{
                 if (state.myTurn){
                     your_turn()
@@ -257,30 +258,21 @@
                     ...prevState,
                     startButtonEnabled: false,
                 }))
-                audio1.current.addEventListener('ended', startAfterAudio)
+                audio1.current.addEventListener('ended', startAfterAudio, { capture: true, once: true });
                 audio1.current.play()
             }
 
             const startAfterAudio = React.useCallback(()=>{
-                audio1.current.removeEventListener('ended', startAfterAudio)
-                audio1.current = null
+                audio1.current.removeEventListener('ended', startAfterAudio, { capture: true, once: true })
+                //audio1.current = null
                 socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                 socket.current.emit("start_timer","{{game_id}}",state.userID)
                 startCountdown()
-                setState(prevState=>{
-                    // if (!prevState.myTurn) {
-                    //     console.error("this should not be happening")
-                    //     setTimeout(function() { alert("name appeared when it's not your turn") }, 1)
-                    //     //console.log("audio1.current's event listener:", getEventListeners(audio1.current))
-                    //     return prevState
-                    // }
-
-                    return {
-                        ...prevState,
-                        turnStarted: true,
-                        startButtonEnabled: true,
-                    }
-                })
+                setState(prevState=>({
+                    ...prevState,
+                    turnStarted: true,
+                    startButtonEnabled: true,
+                }))
             })
 
             function done() {
@@ -322,10 +314,7 @@
 
             function getPhaseNumber(currentPlayer, myTeamsTurn, myTurn){
                 if (currentPlayer === null){ return -1}
-                if(myTeamsTurn) {
-                    if(myTurn) {return 0}
-                    else {return 1}
-                } else{ return 2}
+                return myTeamsTurn ? myTurn ? 0 : 1 : 2
             }
             
             function getTextForTheName(){
