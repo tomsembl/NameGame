@@ -15,15 +15,10 @@
     <body id="app" class="lobby2 flex-v rainbow-gradient-bg animate-rainbow"> 
     </body>
     <script type="text/babel">
-        //use jinja to pass in the game id
-        //console.log(games_)
         function App() {
-            const [games, setGames] = React.useState(()=>{
-                var state = {{games|safe}}
-                state.map((game)=>{
-                    game.selected = false
-                })
-                return state
+            const [state, setState] = React.useState({
+                games : {{games|safe}},
+                selectedGame : null,
             });
             const socket = React.useRef()
             React.useEffect(()=>{
@@ -38,14 +33,12 @@
             },[])
         
             function submit(deleteGame){
-                console.log(deleteGame)
-                const selectedGame = games.find(x=>x.selected)
-                if (selectedGame){
+                if (state.selectedGame){
                     if (deleteGame){
-                        socket.current.emit('delete_game',selectedGame.game_id)
-                        socket.current.emit('deletion_kick',selectedGame.game_id,'{{username}}')
+                        socket.current.emit('delete_game',state.selectedGame)
+                        socket.current.emit('deletion_kick',state.selectedGame,'{{username}}')
                         socket.current.emit('refresh_join_game')
-                    } else { location.href=`join_game/${selectedGame.game_id}`}
+                    } else { location.href=`join_game/${state.selectedGame}`}
                 } else {alert("select one")}
             }
             
@@ -54,12 +47,12 @@
                 location.href='/';
             }
 
-            const gameOption = games.map(gameObject=>{return(
-                <div class={`option slight-v-gradient ${games.find(x=>x.game_id === gameObject.game_id).selected?"selected":""}`} onClick={()=>{
-                    setGames(games.map((game)=>{
-                        game.selected = (game.game_id === gameObject.game_id)
-                        return game
-                    }))
+            const gameOption = state.games.map(gameObject=>{return(
+                <div class={`option slight-v-gradient ${gameObject.game_id == state.selectedGame?"selected":""}`} onClick={()=>{
+                    setState({
+                        ...state, 
+                        selectedGame:gameObject.game_id,
+                    })
                 }}>
                     {gameObject.game_name}
                 </div>
@@ -72,14 +65,14 @@
                         <div class="flex-v-start"> 
                             <h1 class="heading subheading4">SELECT A GAME</h1>
                             <div class="text-box" id="games">
-                                {games.length>0 && <div>{gameOption}</div>}
-                                {games.length==0 && <p class="option slight-v-gradient">No Games...</p>}
+                                {state.games.length>0 && <div>{gameOption}</div>}
+                                {state.games.length==0 && <p class="option slight-v-gradient">No Games...</p>}
                             </div>
                         </div>
                     </div>
                     <div class="flex-h center">
-                        <button class="button1 button3 mar-1em" onClick={()=>{submit(false)}} disabled={games.length==0} id="join_game">Join Game</button>
-                        <button class="button1 button3 mar-1em" onClick={()=>{submit(true)}} disabled={games.length==0}>Delete Game</button>
+                        <button class="button1 button3 mar-1em" onClick={()=>{submit(false)}} disabled={state.games.length==0} id="join_game">Join Game</button>
+                        <button class="button1 button3 mar-1em" onClick={()=>{submit(true)}} disabled={state.games.length==0}>Delete Game</button>
                     </div>
                     <div class="flex-h center">
                         {/* <button class="button1 button3 mar-1em" onClick={()=>{location.href='join_game'}}>Refresh</button> */}
