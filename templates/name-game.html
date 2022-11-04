@@ -113,11 +113,11 @@
                     })) 
                     if (is_new_round){
                         endCountdown()
-                        function goToGraphs(){
-                            audio3.current.removeEventListener('ended', goToGraphs, { capture: true, once: true } )
-                            location.href="/graphs/{{game_id}}"
-                        }
-                        audio3.current.paused ? location.href="/graphs/{{game_id}}" : audio3.current.addEventListener('ended', goToGraphs, { capture: true, once: true } )
+                        // function goToGraphs(){
+                        //     audio3.current.removeEventListener('ended', goToGraphs, { capture: true, once: true } )
+                        //     location.href="/graphs/{{game_id}}"
+                        // }
+                        // audio3.current.paused ? location.href="/graphs/{{game_id}}" : audio3.current.addEventListener('ended', goToGraphs, { capture: true, once: true } )
                     }
                 }) 
 
