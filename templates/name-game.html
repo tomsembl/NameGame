@@ -49,8 +49,9 @@
             const myTurnRef = React.useRef()
             const numPlayersRef = React.useRef()
             const audio1 = React.useRef(new Audio(`/static/start/0.mp3`))
-            const audio2 = React.useRef(new Audio(`/static/end/0.mp3`))
-            const audio3 = new Audio(`/static/Ding.mp3`)
+            const audio2 = React.useRef(new Audio(`/static/stop/0.mp3`))
+            const audio3 = React.useRef(new Audio(`/static/Ding2.mp3`))
+            audio3.current.preservesPitch = false
             React.useEffect(()=>{nameRef.current = name},[name,state.myTurn])
             React.useEffect(()=>{myTurnRef.current = state.myTurn},[state.myTurn])
             React.useEffect(()=>{numPlayersRef.current = state.numPlayers},[state.numPlayers])
@@ -80,6 +81,7 @@
                 }) 
 
                 newSocket.on('emit_current_turn',function(msg) {
+                    console.log(audio3.current.currentTime)
                     current_turn_user_id = msg[1]
                     current_team_id = msg[0]
                     
@@ -111,7 +113,11 @@
                     })) 
                     if (is_new_round){
                         endCountdown()
-                        location.href="/graphs/{{game_id}}"
+                        function goToGraphs(){
+                            audio3.current.removeEventListener('ended', goToGraphs, { capture: true, once: true } )
+                            location.href="/graphs/{{game_id}}"
+                        }
+                        audio3.current.paused ? location.href="/graphs/{{game_id}}" : audio3.current.addEventListener('ended', goToGraphs, { capture: true, once: true } )
                     }
                 }) 
 
@@ -264,7 +270,6 @@
 
             const startAfterAudio = React.useCallback(()=>{
                 audio1.current.removeEventListener('ended', startAfterAudio, { capture: true, once: true })
-                //audio1.current = null
                 socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                 socket.current.emit("start_timer","{{game_id}}",state.userID)
                 startCountdown()
@@ -275,8 +280,15 @@
                 }))
             })
 
+            function ding() {
+                const semitone = 1.0594630943592953
+                audio3.current.pause() ; audio3.current.currentTime = 0
+                audio3.current.playbackRate = audio3.current.playbackRate > 4 ? 1 : audio3.current.playbackRate * semitone
+                audio3.current.play()
+            }
+
             function done() {
-                audio3.play()
+                ding()
                 document.getElementById("done_button").blur()
                 score_answer(nameRef.current.name_id, 1)
                 socket.current.emit("emit_next_name","{{game_id}}",state.userID)

@@ -44,7 +44,7 @@ def main(number_players=3,headless=False):
     if headless: chrome_options.add_argument("--headless")
     # chrome_options.add_experimental_option("detach", True)
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    #chrome_options.add_extension("C:/github_code/NameGame/scripts/extension_4_25_0_0.crx")
+    # chrome_options.add_extension("C:/github_code/NameGame/scripts/old/extension_4_25_0_0.crx")
     windows = [webdriver.Chrome(options=chrome_options) for _ in range(windowCount)]
 
 
@@ -107,10 +107,10 @@ def main(number_players=3,headless=False):
         if "lobby" in d.current_url: 
             d.get(d.current_url.replace("lobby","write_names"))
             print(f"Window {w} - was stuck on lobby, now on write_names #########################################")
-        WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'button0')))
+        WebDriverWait(d, 5).until(EC.element_to_be_clickable((By.ID,'button0')))
         for n in range(nameCount):
             d.find_element(By.ID,f"button{n}").click() #click the dice
-            WebDriverWait(d, 1).until(lambda dr: dr.find_element(By.ID,f"name_input{n}").get_attribute("value") != "") #wait until element with ID f"name_input{n}" has value not equal to ""
+            WebDriverWait(d, 5).until(lambda dr: dr.find_element(By.ID,f"name_input{n}").get_attribute("value") != "") #wait until element with ID f"name_input{n}" has value not equal to ""
         d.find_element(By.ID, 'submit').click()
     WebDriverWait(d, windowCount*nameCount*1).until(lambda dr: dr.find_element(By.ID,"waiting-on").text == 'Ready')
     d.find_element(By.ID, 'start_game').click()
@@ -143,7 +143,10 @@ def main(number_players=3,headless=False):
                     print(f"{w}'s turn. {randint}")
                     for i in range(randint):
                         try: WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'done_button')))
-                        except: print(f"    ended early {i}")
+                        except: 
+                            print(f"    ended early {i}")
+                            try: WebDriverWait(d, 4).until(lambda dr: "graphs" in dr.current_url)
+                            except: pass
                         d.find_element(By.ID,'done_button').click() #They got it
                 try:
                     d.find_element(By.ID, 'concede_button').click() #End Button
@@ -189,7 +192,7 @@ if __name__ == "__main__":
         headless = sys.argv[2] == "--headless"
     if len(sys.argv) > 1:
         num_players = int(sys.argv[1])
-        if num_players == 0: num_players = random.randint(3,14)
+        if num_players == 0: num_players = random.randint(3,9)
         a = main(num_players,headless)
     else:
         a = main()
