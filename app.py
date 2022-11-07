@@ -578,7 +578,7 @@ def other():
 
 @app.route('/gravitysim', methods=["GET"])
 def gravitysim():
-    return render_template('other/gravitysim.html')
+    return render_template('other/gravitySim.html')
 
 @app.route('/breathe', methods=["GET"])
 def breathe():
