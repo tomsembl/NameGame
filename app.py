@@ -572,6 +572,19 @@ def graphs(game_id):
 def readme():
     return render_template('readme.html')
 
+@app.route('/other', methods=["GET"])
+def other():
+    return render_template('other.html')
+
+@app.route('/gravitysim', methods=["GET"])
+def gravitysim():
+    return render_template('gravitysim.html')
+
+@app.route('/breathe', methods=["GET"])
+def breathe():
+    return render_template('breathe.html')
+
+
 
 
 
