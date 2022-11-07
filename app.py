@@ -574,15 +574,15 @@ def readme():
 
 @app.route('/other', methods=["GET"])
 def other():
-    return render_template('other.html')
+    return render_template('other/other.html')
 
 @app.route('/gravitysim', methods=["GET"])
 def gravitysim():
-    return render_template('gravitysim.html')
+    return render_template('other/gravitysim.html')
 
 @app.route('/breathe', methods=["GET"])
 def breathe():
-    return render_template('breathe.html')
+    return render_template('other/breathe.html')
 
 
 
