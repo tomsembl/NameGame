@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <title>BreaTheFuak</title>
+        <style>
+            body{margin: 50px;font-family: "Poppins"; }
+            h1,h4,h6,p{align-items: center; color: white; font-weight: 600;}
+            i{color: white;}
+            #timers{margin-top: 20px;margin-bottom: 50px;width: 16ch;}
+            label{font-weight: bold;margin-top: 10px;color: white;}
+            input[type=text]{width: 6ch; padding-right: 1em;}
+            #parent{border-radius: 15px;padding:50px;display:flex;background-image:linear-gradient(rgb(216, 174, 255),rgb(124, 183, 255)); filter: drop-shadow(10px 10px 9px #b6cae4);}
+            @media screen and (orientation: portrait) {
+                #parent {
+                    flex-direction: column-reverse
+                }
+                #section2{margin-bottom:70px}
+                body{margin: 30px;}
+            }
+            @media screen and (orientation: landscape) {
+                #parent {
+                    flex-direction: row;
+                }
+            }
+            #titleDiv{border-radius: 15px; padding-inline:50px; padding-block:20px; margin-bottom:20px; background-image:linear-gradient(rgb(128, 185, 255),rgb(216, 171, 255)); width:29ch; filter: brightness( ); filter: drop-shadow(10px 10px 9px #b6cae4);}
+            #section2{align-self: center; flex-grow:1; display: flex; flex-direction: column; align-items: center; }
+            #breatheStep{-webkit-transition: opacity .5s ease-in-out;
+                        -moz-transition: opacity .5s ease-in-out;
+                        -ms-transition: opacity .5s ease-in-out;
+                        -o-transition: opacity .5s ease-in-out;
+                        transition: opacity .5s ease-in-out;}
+            #floater{flex-grow:1; margin:50px;border-radius: 50%; background: white; width:200px; height:200px; z-index:-1; transform: scale(0.5);box-shadow: inset 8px 8px 12px  #b6cae4;}
+            #startStopDiv{margin-top:1.5em;}
+            .btn{margin-inline: 1em;}
+            .inline{display:flex;flex-direction: row;}
+            span{margin-left:-16px; margin-top:0.4em; color: rgb(189, 189, 189);}
+            
+            
+        </style>
+        <style id="style2">
+
+        </style>
+    </head>
+    <body>
+        <div id="titleDiv">
+            <h1>BreaTheFuak</h1>
+            <h4>Custom Breathing Exercise</h4>
+        </div>
+        <div id="parent">
+            <div id="section1">
+                <h4>Customise The Exercise</h4>
+                <!--<i>(values in seconds)</i>-->
+                <div id="timers">
+                </div>
+            </div>
+            <div id="section2">
+                <h1 id="breatheStep">&nbsp;</h1>
+                <div class="" id="floater"></div>
+                <div id="startStopDiv">
+                    <button id="startBtn" class="btn btn-light" onclick="start()">Start</button>
+                    <button class="btn btn-light" onclick="stop()">Stop</button>
+                </div>
+                
+            </div>
+        </div>
+        
+    </body>
+    <script>
+        var timers = {
+            "Exercise Duration" : 60,
+            "Breathe In" : 4,
+            "Hold In" : 4,
+            "Breathe Out" : 4,
+            "Hold Out" : 4,
+        }
+        const steps = [
+            "Breathe In",
+            "Hold In",
+            "Breathe Out",
+            "Hold Out",]
+
+        timersDiv = document.getElementById("timers")
+        for (var timer in timers) {
+            timersDiv.innerHTML += `
+            <div class="form-group">
+                <label for="${timer}">${timer}</label>
+                <div class="inline">
+                    <input type="text" name="${timer}" id="${timer}" class="form-control" value="${timers[timer]}"><span>s</span>
+                </div>
+            </div>`
+        }
+
+        var myInterval
+
+        function start(){
+            var time = 0
+            var listTimeCummul = 0
+            var timeTranslate = {}
+            var cycleTime = 0
+            const breatheStep = document.getElementById("breatheStep")
+            
+            for (var timer in timers) {
+                timers[timer] =  document.getElementById(timer).value
+            }
+
+            for (var step of steps) {
+                    stepTime = parseInt(timers[step])
+                    for (let i = listTimeCummul; i <= listTimeCummul+stepTime; i++) {
+                        timeTranslate[i]= [step,i - listTimeCummul + 1];
+                    }
+                    listTimeCummul += stepTime
+                }
+            cycleTime = listTimeCummul
+            document.getElementById("startBtn").setAttribute("disabled",true)
+            document.getElementById("floater").classList.add("animate")
+
+            time1=parseInt(timers[steps[0]])/cycleTime*100
+            time2=parseInt(timers[steps[1]])/cycleTime*100+time1
+            time3=parseInt(timers[steps[2]])/cycleTime*100+time2
+            document.getElementById("style2").innerHTML = `@keyframes ripple{
+                        0%{transform: scale(0.5);}
+                        ${time1}%{transform: scale(1.4);}
+                        ${time2}%{transform: scale(1.4);}
+                        ${time3}%{transform: scale(0.5);}
+                        100%{transform: scale(0.5);}
+                    }
+                    .animate{animation: ripple ${cycleTime}s infinite;}`
+
+            function oneSecondFunc() {
+                //console.log(time)
+                breatheTimeAndStep = timeTranslate[time%cycleTime].toString().replace(',',' &nbsp; ')
+                breatheStep.innerHTML = breatheTimeAndStep
+                time++
+            }
+
+            oneSecondFunc()
+            myInterval = setInterval(oneSecondFunc, 1000)
+
+            setTimeout(() => {
+                stop()
+            }, parseInt(timers["Exercise Duration"])*1000);
+            
+        }
+
+        function stop(){
+            clearInterval(myInterval)
+            document.getElementById("breatheStep").innerHTML = "&nbsp;"
+            document.getElementById("floater").classList.remove("animate")
+            document.getElementById("startBtn").removeAttribute("disabled")
+        }
+    </script>
+</html>
