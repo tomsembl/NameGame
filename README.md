@@ -1,5 +1,5 @@
 # NameGame
-A web-based, multiplayer game for mobiles. A Jackbox-style implementation of The Name Game
+A web-based, multiplayer game for mobiles. If you've never played, it's kind of like Articulate or Charades.
 
 <h2>
   Summary
