@@ -551,7 +551,9 @@ def name_game(game_id):
         return redirect(url_for('homepage'))
     team_names = get_team_names(game_id)
     teams = {x[0]:x[1] for x in team_names}
-    user_inst_id = get_user_inst_id(user_id,game_id)
+    try: user_inst_id = get_user_inst_id(user_id,game_id)
+    except: 
+        return render_template('name-game.html', error=f"user_inst_id doesn't exist for user_id {user_id}, game_id {game_id}")    
     team_id = get_teamid_by_userinst(user_inst_id)
     players, teammembers = get_teams(game_id,get_player_id=True)
     numPlayers = len(players.keys())
