@@ -67,11 +67,12 @@ def get_user_inst_id(user_id,game_id):
 def create_game_sql(form):
     first_round = ''
     for x in ['round1', 'round2', 'round3', 'round4']:
-        if not first_round: first_round = int(x[-1])
         if x not in form.keys(): form[x]="0"
         elif form[x]=="on": form[x]="1"
+        if not first_round and form[x]=="1":
+            first_round = int(x[-1])
     form['round']= first_round
-    #print(form)
+    print(form)
     query = f"""insert into games (active, stage, date_created, round, number_teams, number_names, time_limit, round1, round2, round3, round4, game_name) 
     values (TRUE, 1, datetime('now','localtime'), :round, :number_teams, :number_names, :time_limit, :round1, :round2, :round3, :round4, :game_name )"""
     q_sql("begin transaction"); q_sql(query, form)
@@ -329,8 +330,7 @@ def emit_next_name(game_id,user_id):
     round = get_round(game_id)
     names = get_next_name_sql(game_id, round)
     if names:
-        i = random.randint(0,len(names)-1)
-        socketio.emit('emit_next_name',names[i], room=f"user{user_id}")
+        socketio.emit('emit_next_name',random.choice(names), room=f"user{user_id}")
         #print(names[i]['name'])
     else:
         advance_round(game_id)
