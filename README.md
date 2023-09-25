@@ -121,8 +121,9 @@ A web-based, multiplayer game for mobiles. If you've never played, it's kind of 
     <li>flask-socketio</li>
     <li>psycopg2</li>
   </ul>
-  <li>postgresql server</li>
-  <li>pgadmin</li>
+  <li><s>postgresql server</s>s>s</li>
+  <li><s></s>pgadmin</s></li>
+  <li>sqlite</li>
 </ul>
 <h4>Setup</h4>
 <ol>
