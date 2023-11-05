@@ -16,11 +16,11 @@ def add_csp_header(response):
     response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self';"
     return response
 
-print_old = print
-def print(x):
-    with open("log.log","a") as f:
-        f.write(f"{x}\n")
-    print_old(x)
+# print_old = print
+# def print(x):
+#     with open("log.log","a") as f:
+#         f.write(f"{x}\n")
+#     print_old(x)
 
 # DATABASE FUNCTIONS
 
