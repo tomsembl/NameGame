@@ -1,12 +1,15 @@
+from __future__ import print_function
 from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
 from flask_socketio import SocketIO, join_room
-import sqlite3, random, string, logging, time, json, os
+import sqlite3, random, string, logging, time, json, os, sys
 from os.path import join, dirname, abspath
 from socket import gethostbyname, gethostname
 from datetime import datetime
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '"PIAENFiONAEF023750135017c193n895173c'
+
 #ontent-security-header to be sent with every response
 @app.after_request
 def add_csp_header(response):
@@ -18,6 +21,10 @@ def add_csp_header(response):
 # DATABASE FUNCTIONS
 
 #time_elapsed = 0
+def log(text):
+    with open(r'c:\temp\log.txt', 'w') as f:
+        f.write(str(text))
+
 def q_sql(query,data=False,get_header=False):
     #start = time.time()
     cur = conn.cursor()
@@ -174,11 +181,10 @@ def score_answer_sql(game_id, user_id, name_id, success):
     query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
     q_sql(query, {'game_id':game_id, 'team_id':team_id, 'user_inst_id':user_inst_id, 'name_id':name_id, 'name':name, 'success':success, 'round':round, 'turn_id':turn_id, 'time_start':time_start})
 
-def get_scores(game_id, is_team=False):
-    if is_team:  results = q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and a.game_id = :game_id group by t.team_name order by count(*) desc",{'game_id':game_id})
-    else: results = q_sql(f"select u.username, count(*) from answers a join user_instance u on a.user_inst_id = u.user_inst_id where success = 1 and a.game_id = :game_id group by u.username order by count(*) desc",{'game_id':game_id})
+def get_all_scores(game_id, is_team=False):
+    results = get_teams_scores(game_id) if is_team else get_player_scores(game_id)
     scorers, scores = [], []
-    [(scorers.append(x),scores.append(y)) for x,y in results]
+    for x,y in results: (scorers.append(x),scores.append(y))
     return scorers, scores
 
 def random_shuffle_teams_sql(game_id):
@@ -208,6 +214,17 @@ def get_line_graph_data(game_id, is_team=False):
             dicti[player[0]].append(player[1])
     return({"cummulative":dicti2,"normal":dicti,"rounds":rounds})
 
+def get_next_name_sql(game_id, round, handicap=False): 
+    if handicap: 
+        namesRankedEasyToHard = header_zip_query(f"select name_id, name from answers where game_id = :game_id and name_id not in (select name_id from answers where game_id = :game_id and success=1 and round=:round) group by name_id, name order by sum(julianday(TIME_FINISH)-julianday(time_start))", data={'game_id':game_id,'round':round}, multi=True)
+        easiest50pc = namesRankedEasyToHard[:1+len(namesRankedEasyToHard)//2]
+        if easiest50pc:
+            print("easiest50pc",easiest50pc)
+            return easiest50pc
+    names = header_zip_query(f"select name_id, name from names where game_id = :game_id and name_id not in (select name_id from answers where game_id = :game_id and success=1 and round=:round)", data={'game_id':game_id,'round':round}, multi=True)
+    print("normalnames",names)
+    return names
+
 def update_username(new_username,user_id,user_inst_id): 
     q_sql(f"update users set username = :new_username where user_id = :user_id ",{'user_id':user_id,'new_username':new_username})
     q_sql(f"update user_instance set username= :new_username where user_inst_id = :user_inst_id",{'user_inst_id':user_inst_id,'new_username':new_username})
@@ -235,8 +252,6 @@ def kick_user_sql(game_id,user_id): q_sql(f"delete from user_instance where game
 
 def get_who_hasnt_written_name_sql(game_id): return header_zip_query(f"select user_id, username from user_instance where game_id = :game_id and user_inst_id not in ( select user_inst_id from names where game_id = :game_id )", data={'game_id':game_id}, multi = True)
 
-def get_next_name_sql(game_id, round): return header_zip_query(f"select name_id, name from names where game_id = :game_id and name_id not in (select name_id from answers where game_id = :game_id and success=1 and round=:round)", data={'game_id':game_id,'round':round}, multi=True)
-
 def get_name_by_id(name_id): return q_sql(f"select name from names where name_id = :name_id",{'name_id':name_id})[0][0]
 
 def get_teamid_by_userinst(user_inst_id): return q_sql(f"select team_id from user_instance where user_inst_id= :user_inst_id",{'user_inst_id':user_inst_id})[0][0]
@@ -252,6 +267,10 @@ def update_team_name(team_id, new_team_name): q_sql(f"update teams set team_name
 def has_user_submitted_names(user_inst_id): return q_sql(f"select name_id from names where user_inst_id = :user_inst_id", {'user_inst_id':user_inst_id})
 
 def get_latest_round_from_answers(game_id): return q_sql(f"select round from answers where game_id = :game_id order by round desc limit 1", {'game_id':game_id})[0][0]
+
+def get_player_scores(game_id): return q_sql(f"select u.username, count(*) from answers a join user_instance u on a.user_inst_id = u.user_inst_id where success = 1 and a.game_id = :game_id group by u.username order by count(*) desc",{'game_id':game_id})
+
+def get_teams_scores(game_id): return q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and a.game_id = :game_id group by t.team_name order by count(*) desc",{'game_id':game_id})
 
 
 
@@ -270,8 +289,9 @@ def get_latest_round_from_answers(game_id): return q_sql(f"select round from ans
 socketio = SocketIO(app=app,logger=logging)
 
 @socketio.on('connect')
-def test_connect(auth):
-    user_id = request.cookies.get('user_id')#["user_id"]
+def connect(auth):
+    #user_id = request.cookies.get('user_id')#["user_id"]
+    user_id = request.args["user_id"]
     #username = request.cookies.get('username')#["username"]
     game_id = request.args["game_id"]
     #ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
@@ -328,9 +348,16 @@ def emit_current_turn(game_id,user_id=None):
 @socketio.on('emit_next_name')
 def emit_next_name(game_id,user_id):
     round = get_round(game_id)
-    names = get_next_name_sql(game_id, round)
+    needsHandicap = False
+    if round > 1:
+        scores = [player for player,score in get_player_scores(game_id)]
+        bottom_25_pc = scores[-len(scores)//4+1:]
+        needsHandicap = user_id in bottom_25_pc or user_id not in scores
+    names = get_next_name_sql(game_id, round, handicap=needsHandicap)
     if names:
-        socketio.emit('emit_next_name',random.choice(names), room=f"user{user_id}")
+        name = random.choice(names)
+        print(name)
+        socketio.emit('emit_next_name',name, room=f"user{user_id}")
         #print(names[i]['name'])
     else:
         advance_round(game_id)
@@ -367,6 +394,7 @@ def stop_timer(game_id,user_id):
 
 @socketio.on('score_answer')
 def score_answer(game_id, user_id, name_id, success): 
+    print("scored",name_id)
     score_answer_sql(game_id, user_id, name_id, success)
 
 @socketio.on('get_mp3_number')
@@ -377,7 +405,7 @@ def get_mp3_number(user_id,start_or_stop):
 
 @socketio.on('emit_scores')
 def emit_scores(game_id,user_id,is_team=False):
-    res = get_scores(game_id, is_team)
+    res = get_all_scores(game_id, is_team)
     socketio.emit('emit_scores',[res,is_team], room= f"user{user_id}")
 
 @socketio.on('emit_line_graph_data')
@@ -470,19 +498,19 @@ def join_game(game_id):
         ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
         user_id, username = db_cookie(user_id=user_id,username=None,ip=ip)[0]
         games_sql = get_joinable_games_for_user(user_id)
-        return render_template('join-game.html',games=games_sql,username=username)
+        return render_template('join-game.html',games=games_sql,user_id=user_id,username=username)
     game_deets = get_game_deets(game_id)
     if game_deets["stage"] == 1:
-        return redirect(url_for('lobby',game_id=game_id))
+        return redirect(url_for('lobby',game_id=game_id,user_id=user_id))
     elif get_user_inst_id(user_id,game_id):
         if game_deets["stage"] == 2:
-            return redirect(url_for('write_names',game_id=game_id))
+            return redirect(url_for('write_names',game_id=game_id,user_id=user_id))
         if game_deets["stage"] == 3:
-            return redirect(url_for('name_game',game_id=game_id))
+            return redirect(url_for('name_game',game_id=game_id,user_id=user_id))
         if game_deets["stage"] == 4:
-            return redirect(url_for('graphs',game_id=game_id))
+            return redirect(url_for('graphs',game_id=game_id,user_id=user_id))
         else: return redirect(url_for('join_game'))
-    else: return redirect(url_for('join_game'))
+    else: return redirect(url_for('join_game',user_id=user_id))
 
 
 #lobby
