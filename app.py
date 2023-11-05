@@ -159,21 +159,37 @@ def add_turn_sql(game_id,user_id):
 def end_turn_sql(game_id): q_sql(f"update turns set active = FALSE where game_id = :game_id and active",{'game_id':game_id})
 
 def score_answer_sql(game_id, user_id, name_id, success):
-    user_inst_id = get_user_inst_id(user_id, game_id)
-    round = get_round(game_id)
-    name = get_name_by_id(name_id)
-    team_id = get_teamid_by_userinst(user_inst_id)
-    try:
-        turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
-    except:
-        print(f"[{datetime.now()}] Error: no turn to score answer. gameID:{game_id}. user_instID:{user_inst_id}. success{success}. {name}")
-        add_turn_sql(game_id,user_id)
-        turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
-    latest_time_finish = q_sql(f"select time_finish from answers where turn_id = :turn_id order by answer_id desc limit 1",{'turn_id':turn_id})
-    if latest_time_finish: time_start = latest_time_finish[0][0]
-    query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
-    q_sql(query, {'game_id':game_id, 'team_id':team_id, 'user_inst_id':user_inst_id, 'name_id':name_id, 'name':name, 'success':success, 'round':round, 'turn_id':turn_id, 'time_start':time_start})
+    q_sql("exec sp_score_answer :game_id, :user_id, :name_id, :success",{'game_id':game_id,"user_id":user_id,"name_id":name_id,"success":success})
+    # user_inst_id = get_user_inst_id(user_id, game_id)
+    # round = get_round(game_id)
+    # name = get_name_by_id(name_id)
+    # team_id = get_teamid_by_userinst(user_inst_id)
+    # try:
+    #     turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
+    # except:
+    #     print(f"[{datetime.now()}] Error: no turn to score answer. gameID:{game_id}. user_instID:{user_inst_id}. success{success}. {name}")
+    #     add_turn_sql(game_id,user_id)
+    #     turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
+    # latest_time_finish = q_sql(f"select time_finish from answers where turn_id = :turn_id order by answer_id desc limit 1",{'turn_id':turn_id})
+    # if latest_time_finish: time_start = latest_time_finish[0][0]
+    # query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
+    # q_sql(query, {'game_id':game_id, 'team_id':team_id, 'user_inst_id':user_inst_id, 'name_id':name_id, 'name':name, 'success':success, 'round':round, 'turn_id':turn_id, 'time_start':time_start})
 
+# select @user_inst_id = user_inst_id, @team_id = team_id from user_instance where game_id = @game_id and user_id = @user_id limit 1
+# select @round = round from games where game_id = @game_id limit 1
+# select @name = name from names where name_id = @name_id limit 1
+# select @turn_id = turn_id, @time_start = time_start from turns where user_inst_id = @user_inst_id and game_id = @game_id and round = @round order by turn_id desc limit 1
+# select @latest_time_finish = time_finish from answers where turn_id = @turn_id order by answer_id desc limit 1
+
+
+# insert into answers (:game_id, team_id, user_inst_id, :name_id, name, :success, round, time_start, time_finish, turn_id) 
+# select v.game_id, ui.team_id, ui.user_inst_id, v.name_id, n.name, v.success, g.round, case when a.time_finish is not null then a.time_finish else t.time_start end, datetime('now','localtime'), t.turn_id
+# from (select :game_id game_id, :user_id user_id, :name_id name_id, :success success) v
+# join user_instance ui on ui.game_id = v.game_id and ui.user_id = v.user_id 
+# join games g on g.game_id = v.game_id
+# join names n on n.name_id = v.name_id
+# join turns t
+# left outer join answers a on a.turn_id = t.turn_id 
 def get_scores(game_id, is_team=False):
     if is_team:  results = q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and a.game_id = :game_id group by t.team_name order by count(*) desc",{'game_id':game_id})
     else: results = q_sql(f"select u.username, count(*) from answers a join user_instance u on a.user_inst_id = u.user_inst_id where success = 1 and a.game_id = :game_id group by u.username order by count(*) desc",{'game_id':game_id})
