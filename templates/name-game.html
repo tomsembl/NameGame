@@ -292,9 +292,7 @@
                 ding()
                 document.getElementById("done_button").blur()
                 score_answer(nameRef.current.name_id, 1)
-                setTimeout(()=>{
-                    socket.current.emit("emit_next_name","{{game_id}}",state.userID)
-                }, 200)
+                //socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                 setState(prevState=>({
                     ...prevState,
                     doneButtonEnabled: false,
@@ -304,7 +302,7 @@
                         ...prevState,
                         doneButtonEnabled: true,
                     })
-                )}, 640)
+                )}, 500)
             }
 
             function skipName() {

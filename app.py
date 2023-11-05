@@ -16,7 +16,11 @@ def add_csp_header(response):
     response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self';"
     return response
 
-
+print_old = print
+def print(x):
+    with open("log.log","a") as f:
+        f.write(f"{x}\n")
+    print_old(x)
 
 # DATABASE FUNCTIONS
 
@@ -29,7 +33,12 @@ def q_sql(query,data=False,get_header=False):
     #start = time.time()
     cur = conn.cursor()
     if data: cur.execute(query,data)
-    else: cur.execute(query)
+    else: 
+        try:
+            cur.execute(query)
+        except sqlite3.OperationalError as e:
+            cur.execute("rollback")
+            print("error:",e)
     output = ""
     try: 
         output = cur.fetchall()
@@ -37,9 +46,9 @@ def q_sql(query,data=False,get_header=False):
     except: pass
     finally:
         cur.close()
-        #global time_elapsed
-        #time_elapsed += time.time() - start
-        #print(f"Time elapsed: {time_elapsed}")
+        # global time_elapsed
+        # time_elapsed += time.time() - start
+        # print(f"Time elapsed: {time.time() - start}. Cummulative: {time_elapsed}")
         return output
 
 def db_cookie(user_id,username=None,ip=None):
@@ -49,7 +58,7 @@ def db_cookie(user_id,username=None,ip=None):
         result = q_sql(query,{'user_id':user_id})
     if not result or not user_id:
         if not username: username = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(5))        
-        q_sql("begin transaction"); q_sql("insert into users (username, ip_address) values (:username, :ip)",{'username':username, 'ip':ip})
+        q_sql("begin exclusive"); q_sql("insert into users (username, ip_address) values (:username, :ip)",{'username':username, 'ip':ip})
         result = q_sql("select user_id, username from users where user_id = last_insert_rowid() limit 1"); q_sql("commit")
     return result
 
@@ -61,7 +70,7 @@ def header_zip_query(query, data=None, multi=False):
 def db_user_instance(user_id,username,game_id):
     result = q_sql("select user_inst_id from user_instance where user_id = :user_id and game_id = :game_id limit 1",{'user_id':user_id, 'game_id':game_id})
     if not result:
-        q_sql("begin transaction"); q_sql("insert into user_instance (user_id, username, game_id) values (:user_id, :username, :game_id)",{'user_id':user_id, 'username':username, 'game_id':game_id})
+        q_sql("begin exclusive"); q_sql("insert into user_instance (user_id, username, game_id) values (:user_id, :username, :game_id)",{'user_id':user_id, 'username':username, 'game_id':game_id})
         result = q_sql("select last_insert_rowid()"); q_sql("commit")
     return result
 
@@ -166,20 +175,14 @@ def add_turn_sql(game_id,user_id):
 def end_turn_sql(game_id): q_sql(f"update turns set active = FALSE where game_id = :game_id and active",{'game_id':game_id})
 
 def score_answer_sql(game_id, user_id, name_id, success):
-    user_inst_id = get_user_inst_id(user_id, game_id)
-    round = get_round(game_id)
-    name = get_name_by_id(name_id)
-    team_id = get_teamid_by_userinst(user_inst_id)
-    try:
-        turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
-    except:
-        print(f"[{datetime.now()}] Error: no turn to score answer. gameID:{game_id}. user_instID:{user_inst_id}. success{success}. {name}")
-        add_turn_sql(game_id,user_id)
-        turn_id, time_start = get_turn_and_time(game_id, user_inst_id, round)
-    latest_time_finish = q_sql(f"select time_finish from answers where turn_id = :turn_id order by answer_id desc limit 1",{'turn_id':turn_id})
-    if latest_time_finish: time_start = latest_time_finish[0][0]
-    query = f"insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) values (:game_id, :team_id, :user_inst_id, :name_id, :name, :success, :round, :time_start, datetime('now','localtime'), :turn_id)"
-    q_sql(query, {'game_id':game_id, 'team_id':team_id, 'user_inst_id':user_inst_id, 'name_id':name_id, 'name':name, 'success':success, 'round':round, 'turn_id':turn_id, 'time_start':time_start})
+    q_sql(f"""insert into answers (game_id, team_id, user_inst_id, name_id, name, success, round, time_start, time_finish, turn_id) 
+    select v.game_id, ui.team_id, ui.user_inst_id, v.name_id, n.name, v.success, g.round, case when a.time_finish is not null then a.time_finish else t.time_start end, datetime('now','localtime'), t.turn_id
+    from (select {game_id} game_id, {user_id} user_id, {name_id} name_id, {success} success) v
+    join user_instance ui on ui.game_id = v.game_id and ui.user_id = v.user_id 
+    join games g on g.game_id = v.game_id
+    join names n on n.name_id = v.name_id
+    join turns t on t.turn_id = (select turn_id from turns where user_inst_id = ui.user_inst_id and game_id = v.game_id and round = g.round order by turn_id desc limit 1)
+    left outer join answers a on a.answer_id = (select answer_id from answers where turn_id = t.turn_id order by answer_id desc limit 1)""")
 
 def get_all_scores(game_id, is_team=False):
     results = get_teams_scores(game_id) if is_team else get_player_scores(game_id)
@@ -394,8 +397,12 @@ def stop_timer(game_id,user_id):
 
 @socketio.on('score_answer')
 def score_answer(game_id, user_id, name_id, success): 
-    print("scored",name_id)
+    q_sql("begin exclusive")
     score_answer_sql(game_id, user_id, name_id, success)
+    q_sql("commit")
+    print("scored",name_id)
+    if success == 1:
+        emit_next_name(game_id,user_id)
 
 @socketio.on('get_mp3_number')
 def get_mp3_number(user_id,start_or_stop):
@@ -454,8 +461,8 @@ def homepage():
     user_id = request.cookies.get('user_id')
     ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
     user_id, username = db_cookie(user_id=user_id,username=None,ip=ip)[0]
-    resp.set_cookie('user_id', str(user_id), httponly=True)
-    resp.set_cookie('username', username, httponly=True)
+    resp.set_cookie('user_id', str(user_id), max_age=86400*400)#, httponly=True)
+    resp.set_cookie('username', username, max_age=86400*400)#, httponly=True)
     return resp
 
 
@@ -538,8 +545,8 @@ def username_change():
     user_id = request.cookies.get("user_id")
     update_username(new_username,user_id,user_inst_id)
     resp = make_response("")
-    resp.set_cookie('user_id', str(user_id), httponly=True)
-    resp.set_cookie('username', new_username, httponly=True)
+    resp.set_cookie('user_id', str(user_id), max_age=86400*400)#, httponly=True)
+    resp.set_cookie('username', new_username, max_age=86400*400)#, httponly=True)
     emit_players(game_id)
     return resp
 

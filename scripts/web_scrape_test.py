@@ -26,9 +26,8 @@ def main(number_players=3,headless=False):
     #screen_offsets = (2555, -720) #left2K right4K
     game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
     game_id = None
-    websitehome = "http://namegame.pw"
-    # websitehome = "http://10.0.0.9:42069"
-    # websitehome = "http://10.0.0.8:42069"
+    # websitehome = "http://namegame.pw"
+    websitehome = "http://10.0.0.7:42069"
     names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
     nameCount = 3
     windowCount = number_players
