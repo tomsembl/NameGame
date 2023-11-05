@@ -57,3 +57,24 @@
 		where games.game_id in (81,94,30,86,91)
 		group by games.game_id
 	) as a
+
+
+--easiest/hardest names
+select name_id, name, sum(julianday(TIME_FINISH)-julianday(time_start)) * 21500 from answers where game_id = 19  group by name_id, name order by sum(julianday(TIME_FINISH)-julianday(time_start))
+
+--each person's slowest names
+select username, name, max(julianday(TIME_FINISH)-julianday(time_start)) * 86400
+from answers a 
+join user_instance u on a.user_inst_id = u.user_inst_id
+where a.game_id = 19
+group by username
+order by avg(julianday(TIME_FINISH)-julianday(time_start)) * 86400
+
+--each person's slowest names
+select username, name, min(julianday(TIME_FINISH)-julianday(time_start)) * 86400
+from answers a 
+join user_instance u on a.user_inst_id = u.user_inst_id
+where a.game_id = 19 
+and a.success = 1
+group by username
+order by avg(julianday(TIME_FINISH)-julianday(time_start)) * 86400

@@ -31,7 +31,7 @@
             const socket = React.useRef()
             React.useEffect(()=>{
                 
-                const newSocket = io.connect(window.origin, {query:`game_id=${state.gameID}`})
+                const newSocket = io.connect(window.origin, {query:`game_id=${state.gameID}&user_id=${state.userID}`})
                 
                 newSocket.on('message',function(msg) {
                     console.log(msg)
