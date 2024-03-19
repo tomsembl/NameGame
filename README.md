@@ -102,7 +102,7 @@ A web-based, multiplayer game for mobiles. If you've never played, it's kind of 
   <br>
   <li>Don't use a letter within the name in your explanation</li>
   <ul>
-    <li>eg. Name: <em>Amber Heard</em>&nbsp; Don't say: <em>"Johnny Depp's ex, starts with an <strong>A</strong>" or "ends with a <strong>D</strong>"</em></li>
+    <li>eg. Name: <em>Donald Trump</em>&nbsp; Don't say: <em>starts with a <strong>D</strong>" or "ends with a...>"</em></li>
   </ul>
   <br>
   <li>Don't use a "Rhymes with x" in your explanation</li>
