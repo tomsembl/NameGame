@@ -121,25 +121,12 @@ A web-based, multiplayer game for mobiles. If you've never played, it's kind of 
     <li>flask-socketio</li>
     <li>psycopg2</li>
   </ul>
-  <li><s>postgresql server</s>s>s</li>
-  <li><s></s>pgadmin</s></li>
   <li>sqlite</li>
 </ul>
 <h4>Setup</h4>
 <ol>
   <li>download/install python 3</li>
   <li>download/install pip</li>
-  <li>run setup.bat to install python libraries</li>
-  <li>download/install postgresql (https://www.postgresql.org/download/)</li>
-  <li>ensure pgAdmin is included during installation</li>
-  <li>open pgAdmin</li>
-  <ol>
-    <li>set master password as desired</li>
-    <li>create a default database (postgres)</li>
-    <li>open a query window</li>
-    <li>run <strong>CREATE DATABASE namegame</strong></li>
-    <li>open a new query window under the database <strong>namegame</strong></li>
-    <li>run the contents of the file sql\full_db_script_with data wiped.sql</li>
-  </ol>
+  <li>run pip install -r requirements.txt t to install python libraries</li>
   <li>run app.py</li>
 </ol>
