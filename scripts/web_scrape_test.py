@@ -20,14 +20,15 @@ from datetime import datetime
 import time,random,sys#,argparse
 
 def main(number_players=3,headless=False):
+    if number_players == 0: number_players = random.randint(3,9)
     #VARIABLES
     screen_offsets = (0,0)
     #screen_offsets = (2555, 0) #2x 4K
     #screen_offsets = (2555, -720) #left2K right4K
     game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
     game_id = None
-    # websitehome = "http://namegame.pw"
-    websitehome = "http://10.0.0.11:42069"
+    websitehome = "http://namegame.pw"
+    #websitehome = "http://10.0.0.11:42069"
     names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
     nameCount = 3
     windowCount = number_players
@@ -191,7 +192,6 @@ if __name__ == "__main__":
         headless = sys.argv[2] == "--headless"
     if len(sys.argv) > 1:
         num_players = int(sys.argv[1])
-        if num_players == 0: num_players = random.randint(3,9)
         a = main(num_players,headless)
     else:
         a = main()
