@@ -43,7 +43,7 @@
         </div>
     </body>
     <script>
-        const socket = io.connect(window.origin, {query:"game_id={{game_id}}"})
+        const socket = io.connect(window.origin, {query:"game_id={{game_id}}&user_id={{user_id}}"})
         var waiting_on_list
 
         socket.on('advance_game_emit',function(msg) {

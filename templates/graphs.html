@@ -37,7 +37,7 @@
 		</div>
 	</body>
 	<script>
-		const socket = io.connect(window.origin, { query: "game_id={{game_id}}" })
+		const socket = io.connect(window.origin, { query: "game_id={{game_id}}&user_id={{user_id}}" })
 
 		socket.on('emit_scores', function (msg) {
 			var is_team = msg[1]

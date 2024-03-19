@@ -300,6 +300,19 @@ table.players-team tr td {
     animation: correct 0.4s;
     animation-iteration-count: 1;
 }
+
+.change-user-button{
+    margin-left: 0.4em;
+}
+
+.change-user-select{
+    font-size: 1.2em;
+    height: 42px;
+    width: 35vw;
+    margin-right: 0.4em;
+}
+
+
 @keyframes correct {
     0% {
         transform: scale(1);

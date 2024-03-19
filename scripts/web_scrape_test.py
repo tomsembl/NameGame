@@ -26,9 +26,8 @@ def main(number_players=3,headless=False):
     #screen_offsets = (2555, -720) #left2K right4K
     game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
     game_id = None
-    websitehome = "http://namegame.pw"
-    # websitehome = "http://10.0.0.9:42069"
-    # websitehome = "http://10.0.0.8:42069"
+    # websitehome = "http://namegame.pw"
+    websitehome = "http://10.0.0.11:42069"
     names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
     nameCount = 3
     windowCount = number_players
@@ -39,7 +38,7 @@ def main(number_players=3,headless=False):
     #chrome setup
     print(game_name)
     print(f"Setting up {windowCount} chrome windows")
-    chromedriver_autoinstaller.install()
+    #chromedriver_autoinstaller.install()
     chrome_options = Options()
     if headless: chrome_options.add_argument("--headless")
     # chrome_options.add_experimental_option("detach", True)
@@ -76,7 +75,7 @@ def main(number_players=3,headless=False):
         print(f"Window {w} - lobby")
         WebDriverWait(d, 0.6).until(EC.element_to_be_clickable((By.ID,'username_change')))
         d.find_element(By.ID,'username_change').clear()
-        d.find_element(By.ID,'username_change').send_keys(f"{names[w]} {w}")
+        d.find_element(By.ID,'username_change').send_keys(f"{names[w]}{w}")
         d.find_element(By.ID,'username_change_button').click()
 
         #delete rainbow

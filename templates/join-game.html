@@ -22,7 +22,7 @@
             });
             const socket = React.useRef()
             React.useEffect(()=>{
-                const newSocket = io.connect(window.origin, {query:"game_id=join"})
+                const newSocket = io.connect(window.origin, {query:"game_id=join&user_id={{user_id}}"})
 
                 newSocket.on('refresh_join_game', function(msg) {
                     console.log("refresh_join_game")

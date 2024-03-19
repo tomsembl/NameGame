@@ -57,7 +57,7 @@
             React.useEffect(()=>{numPlayersRef.current = state.numPlayers},[state.numPlayers])
             React.useEffect(()=>{
                 
-                const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}"})
+                const newSocket = io.connect(window.origin, {query:"game_id={{game_id}}&user_id={{user_id}}"})
 
                 //newSocket.onAny((eventName, ...args) => {console.log(eventName, args)})
 
@@ -292,7 +292,7 @@
                 ding()
                 document.getElementById("done_button").blur()
                 score_answer(nameRef.current.name_id, 1)
-                socket.current.emit("emit_next_name","{{game_id}}",state.userID)
+                //socket.current.emit("emit_next_name","{{game_id}}",state.userID)
                 setState(prevState=>({
                     ...prevState,
                     doneButtonEnabled: false,
@@ -303,6 +303,12 @@
                         doneButtonEnabled: true,
                     })
                 )}, 500)
+            }
+
+            function skipName() {
+                score_answer(nameRef.current.name_id, 0)
+                socket.current.emit("emit_next_name","{{game_id}}",state.userID)
+                audio3.current.play()
             }
 
             function end_turn(names_ran_out=false) {
@@ -429,6 +435,7 @@
                     </div>}
                     <div class="flex-h mar-1em">
                         <button class="button2" onClick={()=>{location.href='/';}}>Home</button>
+                        {state.myTurn && <button id="skip_button" class="button2" onClick={()=>{skipName()}}>Skip</button>}
                     </div>
                 </body>
             )
