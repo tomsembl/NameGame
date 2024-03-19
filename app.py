@@ -275,7 +275,7 @@ def get_player_scores(game_id): return q_sql(f"select u.username, count(*) from 
 
 def get_teams_scores(game_id): return q_sql(f"select t.team_name, count(*) from answers a join teams t on a.team_id = t.team_id where success = 1 and a.game_id = :game_id group by t.team_name order by count(*) desc",{'game_id':game_id})
 
-
+def get_all_users(): return header_zip_query(f"select user_id, username from users order by user_id desc", multi = True)
 
 
 
@@ -604,6 +604,14 @@ def graphs(game_id):
     game_deets = get_game_deets(game_id)
     round = get_latest_round_from_answers(game_id)
     return render_template('graphs.html', game_id=game_id, user_id=user_id, round=round, game_deets=game_deets)
+
+#change user cookie
+@app.route('/change_user', methods=["GET"])
+def change_user():
+    user_id = request.cookies.get('user_id')
+    username = request.cookies.get('username')
+    users = get_all_users()
+    return render_template('change-user.html', user_id=user_id, username=username, users=users)
 
 @app.route('/readme', methods=["GET"])
 def readme():

@@ -4,3 +4,5 @@ namegame.db
 test_results.txt
 scripts/__pycache__/web_scrape_test.cpython-310.pyc
 log.log
+log.log
+scripts/__pycache__/web_scrape_test.cpython-311.pyc
