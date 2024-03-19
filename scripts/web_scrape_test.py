@@ -38,7 +38,7 @@ def main(number_players=3,headless=False):
     #chrome setup
     print(game_name)
     print(f"Setting up {windowCount} chrome windows")
-    chromedriver_autoinstaller.install()
+    #chromedriver_autoinstaller.install()
     chrome_options = Options()
     if headless: chrome_options.add_argument("--headless")
     # chrome_options.add_experimental_option("detach", True)

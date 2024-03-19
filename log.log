@@ -16278,3 +16278,35 @@ INFO:root:received event "emit_scores" from BxpKc7CWE44gJx5FAAH6 [/]
 INFO:geventwebsocket.handler:10.0.0.7 - - [2023-11-05 16:18:29] "POST /socket.io/?game_id=27&EIO=4&transport=polling&t=OkUZzkZ&sid=E35JGMV1I6KEgz2tAAH2 HTTP/1.1" 200 195 0.001000
 INFO:geventwebsocket.handler:10.0.0.7 - - [2023-11-05 16:18:29] "GET /socket.io/?game_id=27&EIO=4&transport=polling&t=OkUZzkd&sid=E35JGMV1I6KEgz2tAAH2 HTTP/1.1" 200 157 0.000000
 INFO:root:emitting event "emit_scores" to user92 [/]
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET / HTTP/1.1" 200 2376 0.039277
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/style.css HTTP/1.1" 200 16886 0.089836
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/bulma.min.css HTTP/1.1" 200 207785 0.004342
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/socket.io.js HTTP/1.1" 200 44384 0.001501
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/react.production.min.js HTTP/1.1" 200 11975 0.000000
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/react-dom.production.min.js HTTP/1.1" 200 121340 0.004478
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/babel.min.js HTTP/1.1" 200 791756 0.009311
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/jquery.min.js HTTP/1.1" 200 86143 0.006979
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/chart.js HTTP/1.1" 200 445542 0.011832
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/poppins.woff2 HTTP/1.1" 200 8364 0.002819
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:28:50] "GET /static/favicon.ico HTTP/1.1" 200 15873 0.000000
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET / HTTP/1.1" 200 2376 0.023253
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/style.css HTTP/1.1" 304 379 0.166127
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/bulma.min.css HTTP/1.1" 304 384 0.004874
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/socket.io.js HTTP/1.1" 304 382 0.001898
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/react.production.min.js HTTP/1.1" 304 392 0.001870
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/react-dom.production.min.js HTTP/1.1" 304 397 0.002246
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/babel.min.js HTTP/1.1" 304 383 0.000500
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/jquery.min.js HTTP/1.1" 304 383 0.003909
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/chart.js HTTP/1.1" 304 378 0.001696
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:16] "GET /static/poppins.woff2 HTTP/1.1" 304 382 0.001609
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /join_game HTTP/1.1" 200 4467 0.054271
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /static/style.css HTTP/1.1" 304 379 0.003150
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /static/socket.io.js HTTP/1.1" 304 382 0.001496
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /static/react.production.min.js HTTP/1.1" 304 392 0.007025
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /static/react-dom.production.min.js HTTP/1.1" 304 397 0.003237
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /static/babel.min.js HTTP/1.1" 304 383 0.002327
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /socket.io/?game_id=join&user_id=1&EIO=4&transport=polling&t=OvM55-n HTTP/1.1" 200 254 0.001335
+INFO:root:odPsNlO21RUIqF9FAAAB is entering room user1 [/]
+INFO:root:odPsNlO21RUIqF9FAAAB is entering room gamejoin [/]
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "POST /socket.io/?game_id=join&user_id=1&EIO=4&transport=polling&t=OvM55_3&sid=LPLfmd9n6UFE_wn6AAAA HTTP/1.1" 200 201 0.002645
+INFO:geventwebsocket.handler:192.168.249.96 - - [2024-03-19 17:39:19] "GET /socket.io/?game_id=join&user_id=1&EIO=4&transport=polling&t=OvM55_5&sid=LPLfmd9n6UFE_wn6AAAA HTTP/1.1" 200 157 0.000185
