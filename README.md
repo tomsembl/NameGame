@@ -119,9 +119,8 @@ A web-based, multiplayer game for mobiles. If you've never played, it's kind of 
   <ul>
     <li>flask</li>
     <li>flask-socketio</li>
-    <li>psycopg2</li>
+    <li>sqlite3</li>
   </ul>
-  <li>sqlite</li>
 </ul>
 <h4>Setup</h4>
 <ol>
