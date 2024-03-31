@@ -13,7 +13,7 @@
 	<body class="lobby2">
 		<h1 class="heading subheading3">Scores - Round {{round}}</h1>
 		<div class="flex-h vmar2">
-			{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()" id="return_to_game">Return to Game</button>
+			{% if game_deets['stage'] < 5 %} <button class="button1 button3" onclick="done()" id="return_to_game">Return to Game</button>
 				{% else %}
 				<h1 id="game_over" class="heading subheading4 pad-10pct">GAME OVER</h1>
 				{% endif %}
@@ -27,7 +27,7 @@
 			<canvas id="player_chart"></canvas>
 		</div>
 		<div class="flex-h vmar2">
-			{% if game_deets['stage'] < 4 %} <button class="button1 button3" onclick="done()">Return to Game</button>
+			{% if game_deets['stage'] < 5 %} <button class="button1 button3" onclick="done()">Return to Game</button>
 				{% else %}
 				<h1 class="heading subheading4 pad-10pct">GAME OVER</h1>
 				{% endif %}

@@ -47,7 +47,7 @@
         var waiting_on_list
 
         socket.on('advance_game_emit',function(msg) {
-            location.href='/name_game/{{game_id}}';
+            location.href='/pick_teams/{{game_id}}';
         }) 
 
         socket.on('who_hasnt_written_name',function(who_hasnt) {

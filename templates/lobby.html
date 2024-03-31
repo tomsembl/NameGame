@@ -104,21 +104,21 @@
                 if (prompt) {socket.current.emit("deletion_kick",state.gameID,"{{username}}",state.selectedPlayerID)}
             }
 
-            const can_start = !state.teammembers.null && Object.keys(state.teams).every(teamID=>!!state.teammembers[teamID])
+            const can_start = true// = !state.teammembers.null && Object.keys(state.teams).every(teamID=>!!state.teammembers[teamID])
 
             function advance_game(){
-                const allTeamsHavePlayers = Object.keys(state.teams).every(teamID=>{
-                    if (!state.teammembers[teamID]) {
-                        alert(`not every team has a player: ${state.teams[teamID]}`)
-                        return false
-                    }
-                    return true
-                })
-                if (!allTeamsHavePlayers){return}
-                if (state.teammembers.null){
-                    alert(`not every player is assigned to a team: ${teammembers.null.join(", ")}`)
-                    return
-                }
+                // const allTeamsHavePlayers = Object.keys(state.teams).every(teamID=>{
+                //     if (!state.teammembers[teamID]) {
+                //         alert(`not every team has a player: ${state.teams[teamID]}`)
+                //         return false
+                //     }
+                //     return true
+                // })
+                // if (!allTeamsHavePlayers){return}
+                // if (state.teammembers.null){
+                //     alert(`not every player is assigned to a team: ${teammembers.null.join(", ")}`)
+                //     return
+                // }
                 //confirm("do you want to start")
                 fetch("/advance_game",{
                     method:"POST", 
@@ -224,51 +224,13 @@
                             </div>
                             <h1 class="heading subheading4 pad-05em">
                                 <div class="flex-h">
-                                    <button class="button2" onClick={assign}>Assign</button>
+                                    
                                     <button class="button2" onClick={kick}>Kick</button>
                                 </div>
                             </h1>
                         </div>
                     </div>
-                    <div class="flex-h center vmar">
-                        <div id="teams-div" class="flex-v center vw86">
-                            <h1 class="heading subheading4">Teams</h1>
-                            <div class="text-box" id="teams">
-                                {Object.keys(state.teams).map((teamID) => {
-                                    return(
-                                        <div class={`option small-option space-between slight-v-gradient ${state.selectedTeamID===teamID?'selected':''}`} id={`team-option${teamID}`} onClick={()=>{setState(prevState=>({
-                                                ...prevState,
-                                                selectedTeamID: prevState.selectedTeamID===teamID? null : teamID ,
-                                            }))
-                                        }}>
-                                            <p><strong>{state.teams[teamID]}</strong></p>
-                                            <table class="team-players-table">
-                                                <tr>
-                                                    {state.teammembers[teamID] && state.teammembers[teamID].map((playerName, i) => {return <td  class="pad-lr border">{playerName}</td>})}
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    )
-                                })}
-                                </div>
-                            <h1 class="heading subheading4 pad-05em">
-                                <div class="flex-h">
-                                    <button class="button2" id="shuffle" onClick={shuffle}>Shuffle</button>
-                                </div>
-                            </h1>
-                        </div>
-                    </div>
-                    <div class="flex-h center vmar">
-                        <h1 class="heading subheading4 pad-05em">
-                            Edit Team Name
-                            <div class="flex-h-start m1t">
-                                <input class="lobby-text-input" type="text" id="team_name_change" value={state.selectedTeamID? state.teams[state.selectedTeamID] : ""} maxlength="20" onChange={onTeamNameChange}/>
-                                <button class="button2 tick-button" id="team_name_change_button" onClick={onTeamNameChange}>
-                                    ✓
-                                </button>
-                            </div>
-                        </h1>
-                    </div>
+                    
                     <div class="flex-h vmar">
                         <button class="button1 button3" onClick={advance_game} id="start_game" disabled={!can_start}>Start Game</button>
                         <button class="button1 button3" onClick={()=>{location.href='/'}}>Home</button>

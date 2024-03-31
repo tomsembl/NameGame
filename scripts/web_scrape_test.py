@@ -27,7 +27,8 @@ def main(number_players=3,headless=False):
     game_name = f"web_scrape_test_{datetime.now().strftime(r'%y-%m-%d_%H:%M:%S')}"
     game_id = None
     # websitehome = "http://namegame.pw"
-    websitehome = "http://10.0.0.11:42069"
+    # websitehome = "http://10.0.0.11:42069"
+    websitehome = "http://192.168.1.11:42069"
     names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
     nameCount = 3
     windowCount = number_players

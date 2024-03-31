@@ -155,7 +155,7 @@ def advance_round_sql(game_id):
     all_rounds = [x  for x in range(1,5) if bool(game_deets[f'round{x}'])]
     next_index = all_rounds.index(round)+1
     if next_index >= len(all_rounds):
-        q_sql(f"update games set stage=4 where game_id=:game_id",{'game_id':game_id})
+        q_sql(f"update games set stage=5 where game_id=:game_id",{'game_id':game_id})
     else:
         q_sql(f"update games set round=:round where game_id=:game_id",{'round':all_rounds[next_index],'game_id':game_id})
         emit_current_round(game_id)
@@ -191,7 +191,7 @@ def get_all_scores(game_id, is_team=False):
     return scorers, scores
 
 def random_shuffle_teams_sql(game_id):
-    if not get_game_stage(game_id) == 1: return
+    if not get_game_stage(game_id) == 3: return
     teams = [x[0] for x in get_team_names(game_id)]
     user_insts = [x[0] for x in get_user_inst_ids_by_game(game_id)]
     random.shuffle(teams)
@@ -233,7 +233,7 @@ def update_username(new_username,user_id,user_inst_id):
     q_sql(f"update user_instance set username= :new_username where user_inst_id = :user_inst_id",{'user_inst_id':user_inst_id,'new_username':new_username})
 
 def player_team_change_sql(user_id,team_id,game_id): 
-    if get_game_stage(game_id) == 1: q_sql(f"update user_instance set team_id= :team_id where user_id = :user_id and game_id=:game_id", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
+    if get_game_stage(game_id) == 3: q_sql(f"update user_instance set team_id= :team_id where user_id = :user_id and game_id=:game_id", {'user_id':user_id,'game_id':game_id,'team_id':team_id})
 
 def get_turn_and_time(game_id, user_inst_id, round): return q_sql(f"select turn_id, time_start from turns where user_inst_id = :user_inst_id and game_id = :game_id and round = :round order by turn_id desc limit 1",{'user_inst_id':user_inst_id,'game_id':game_id,'round':round})[0]
 
@@ -403,6 +403,7 @@ def score_answer(game_id, user_id, name_id, success):
     print("scored",name_id)
     if success == 1:
         emit_next_name(game_id,user_id)
+        socketio.emit("emit_previous_name", get_name_by_id(name_id), room=f"game{game_id}")
 
 @socketio.on('get_mp3_number')
 def get_mp3_number(user_id,start_or_stop):
@@ -487,7 +488,7 @@ def advance_game():
     data = request.get_json()
     game_id, stage = data["game_id"], data["stage"]
     advance_game_sql(game_id,stage)
-    if stage == 3:
+    if stage == 4:
         if not is_turn_order_init(game_id): 
             init_turn_order(game_id)
             for _ in range(random.randint(0,7)): advance_turn_order(game_id)
@@ -513,8 +514,10 @@ def join_game(game_id):
         if game_deets["stage"] == 2:
             return redirect(url_for('write_names',game_id=game_id,user_id=user_id))
         if game_deets["stage"] == 3:
+            return redirect(url_for('pick_teams',game_id=game_id,user_id=user_id))
+        if game_deets["stage"] == 4:#was 3
             return redirect(url_for('name_game',game_id=game_id,user_id=user_id))
-        if game_deets["stage"] == 4:
+        if game_deets["stage"] == 5:#was 4
             return redirect(url_for('graphs',game_id=game_id,user_id=user_id))
         else: return redirect(url_for('join_game'))
     else: return redirect(url_for('join_game',user_id=user_id))
@@ -563,6 +566,24 @@ def write_names(game_id):
     return render_template('write-names.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, user_inst_id=user_inst_id)
 
 
+#pick teams
+@app.route('/pick_teams/<game_id>', methods=["GET"])
+def pick_teams(game_id):
+     # TODO: if game has started, redirect to the started game
+    game_deets = get_game_deets(game_id)
+    user_id = request.cookies.get('user_id')
+    if not user_id:
+        return redirect(url_for('homepage'))
+    username = request.cookies.get('username')
+    db_user_instance(user_id,username,game_id)
+    players, teammembers = get_teams(game_id)
+    team_names = get_team_names(game_id)
+    teams = {x[0]:x[1] for x in team_names}
+    user_inst_id = get_user_inst_id(user_id,game_id)
+    emit_players(game_id)
+    return render_template('pick-teams.html', user_id=user_id, game_id=game_id, game_deets=game_deets, username=username, players=players, teams=teams, teammembers=teammembers, user_inst_id=user_inst_id)
+
+
 @app.route('/submit_names', methods=["POST"])
 def submit_names():
     data = request.get_json()
@@ -592,7 +613,7 @@ def name_game(game_id):
     team_id = get_teamid_by_userinst(user_inst_id)
     players, teammembers = get_teams(game_id,get_player_id=True)
     numPlayers = len(players.keys())
-    if game_deets['stage'] >= 4: return redirect(url_for(f"graphs", game_id=game_id))
+    if game_deets['stage'] >= 5: return redirect(url_for(f"graphs", game_id=game_id))#wss4
     return render_template('name-game.html', user_id=user_id, game_id=game_id, game_deets=game_deets, players=players, teams=teams, team_id=team_id, teammembers=teammembers, numPlayers=numPlayers)
 
 #graphs
