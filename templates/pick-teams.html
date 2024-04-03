@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="mobile-web-app-capable" content="yes">
+        <title>NameGame</title>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <script type="text/javascript" src="{{ url_for('static',filename='socket.io.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='react.production.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='react-dom.production.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='babel.min.js') }}"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+    <script type="text/babel">
+        function App() {
+            const [gameDeets, setGameDeets] = React.useState({{game_deets|safe}})
+            const [state, setState] = React.useState({
+                userID: {{user_id}},
+                gameID: {{game_id}},
+                teams: {{teams|safe}},
+                players: {{players|safe}},
+                teammembers: {{teammembers|safe}},
+                selectedPlayerID: null,
+                selectedTeamID: null,
+                username: "{{username|safe}}",
+            })
+            const socket = React.useRef()
+            React.useEffect(()=>{
+                
+                const newSocket = io.connect(window.origin, {query:`game_id=${state.gameID}&user_id=${state.userID}`})
+                
+                newSocket.on('message',function(msg) {
+                    console.log(msg)
+                    alert(msg)
+                })
+
+                newSocket.on('emit_teams',function(msg) { 
+                    //update_team_names(msg)
+                    setState(prevState=>({
+                        ...prevState,
+                        teams: msg,
+                    }))
+                }) 
+
+                newSocket.on('emit_players',function(msg) {
+                    //update_lobby_players(msg)
+                    setState(prevState=>({
+                        ...prevState,
+                        players: msg[0],
+                        teammembers: msg[1],
+                    }))
+                }) 
+
+                newSocket.on('advance_game_emit',function(msg) {
+                    location.href='/name_game/{{game_id}}';
+                }) 
+
+                newSocket.on('deletion_kick',function(msg) {
+                    alert(msg)
+                    location.href='/';
+                }) 
+
+                // newSocket.emit("emit_players",state.gameID,state.userID)
+
+                socket.current = newSocket
+
+            },[])
+
+
+            function username_change(newUsername){
+                if (!newUsername){newUsername= "{{username}}"
+                }
+                else {
+                    fetch("/username_change",{
+                        method:"POST", 
+                        body: JSON.stringify({"new_username":newUsername,"user_inst_id":"{{user_inst_id}}","game_id":state.gameID}),
+                        headers: new Headers({"content-type": "application/json"}) 
+                    })
+                }
+            }
+
+            function team_name_change(teamID,new_team_name){
+                if (!new_team_name.length){alert("name must be longer")}
+                else { socket.current.emit("team_name_change",new_team_name,teamID,state.gameID) }
+            }
+
+            function assign(){
+                if (state.selectedPlayerID === null){alert("select a player");return}
+                if (state.selectedTeamID === null){alert("select a team");return} 
+                socket.current.emit("player_team_change",state.selectedPlayerID,state.selectedTeamID,state.gameID)
+            }
+
+            function shuffle() {
+                socket.current.emit("random_shuffle_teams",state.gameID)
+            }
+
+            function kick() {
+                if (state.selectedPlayerID === null){alert("select a player");return}
+                const prompt = confirm("are you sure you want to kick the selected player from the game?")
+                if (prompt) {socket.current.emit("deletion_kick",state.gameID,"{{username}}",state.selectedPlayerID)}
+            }
+
+            const can_start = !state.teammembers.null && Object.keys(state.teams).every(teamID=>!!state.teammembers[teamID])
+
+            function advance_game(){
+                const allTeamsHavePlayers = Object.keys(state.teams).every(teamID=>{
+                    if (!state.teammembers[teamID]) {
+                        alert(`not every team has a player: ${state.teams[teamID]}`)
+                        return false
+                    }
+                    return true
+                })
+                if (!allTeamsHavePlayers){return}
+                if (state.teammembers.null){
+                    alert(`not every player is assigned to a team: ${teammembers.null.join(", ")}`)
+                    return
+                }
+                //confirm("do you want to start")
+                fetch("/advance_game",{
+                    method:"POST", 
+                    body: JSON.stringify({"game_id":state.gameID,"stage":4}),
+                    headers: new Headers({"content-type": "application/json"}) 
+                })
+            }
+
+            function onPlayerChange(e) {
+                setState(prevState=>{
+                    if (e.target.localName == 'button') {username_change(prevState.username);return prevState}
+                    username_change(e.target.value)
+                    return {
+                        ...prevState,
+                        username: e.target.value,
+                    }
+                })
+            }
+
+            function onTeamNameChange(e) {
+                setState(prevState=>{
+                    if (!prevState.selectedTeamID) {return prevState}
+                    var prevTeams = prevState.teams
+                    if (e.target.localName=="button") {team_name_change(prevState.selectedTeamID, prevTeams[prevState.selectedTeamID]); return prevState}
+                    prevTeams[prevState.selectedTeamID] = e.target.value
+                    e.target.value && team_name_change(prevState.selectedTeamID, e.target.value)
+                    return ({
+                    ...prevState,
+                    teams: prevTeams,
+                })})
+            }
+
+            return(
+                <body id="body" class="lobby2 flex-v rainbow-gradient-bg animate-rainbow">
+                    <h1 class="heading subheading3">PICK TEAMS</h1>
+                    <div class="flex-h center vmar">
+                        <h1 class="heading subheading4 pad-05em">
+                            Edit Player Name
+                            <div class="flex-h-start mt1">
+                                <input class="lobby-text-input" type="text" id="username_change" value={state.username} maxlength="16" onChange={onPlayerChange}/>
+                                <button class="button2 tick-button" id="username_change_button" onClick={onPlayerChange}>
+                                    ✓
+                                </button>
+                            </div>
+                        </h1>
+                    </div>
+                    <div class="flex-h vmar">
+
+                        <div class="flex-v-start vw40 game-details">
+                            <h1 class="heading subheading4">Game Details</h1>
+                            <table class="">
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Name: </strong></td>
+                                    <td class="td-right"><p id="game_name">{gameDeets.game_name}&nbsp;</p></td>
+                                </tr>
+                            </table>
+                            <table class="">
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Num of Teams:</strong></td>
+                                    <td class="td-left"><p id="details_teams">{gameDeets.number_teams}</p></td>
+                                </tr>
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Num of Names:</strong></td>
+                                    <td class="td-left"><p id="details_num_names">{gameDeets.number_names}</p></td>
+                                </tr>
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Time Limit (s):</strong></td>
+                                    <td class="td-left"><p id="details_time_limit">{gameDeets.time_limit}</p></td>
+                                </tr>
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Round1:</strong></td>
+                                    <td class="td-left"><p id="details_round1">{gameDeets.round1?"✓":"✗"}</p></td>
+                                </tr>
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Round2:</strong></td>
+                                    <td class="td-left"><p id="details_round2">{gameDeets.round2?"✓":"✗"}</p></td>
+                                </tr>
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Round3:</strong></td>
+                                    <td class="td-left"><p id="details_round3">{gameDeets.round3?"✓":"✗"}</p></td>
+                                </tr>
+                                <tr class="table-row slight-v-gradient">
+                                    <td class="td-left"><strong>Round4:</strong></td>
+                                    <td class="td-left"><p id="details_round4">{gameDeets.round4?"✓":"✗"}</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="flex-v-start vw40">
+                            <h1 class="heading subheading4">Players</h1>
+                            <div class="text-box" id="players">
+                                {Object.keys(state.players).map((playerID) => {
+                                    playerID = parseInt(playerID)
+                                    return(
+                                        <div class={`option small-option slight-v-gradient ${state.selectedPlayerID===playerID?'selected':''}`} id={`player-option${playerID}`} onClick={()=>{setState(prevState=>({
+                                                ...prevState,
+                                                selectedPlayerID: prevState.selectedPlayerID===playerID? null : playerID ,
+                                            }))
+                                        }}>
+                                            {state.players[playerID]}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <h1 class="heading subheading4 pad-05em">
+                                <div class="flex-h">
+                                    <button class="button2" onClick={assign}>Assign</button>
+                                    <button class="button2" onClick={kick}>Kick</button>
+                                </div>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="flex-h center vmar">
+                        <div id="teams-div" class="flex-v center vw86">
+                            <h1 class="heading subheading4">Teams</h1>
+                            <div class="text-box" id="teams">
+                                {Object.keys(state.teams).map((teamID) => {
+                                    return(
+                                        <div class={`option small-option space-between slight-v-gradient ${state.selectedTeamID===teamID?'selected':''}`} id={`team-option${teamID}`} onClick={()=>{setState(prevState=>({
+                                                ...prevState,
+                                                selectedTeamID: prevState.selectedTeamID===teamID? null : teamID ,
+                                            }))
+                                        }}>
+                                            <p><strong>{state.teams[teamID]}</strong></p>
+                                            <table class="team-players-table">
+                                                <tr>
+                                                    {state.teammembers[teamID] && state.teammembers[teamID].map((playerName, i) => {return <td  class="pad-lr border">{playerName}</td>})}
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    )
+                                })}
+                                </div>
+                            <h1 class="heading subheading4 pad-05em">
+                                <div class="flex-h">
+                                    <button class="button2" id="shuffle" onClick={shuffle}>Shuffle</button>
+                                </div>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="flex-h center vmar">
+                        <h1 class="heading subheading4 pad-05em">
+                            Edit Team Name
+                            <div class="flex-h-start m1t">
+                                <input class="lobby-text-input" type="text" id="team_name_change" value={state.selectedTeamID? state.teams[state.selectedTeamID] : ""} maxlength="20" onChange={onTeamNameChange}/>
+                                <button class="button2 tick-button" id="team_name_change_button" onClick={onTeamNameChange}>
+                                    ✓
+                                </button>
+                            </div>
+                        </h1>
+                    </div>
+                    <div class="flex-h vmar">
+                        <button class="button1 button3" onClick={advance_game} id="start_game" disabled={!can_start}>Start Game</button>
+                        <button class="button1 button3" onClick={()=>{location.href='/'}}>Home</button>
+                    </div>
+                </body>
+            )
+        }
+        ReactDOM.render(<App />, document.querySelector("#app"));
+    </script>
+</html>
+        

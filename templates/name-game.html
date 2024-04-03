@@ -42,6 +42,7 @@
             })
             const [countdown, setCountdown] = React.useState(time_limit)
             const [name, setName] = React.useState(null)
+            const [previousName, setPreviousName] = React.useState(null)
             var current_name, previous_name, current_turn_user_id, current_team_id, teams, players, start_mp3, finish_mp3, teammembers, is_new_round, start_or_stop, stop_mp3, current_round
             const nameRef = React.useRef()
             const socket = React.useRef()
@@ -195,6 +196,11 @@
                         ...prevState,
                         turnOrder: arr,
                     }))
+                })
+
+                newSocket.on('emit_previous_name',msg=> { 
+                    setPreviousName(msg)
+                    console.log
                 })
 
                 newSocket.emit("emit_current_turn","{{game_id}}",state.userID)
@@ -391,7 +397,8 @@
                     </div>
                     
                     <div class="flex-v">
-                        <h1 id="the_name" class={`heading subheading3 pad-10pct-v name-big${state.myTurn?"-big":""}`}>{getTextForTheName()}</h1>
+                        <h1 id="the_name" class={`heading subheading pad-10pct-v name-big${state.myTurn?"-big":""}`}>{getTextForTheName()}</h1>
+                        {(!state.myTurn && previousName!=null) && <h1 id="last_guessed_name" class="heading subheading4">{`Previous Name: ${previousName}`}</h1>}
                         {state.myTurn && <button id="done_button" class={`button1 button3 button-green ${state.doneButtonEnabled?"":"correct"} ${state.turnStarted?"":"invisible"} mar-b20`} onClick={done} disabled={!state.doneButtonEnabled}>THEY GOT IT</button>} 
                     </div>
 
