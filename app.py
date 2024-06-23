@@ -1,29 +1,50 @@
 from __future__ import print_function
-from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
+from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify, send_from_directory
 from flask_socketio import SocketIO, join_room
-import sqlite3, random, string, logging, time, json, os, sys
+import sqlite3, random, string, logging, time, json, os, sys, ssl
 from os.path import join, dirname, abspath
 from socket import gethostbyname, gethostname
 from datetime import datetime
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '"PIAENFiONAEF023750135017c193n895173c'
 
-#ontent-security-header to be sent with every response
+@app.before_request
+def before_request():
+    # Redirect HTTP requests to HTTPS
+    if not request.is_secure and isProd:
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+
+#content-security-header to be sent with every response
 @app.after_request
 def add_csp_header(response):
     response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self';"
     return response
 
-# print_old = print
-# def print(x):
-#     with open("log.log","a") as f:
-#         f.write(f"{x}\n")
-#     print_old(x)
+print_old = print
+def print(x):
+    with open("log.log","a") as f:
+        f.write(f"{x}\n")
+    print_old(x)
 
 # DATABASE FUNCTIONS
-
+def dbInit():
+    db_path = join(dirname(abspath(__file__)), 'namegame.db')
+    isSetup =  os.path.exists(db_path)
+    connection = sqlite3.connect(db_path, check_same_thread=False, isolation_level=None)
+    if not isSetup:
+            print("Setting up DB")
+            script_path = join(dirname(abspath(__file__)), 'sql/full_db_script_no_data_sqlite.sql')
+            with open(script_path, 'r') as f:
+                script = f.read()
+            cur = connection.cursor()
+            cur.executescript(script)
+            cur.close()
+            print("DB setup complete")
+    return connection
+    
 #time_elapsed = 0
 def log(text):
     with open(r'c:\temp\log.txt', 'w') as f:
@@ -634,6 +655,13 @@ def change_user():
     users = get_all_users()
     return render_template('change-user.html', user_id=user_id, username=username, users=users)
 
+@app.route('/.well-known/acme-challenge/<path:filename>')
+def acme_challenge(filename):
+    try:
+        return send_from_directory('static/.well-known/acme-challenge', filename)
+    except Exception as e:
+        return make_response(str(e),500)
+    
 @app.route('/readme', methods=["GET"])
 def readme():
     return render_template('readme.html')
@@ -657,35 +685,37 @@ def breathe():
 
 
 
-
-
 # START APP
 if __name__ == '__main__':
-
-    #connect DB
-    db_path = join(dirname(abspath(__file__)), 'namegame.db')
-    isSetup =  os.path.exists(db_path)
-    conn = sqlite3.connect(db_path, check_same_thread=False, isolation_level=None)
-    if not isSetup:
-        print("Setting up DB")
-        script_path = join(dirname(abspath(__file__)), 'sql/full_db_script_no_data_sqlite.sql')
-        with open(script_path, 'r') as f:
-            script = f.read()
-        cur = conn.cursor()
-        cur.executescript(script)
-        cur.close()
-        print("DB setup complete")
+    isProd = True #change this 
+    conn = dbInit()
     logging.basicConfig(filename='log.log',level=logging.INFO)
-    #app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 10800 # 3h caching. turn on for prod!
-    host=gethostbyname(gethostname())
-    port=42069
-    print(f"Running Site at http://{host}:{port}")
-    socketio.run(
-        app,
-        host=host,
-        port=port,
-        # ssl_context='adhoc'
-        # log_output=True,
-        # debug=True,
-        # use_reloader=True
-    )
+    host = gethostbyname(gethostname())
+    port = 42069
+    ssl_context="adhoc"
+    if isProd:
+        port = 443
+        app.config['SECRET_KEY'] = os.urandom(24)
+        #app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 10800 # 3h caching. turn on for prod!
+        ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+        ssl_context.load_cert_chain(
+            '/etc/letsencrypt/live/namegame.pw/fullchain.pem', 
+            '/etc/letsencrypt/live/namegame.pw/privkey.pem'
+        )
+    print(f"Running Site at http{'s' if isProd else ''}://{'namegame.pw' if isProd else host}:{port}")
+    if isProd:
+        socketio.run(
+            app,
+            host = host,
+            port = port,
+            ssl_context = ssl_context,
+        )
+    else:
+        socketio.run(
+            app,
+            host = host,
+            port = port,
+            log_output = not isProd,
+            #debug = not isProd,
+            #use_reloader = not isProd
+        )
