@@ -396,7 +396,7 @@ def stop_timer(game_id,user_id):
     end_turn_sql(game_id)
 
 @socketio.on('score_answer')
-def score_answer(game_id, user_id, name_id, success): 
+def score_answer(game_id, user_id, name_id, success):
     q_sql("begin exclusive")
     score_answer_sql(game_id, user_id, name_id, success)
     q_sql("commit")

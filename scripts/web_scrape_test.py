@@ -20,6 +20,8 @@ from datetime import datetime
 import time,random,sys#,argparse
 
 def main(number_players=3,headless=False):
+    if number_players == 0: number_players = random.randint(3,9)
+
     #VARIABLES
     screen_offsets = (0,0)
     #screen_offsets = (2555, 0) #2x 4K
@@ -28,7 +30,8 @@ def main(number_players=3,headless=False):
     game_id = None
     # websitehome = "http://namegame.pw"
     # websitehome = "http://10.0.0.11:42069"
-    websitehome = "http://192.168.1.11:42069"
+    # websitehome = "http://192.168.1.11:42069"
+    websitehome = "http://192.168.1.187:5120/"
     names = ["Jasmine","Allan","Derick","Oscar","Rose","Megan","Elliot","Mary","Josh","Andy","Sarah"]*2
     nameCount = 3
     windowCount = number_players
@@ -69,7 +72,7 @@ def main(number_players=3,headless=False):
 
         # join game
         print(f"Window {w} - join_game")
-        if w != 0: d.get(websitehome+f"/join_game")
+        if w != 0: d.get(websitehome+f"join_game")
         d.find_element(By.XPATH,f'.//*[@id="games"]/div/div[text()="{game_name}"]').click()# matching game option
         time.sleep(0.1)
         d.find_element(By.ID,'join_game').click()
@@ -80,15 +83,9 @@ def main(number_players=3,headless=False):
         d.find_element(By.ID,'username_change_button').click()
 
         #delete rainbow
-        d.execute_script(f"document.getElementById('body').classList.remove('animate-rainbow')")
+        d.execute_script(f"document.getElementById('app').classList.remove('animate-rainbow')")
 
-    #start game
-    d.find_element(By.ID, 'shuffle').click()
-    print(f"Window x - shuffle")
-    try: WebDriverWait(d, windowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
-    except: 
-        d.get(+f"{websitehome}/join_game")
-        WebDriverWait(d, windowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
+
     d.find_element(By.ID, 'start_game').click()
     print(f"Window x - start_game")
     try:
@@ -115,6 +112,15 @@ def main(number_players=3,headless=False):
     WebDriverWait(d, windowCount*nameCount*1).until(lambda dr: dr.find_element(By.ID,"waiting-on").text == 'Ready')
     d.find_element(By.ID, 'start_game').click()
 
+    #pick teams
+    d.find_element(By.ID, 'shuffle').click()
+    print(f"Window x - shuffle")
+    try: WebDriverWait(d, windowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
+    except: 
+        d.get(+f"{websitehome}/join_game")
+        WebDriverWait(d, windowCount*2).until(EC.element_to_be_clickable((By.ID,'start_game')))
+    d.find_element(By.ID, 'start_game').click()
+    
     #cycle through windows if alert present
     # if EC.alert_is_present(d):
     #     for w in range(windowCount):
