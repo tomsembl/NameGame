@@ -1,5 +1,5 @@
 # NameGame
-A web-based, multiplayer game for mobiles. If you've never played, it's kind of like Articulate or Charades.
+A multiplayer game for web and mobile. If you've never played, it's kind of like Articulate or Charades.
 
 <h2>
   Summary
